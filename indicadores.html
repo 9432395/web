@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indicadores — MATE · Order Flow Tools para NinjaTrader 8</title>
+<meta name="description" content="Los 20 indicadores del pack MATE: Footprint, Liquidity Heatmap, Big Trades, TPO, perfiles de volumen, Delta, VWAP Suite, MGI Suite, Lag Sentinel y Auction Context. Cada uno con su manual completo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05070B;
+    --panel:#0C111A;
+    --line:rgba(255,255,255,.07);
+    --line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;
+    --muted:#7E8A9C;
+    --blue:#5E9FD8;
+    --blue-raw:#4682B4;
+    --orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);
+    --orange-dim:rgba(255,165,0,.12);
+    --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:
+      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+  .bg-glow{
+    position:fixed;z-index:-1;pointer-events:none;
+    width:760px;height:760px;top:-360px;left:60%;
+    background:radial-gradient(circle, rgba(70,130,180,.15), transparent 62%);
+    filter:blur(10px);
+  }
+
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(5,7,11,.78);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;text-decoration:none}
+  .logo-stack{display:flex;flex-direction:column;line-height:1}
+  .logo-word{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s, border-color .2s, background .2s;
+  }
+  .btn-orange{background:var(--orange);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .btn-ghost{border:1px solid var(--line-2);color:var(--text);background:rgba(255,255,255,.02)}
+  .btn-ghost:hover{border-color:var(--blue);background:var(--blue-dim)}
+  @media(max-width:720px){.nav-links{display:none}}
+
+  .page-head{padding:72px 0 20px;text-align:center}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--blue);
+    letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:14px;
+  }
+  .page-head h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:-.03em;line-height:1.08;margin-bottom:16px;
+  }
+  .page-head h1 .grad{
+    background:linear-gradient(90deg, #5E9FD8, #FFA500);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .page-head p{color:var(--muted);max-width:58ch;margin:0 auto}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.06em;
+    color:var(--muted);text-decoration:none;
+    border:1px solid var(--line-2);border-radius:99px;padding:7px 14px;
+    transition:color .2s, border-color .2s, background .2s;
+  }
+  .chip:hover{color:var(--text);border-color:var(--blue);background:var(--blue-dim)}
+  section{padding:56px 0}
+
+  /* ---------- FICHA DESTACADA ---------- */
+  .feature-card{
+    background:var(--panel);
+    border:1px solid rgba(94,159,216,.35);
+    border-radius:20px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(70,130,180,.06);
+  }
+  .fc-head{
+    padding:36px 40px 28px;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .fc-head .t h2{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em;margin-bottom:8px;
+  }
+  .fc-head .t .sub{color:var(--muted);max-width:60ch}
+  .fc-badges{display:flex;gap:8px;flex-wrap:wrap}
+  .badge{
+    font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+    padding:5px 12px;border-radius:99px;white-space:nowrap;
+  }
+  .badge.b1{color:var(--blue);border:1px solid rgba(94,159,216,.4);background:var(--blue-dim)}
+  .badge.b2{color:var(--orange);border:1px solid rgba(255,165,0,.4);background:var(--orange-dim)}
+  .fc-promise{
+    margin:0 40px;padding:22px 26px;margin-top:26px;
+    border:1px solid rgba(255,165,0,.3);border-radius:12px;
+    background:linear-gradient(90deg, rgba(255,165,0,.07), transparent 60%);
+  }
+  .fc-promise p{color:#D8DEE8;font-size:.98rem}
+  .fc-promise b{color:var(--orange);font-weight:600}
+  .fc-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    padding:28px 40px 36px;
+  }
+  @media(max-width:900px){.fc-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.fc-grid{grid-template-columns:1fr}.fc-head{padding:28px 24px 22px}.fc-promise{margin:0 24px;margin-top:22px}.fc-grid{padding:24px 24px 28px}}
+  .fcell{
+    background:rgba(255,255,255,.02);border:1px solid var(--line);
+    border-radius:12px;padding:20px;
+    transition:border-color .2s;
+  }
+  .fcell:hover{border-color:rgba(94,159,216,.4)}
+  .fcell h3{
+    font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600;
+    margin-bottom:7px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;
+  }
+  .fcell h3::before{content:"";width:7px;height:7px;border-radius:2px;background:linear-gradient(135deg,var(--blue-raw),var(--orange));flex-shrink:0}
+  .fcell p{color:var(--muted);font-size:.85rem}
+  .fc-foot{
+    border-top:1px solid var(--line);padding:22px 40px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .fc-foot .doc{
+    display:flex;align-items:center;gap:10px;color:var(--muted);
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+  }
+  .fc-foot .doc i{
+    width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;
+  }
+
+  /* ---------- RESTO DEL PACK ---------- */
+  .roster{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:900px){.roster{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.roster{grid-template-columns:1fr}}
+  .rcell{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px;display:flex;flex-direction:column;gap:8px;
+    transition:border-color .2s, transform .2s;
+  }
+  .rcell:hover{border-color:rgba(94,159,216,.35);transform:translateY(-2px)}
+  .rcell h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;letter-spacing:-.01em}
+  .rcell p{color:var(--muted);font-size:.85rem;flex-grow:1}
+  .rcell .soon{
+    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;
+    color:var(--muted);align-self:flex-start;
+    border:1px solid var(--line-2);border-radius:99px;padding:3px 10px;margin-top:6px;
+  }
+
+  .sec-head{max-width:640px;margin:0 auto 40px;text-align:center}
+  .sec-head h2{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px;
+  }
+  .sec-head p{color:var(--muted)}
+
+  .cta-box{
+    border:1px solid rgba(94,159,216,.3);border-radius:20px;
+    padding:56px 40px;text-align:center;
+    background:
+      radial-gradient(600px 240px at 50% -20%, rgba(70,130,180,.2), transparent 70%),
+      var(--panel);
+  }
+  .cta-box h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:12px;letter-spacing:-.02em}
+  .cta-box p{color:var(--muted);margin-bottom:28px;max-width:50ch;margin-inline:auto}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .disclaimer{margin-top:16px;font-size:.74rem;max-width:84ch;color:#5A6474}
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="index.html" aria-label="MATE, inicio">
+        <span class="logo-stack">
+          <span class="logo-word">MATE</span>
+          <span class="logo-sub">ORDER FLOW TOOLS</span>
+        </span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#features">Capacidades</a></li>
+        <li><a href="indicadores.html" class="on">Indicadores</a></li>
+        <li><a href="index.html#productos">Precios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+      <a class="btn btn-orange" href="index.html#productos">Empezar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <div class="page-head">
+    <span class="kicker">El arsenal</span>
+    <h1>Los indicadores del pack <span class="grad">MATE</span></h1>
+    <p>Los 20 indicadores del pack, cada uno con su manual completo en español e inglés. Qué mide cada uno, cómo se lee y qué lugar ocupa en tu operativa — el catálogo completo, sin secretos.</p>
+    <nav class="chips" aria-label="Índice de indicadores">
+      <a class="chip" href="#footprint">FOOTPRINT</a>
+      <a class="chip" href="#heatmap">LIQUIDITY HEATMAP</a>
+      <a class="chip" href="#tpo">TPO &amp; VOLUME PROFILE</a>
+      <a class="chip" href="#bigtrades">BIG TRADES</a>
+      <a class="chip" href="#deltasuite">DELTA SUITE</a>
+      <a class="chip" href="#deltaprofile">DELTA PROFILE</a>
+      <a class="chip" href="#fixedrange">FIXED RANGE VP</a>
+      <a class="chip" href="#anchored">ANCHORED VP</a>
+      <a class="chip" href="#vwap">VWAP SUITE</a>
+      <a class="chip" href="#mgi">MGI SUITE</a>
+      <a class="chip" href="#lagsentinel">LAG SENTINEL</a>
+      <a class="chip" href="#auctioncontext">AUCTION CONTEXT</a>
+    </nav>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="footprint">Footprint Order Flow</h2>
+          <p class="sub">La radiografía de cada vela: quién agredió, con cuánto tamaño y en qué precio exacto — con cinco capas de análisis construidas sobre datos tick a tick.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">TICK-EXACT</span>
+          <span class="badge b2">SIN REPINTADO</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>Lo que ves, ocurrió.</b> Cada número proviene de operaciones individuales clasificadas tick a tick contra el bid/ask vivo en el momento exacto de cada ejecución. Nada interpolado, nada suavizado, nada repintado.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Delta y volumen por precio</h3>
+          <p>Cada vela desglosada fila a fila: compras contra el ask, ventas contra el bid, su diferencia neta y el negocio total. POC de delta y de volumen marcados en oro.</p>
+        </div>
+        <div class="fcell">
+          <h3>Imbalances diagonales</h3>
+          <p>Detección automática con la convención diagonal clásica, ratio y filtro de mínimo delta configurables. El desequilibrio real, sin falsos positivos en los extremos.</p>
+        </div>
+        <div class="fcell">
+          <h3>Zonas stacked &amp; trapped</h3>
+          <p>Los imbalances apilados se convierten en zonas de soporte y resistencia vivas — y cuando una falla, renace como zona de traders atrapados: combustible para el otro lado.</p>
+        </div>
+        <div class="fcell">
+          <h3>Absorción y agotamiento</h3>
+          <p>Señales inteligentes calculadas al cierre de cada vela: volumen enorme sin delta en un extremo (absorción) o la agresión quedándose sin gasolina (agotamiento).</p>
+        </div>
+        <div class="fcell">
+          <h3>Subastas sin terminar y Big Prints</h3>
+          <p>Extremos donde la subasta no acabó su negocio y ejecuciones individuales de gran tamaño, marcadas por lado directamente sobre la celda donde golpearon.</p>
+        </div>
+        <div class="fcell">
+          <h3>Área de valor y migración del POC</h3>
+          <p>VAH, VAL y área de valor por vela con porcentaje configurable, y la línea de migración del POC conectando el centro de gravedad de vela en vela.</p>
+        </div>
+        <div class="fcell">
+          <h3>Tabla de estadísticas por vela</h3>
+          <p>Delta, cambio de delta, delta %, volumen total, imbalances y más — en tres estilos visuales, con cada fila activable por separado.</p>
+        </div>
+        <div class="fcell">
+          <h3>Alertas en tiempo real</h3>
+          <p>Toque de zona, nacimiento de zona, absorción y agotamiento. Todas cebadas al conectar: el histórico jamás dispara una falsa alarma.</p>
+        </div>
+        <div class="fcell">
+          <h3>Zoom inteligente</h3>
+          <p>Los números nunca cambian con el zoom: el texto se adapta, se compacta o cede el sitio a las celdas — el footprint sigue hablando a cualquier distancia.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card" style="border-color:rgba(255,165,0,.35);box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(255,165,0,.05)">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="heatmap">Liquidity Heatmap</h2>
+          <p class="sub">El lado del mercado que la cinta no puede mostrar: las órdenes en reposo — dónde espera el tamaño, cómo se mueve y qué ocurre cuando el precio llega.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">TIEMPO REAL</span>
+          <span class="badge b2">SOLO HECHOS</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>Solo hechos crudos.</b> Sin puntuaciones, sin predicciones, sin repintar el pasado. Cada episodio termina en un hecho medido — y toda defensa tiene su desenlace: quién ganó se lee directo del mapa.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Mapa térmico del libro</h3>
+          <p>La historia de cada precio pintada como bandas de calor: caliente = mucho tamaño en reposo. Los muros esperando al precio, visibles antes de que llegue.</p>
+        </div>
+        <div class="fcell">
+          <h3>Absorciones detectadas</h3>
+          <p>Un nivel que muere comiendo volumen real queda marcado en el mapa: ahí alguien peleó. El número interior te dice cuántos contratos tragó.</p>
+        </div>
+        <div class="fcell">
+          <h3>Icebergs al descubierto</h3>
+          <p>Cuando un nivel ejecuta más de lo que jamás mostró, estaba reponiendo en secreto. Borde verde: el hecho más fuerte que imprime esta herramienta.</p>
+        </div>
+        <div class="fcell">
+          <h3>Muros retirados</h3>
+          <p>Tamaño que se anuncia y se va sin ejecutar casi nada, registrado como hecho medido. Cuando se acumulan de un lado, desconfía de ese lado.</p>
+        </div>
+        <div class="fcell">
+          <h3>Desenlace de cada defensa</h3>
+          <p>Si el precio cruza después un nivel defendido, su marca se atenúa. El mapa te dice quién ganó cada batalla — sin interpretaciones.</p>
+        </div>
+        <div class="fcell">
+          <h3>Bookmap Mode + Volume Dots</h3>
+          <p>Lienzo térmico de plataforma dedicada con el volumen ejecutado como puntos por agresor: dónde descansó el tamaño, dónde ejecutó, quién ganó.</p>
+        </div>
+        <div class="fcell">
+          <h3>Panel del libro estilo DOM</h3>
+          <p>El libro en vivo anclado al eje de precios: barras por nivel, best bid/ask con filo blanco y aviso de spread abierto. Números que nunca se encogen.</p>
+        </div>
+        <div class="fcell">
+          <h3>Una sola escala, toda la sesión</h3>
+          <p>El mismo tamaño produce el mismo color a las 9:31 y a las 15:59. El muro de la mañana y el de la tarde se comparan a ojo, con honestidad.</p>
+        </div>
+        <div class="fcell">
+          <h3>Persistencia de sesión</h3>
+          <p>Mapa, marcas y desenlaces se guardan cada minuto: recarga el gráfico y recupera tu sesión intacta. Una recarga no perdona ni condena ninguna marca.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · REQUIERE DATOS LEVEL II</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="tpo">Session TPO &amp; Volume Profile</h2>
+          <p class="sub">Una estación de Market Profile completa en un solo indicador: el mapa de la subasta por letras y el volumen real por precio, lado a lado, sesión a sesión.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">2 VISTAS EN 1</span>
+          <span class="badge b2">CERO REPINTADO</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>Dos verdades, cara a cara.</b> Dónde pasó su tiempo el mercado y dónde comprometió su volumen. Cuando ambas coinciden, hay aceptación; cuando divergen, hay información — y tú la ves antes que nadie.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>El perfil TPO clásico</h3>
+          <p>El alfabeto de la subasta letra a letra, con POC, área de valor, single prints, colas de rechazo y poor highs/lows — la gramática completa del Market Profile, automatizada.</p>
+        </div>
+        <div class="fcell">
+          <h3>Volume Profile independiente</h3>
+          <p>El volumen real negociado por precio con su propio VPOC y su propia área de valor, con resolución de filas configurable por separado. Dos lentes, un gráfico.</p>
+        </div>
+        <div class="fcell">
+          <h3>POC vs VPOC: el desacuerdo que paga</h3>
+          <p>Cuando el punto de control por tiempo y el de volumen divergen, el mercado te está contando algo. La resolución de ese conflicto es de las lecturas más finas del profile trading.</p>
+        </div>
+        <div class="fcell">
+          <h3>Fusiona y divide con clic derecho</h3>
+          <p>Une varios días de balance en un perfil compuesto y opera sus bordes; divide un día de doble distribución para ver ambas subastas. Tus decisiones de vista sobreviven recargas y reinicios.</p>
+        </div>
+        <div class="fcell">
+          <h3>Cinco familias de niveles naked</h3>
+          <p>POC, VPOC, áreas de valor y medios sin reexaminar, extendidos hacia adelante hasta que el precio los atraviesa — con detección exacta al tick. Las preguntas abiertas del mercado, siempre a la vista.</p>
+        </div>
+        <div class="fcell">
+          <h3>Initial Balance y marcadores</h3>
+          <p>El rango inicial que enmarca la hipótesis del día, más los marcadores de apertura y cierre de cada sesión. El contexto del día, de un vistazo.</p>
+        </div>
+        <div class="fcell">
+          <h3>Zoom institucional continuo</h3>
+          <p>Las letras crecen y se encogen con el gráfico de forma fluida, y el perfil se ensancha bajo zoom fuerte — el comportamiento de las plataformas de escritorio de gama alta.</p>
+        </div>
+        <div class="fcell">
+          <h3>Sesiones a tu medida</h3>
+          <p>RTH, overnight, sesión del gráfico o horarios personalizados. Cada perfil respeta tu definición de sesión, en tu zona horaria.</p>
+        </div>
+        <div class="fcell">
+          <h3>Carga en segundos</h3>
+          <p>Perfiles históricos al instante o reconstrucción exacta tick a tick: tú eliges el equilibrio entre velocidad y precisión absoluta. El tiempo real siempre es tick a tick.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card" style="border-color:rgba(255,165,0,.35);box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(255,165,0,.05)">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="bigtrades">Big Trades</h2>
+          <p class="sub">El detector de ejecución institucional: cada burbuja del gráfico es una operación de gran tamaño que realmente ocurrió — precio exacto, volumen exacto, agresor identificado.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">DETECCIÓN DE SWEEPS</span>
+          <span class="badge b2">LO QUE VES, SE EJECUTÓ</span>
+          </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>La capa que los detectores baratos no ven.</b> Cuando una institución envía 127 contratos, el exchange los reporta como 70+57 en el mismo instante — y los detectores simples ven dos operaciones “pequeñas” y callan. Big Trades reconstruye la orden original y la dibuja con su tamaño verdadero.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Sweeps reconstruidos</h3>
+          <p>Mismo instante, mismo lado agresor, precio sin retroceso: la orden institucional recompuesta y dibujada como un solo evento en el precio donde realmente operó.</p>
+        </div>
+        <div class="fcell">
+          <h3>Burbujas que no mienten</h3>
+          <p>Área proporcional al volumen, el número exacto dentro, color por lado agresor — y un anillo dorado señalando el mayor evento a la vista.</p>
+        </div>
+        <div class="fcell">
+          <h3>Niveles de acumulación</h3>
+          <p>Los precios donde el tamaño institucional se apila se convierten en líneas de interés con su insignia: “708 S54%” = 708 contratos, 54% vendidos. Sin ambigüedad.</p>
+        </div>
+        <div class="fcell">
+          <h3>Big Delta</h3>
+          <p>Un CVD construido solo con operaciones de tamaño institucional — a menudo más limpio que el delta completo. Si el precio rompe y el Big Delta no acompaña, el tamaño no está participando.</p>
+        </div>
+        <div class="fcell">
+          <h3>Cazador de icebergs en acción</h3>
+          <p>Las recargas de un iceberg dejan prints y sweeps repetidos en el mismo precio — exactamente lo que los niveles de acumulación sacan a la superficie.</p>
+        </div>
+        <div class="fcell">
+          <h3>Modo sesión fresca</h3>
+          <p>Abre el gráfico limpio y convierte cada burbuja nueva en un acontecimiento, mientras las estadísticas siguen procesando la sesión completa por debajo.</p>
+        </div>
+        </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="deltasuite">Delta Suite</h2>
+          <p class="sub">La agresión de cada operación — quién levantó la oferta, quién golpeó la demanda — convertida en tres vistas profesionales en su propio panel.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">3 VISTAS EN 1</span>
+          <span class="badge b2">SIN REPINTADO</span>
+          </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>El número neto esconde la batalla.</b> Una vela que cierra en +50 después de visitar −300 no es lo mismo que un +50 limpio. La mecha de excursión de Delta Suite te muestra la absorción que el delta final no cuenta.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>BarDelta con mecha de excursión</h3>
+          <p>El delta neto de cada vela más la historia intra-vela: desde el mínimo hasta el máximo que visitó la agresión. La batalla completa, no solo el resultado.</p>
+        </div>
+        <div class="fcell">
+          <h3>DeltaPct: la vista de la convicción</h3>
+          <p>+200 de delta con 400 contratos es dominancia del 50%; con 4,000 es un empate del 5%. En los clímax, esta vista delata al que absorbe.</p>
+        </div>
+        <div class="fcell">
+          <h3>CVD en velas o línea</h3>
+          <p>El delta acumulado de la sesión como velas OHLC de la acumulación. La pregunta de fondo, respondida: quién controla, y si ese control crece.</p>
+        </div>
+        <div class="fcell">
+          <h3>Divergencias que jamás repintan</h3>
+          <p>Máximos del precio sin máximos del CVD, marcados sobre swings confirmados. Una marca puesta es una marca que no se mueve — nunca.</p>
+        </div>
+        <div class="fcell">
+          <h3>Lente institucional</h3>
+          <p>Un interruptor reconstruye las tres vistas usando solo operaciones grandes: si el CVD del tamaño discrepa del total, sabes qué está haciendo cada público.</p>
+        </div>
+        <div class="fcell">
+          <h3>Autoauditable al contrato</h3>
+          <p>El total por vela coincide exactamente con el volumen nativo de NinjaTrader — compruébalo tú mismo cuando quieras. Datos que dan la cara.</p>
+        </div>
+        </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="deltaprofile">Delta Profile</h2>
+          <p class="sub">Quién está ganando la subasta en cada precio, como una franja limpia anclada al borde del gráfico — con tres maneras de definir “ahora”.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">MODO ROLLING</span>
+          <span class="badge b2">MEMORIA DE AGRESIÓN</span>
+          </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>¿Estás comprando el empuje… o su eco?</b> El modo Rolling contiene siempre exactamente los últimos N minutos, y sus puntos de frescura marcan dónde la agresión está ocurriendo ahora mismo — no el residuo de una batalla que ya expiró.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>La subasta por precio</h3>
+          <p>Delta agresivo por fila de precio, con gradiente de intensidad y la fila del máximo delta contorneada en oro: el precio donde un lado se comprometió con más fuerza.</p>
+        </div>
+        <div class="fcell">
+          <h3>Rolling: siempre lo último</h3>
+          <p>Una ventana que se desliza de forma continua, sin punto ciego tras un reinicio y sin delta viejo de hace horas. Frescura de datos garantizada en todo instante.</p>
+        </div>
+        <div class="fcell">
+          <h3>Puntos de frescura</h3>
+          <p>Marcas blancas en las filas donde la agresión es reciente de verdad — la diferencia entre sumarse a un movimiento vivo y llegar tarde a uno muerto.</p>
+        </div>
+        <div class="fcell">
+          <h3>DELTA vs PREV: la derivada</h3>
+          <p>La tarjeta compara la ventana actual con la anterior: +840 ahora frente a +200 antes = compradores acelerando. Signos opuestos = giro en marcha.</p>
+        </div>
+        <div class="fcell">
+          <h3>Niveles naked de máximo delta</h3>
+          <p>Cada período cerrado deja su línea dorada donde el agresor se impuso — viva hasta que el precio la reexamina, con detección exacta al tick. Memoria de agresión pura.</p>
+        </div>
+        <div class="fcell">
+          <h3>El pulso de la sesión</h3>
+          <p>B 62% / S 38% de un vistazo: un 50/50 con total enorme es una batalla; un 70/30 con total pequeño es una deriva sin oposición.</p>
+        </div>
+        </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="fixedrange">Fixed Range Volume Profile</h2>
+          <p class="sub">Perfiles de volumen exactos al tick sobre cualquier rango de velas — dibujados, movidos y redimensionados directamente sobre el gráfico con el ratón.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">DIBUJA CON EL RATÓN</span>
+          <span class="badge b2">DELTA + VOLUMEN</span>
+          </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>No solo dónde negoció el mercado: quién ganó en cada precio.</b> Su firma es la disposición “d b”: el delta por fila espalda con espalda con el volumen, desde un eje compartido. Dos preguntas, una silueta.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Clic derecho y listo</h3>
+          <p>“Add Fixed Range Profile Here” y nace un perfil donde señalaste. Muévelo, estíralo, mantén varios a la vez — los bordes se anclan a velas, nunca a píxeles.</p>
+        </div>
+        <div class="fcell">
+          <h3>Delta espalda con espalda</h3>
+          <p>El volumen te dice dónde se aceptó precio; el delta te dice quién pagó por ello. La fila del máximo delta queda contorneada: el precio del mayor compromiso del rango.</p>
+        </div>
+        <div class="fcell">
+          <h3>Rangos vivos</h3>
+          <p>Arrastra el borde derecho hasta la última vela y el perfil queda pegado al presente: un perfil de sesión que empieza exactamente donde tú decides.</p>
+        </div>
+        <div class="fcell">
+          <h3>Niveles proyectados</h3>
+          <p>vPOC, VAH y VAL extendidos hasta el borde derecho como niveles operables, con sus precios exactos impresos sobre las líneas.</p>
+        </div>
+        <div class="fcell">
+          <h3>Persistencia total</h3>
+          <p>Cada perfil se guarda en disco por instrumento. Recargas, cambios de workspace, reinicios: tus rangos siempre te esperan donde los dejaste.</p>
+        </div>
+        <div class="fcell">
+          <h3>Lectura de impulsos</h3>
+          <p>Perfila un tramo fuerte: delta concentrado al inicio = viajó por inercia; concentrado al final = todavía se estaba peleando. Información que ningún gráfico de velas te da.</p>
+        </div>
+        </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card" style="border-color:rgba(255,165,0,.35);box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(255,165,0,.05)">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="anchored">Anchored Volume Profile</h2>
+          <p class="sub">El mapa real del volumen de cualquier ventana temporal — sesión, semana, mes, trimestre, rango fijo o ventana móvil — en un histograma limpio anclado al panel.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">CUALQUIER VENTANA</span>
+          <span class="badge b2">CARGA EN SEGUNDOS</span>
+          </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>El contexto que quieras, al instante.</b> Solo carga los datos de la propia ventana — nunca el histórico completo del gráfico — así que abre en segundos tenga los días que tenga tu gráfico. Y si tu conexión cae y vuelve, se recarga solo: siempre exacto.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Once ventanas temporales</h3>
+          <p>Sesión RTH o ETH en curso, semana, mes y trimestre actuales o anteriores, rango fijo al segundo, ventanas móviles de N minutos, días o semanas, o las velas visibles en pantalla.</p>
+        </div>
+        <div class="fcell">
+          <h3>Períodos que se gestionan solos</h3>
+          <p>Al nacer una semana nueva, la “semana anterior” se actualiza sola. Las ventanas móviles suman lo nuevo y restan exactamente lo que sale. Cero mantenimiento.</p>
+        </div>
+        <div class="fcell">
+          <h3>VPOC, área de valor, HVN y LVN</h3>
+          <p>El imán más fuerte de la ventana, el rango de aceptación, las repisas donde el precio frena y los huecos que cruza rápido — los niveles que operan los profesionales.</p>
+        </div>
+        <div class="fcell">
+          <h3>Anclaje institucional</h3>
+          <p>Semanas, meses y trimestres anclados al día de trading, no al calendario. Festivos, sesiones recortadas y huecos de datos no pueden mover el ancla.</p>
+        </div>
+        <div class="fcell">
+          <h3>Dos resoluciones</h3>
+          <p>Minuto para cargar en segundos con volumen total exacto, o tick a tick para la precisión absoluta. En vivo, siempre exacto al tick.</p>
+        </div>
+        <div class="fcell">
+          <h3>Dobla la lectura</h3>
+          <p>Añádelo dos veces — uno a cada borde del panel — y opera con el mapa de la semana anterior frente al de la sesión en curso, cara a cara.</p>
+        </div>
+        </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="vwap">VWAP Suite</h2>
+          <p class="sub">Cinco indicadores, un mismo estándar: el VWAP diario, semanal, mensual, trimestral y anual con canales de desviación — los precios de referencia contra los que las instituciones miden sus ejecuciones.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">5 INDICADORES</span>
+          <span class="badge b2">EXACTO AL TICK</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>El VWAP que imprime el mismo valor en cualquier gráfico.</b> La mayoría de herramientas lo aproximan desde las velas: su valor se desvía y hasta cambia con el timeframe. Los VWAP de MATE se calculan operación a operación — el valor verdadero, en cualquier gráfico, siempre.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Los cinco horizontes</h3>
+          <p>Daily (RTH y ETH por separado), Weekly, Monthly, Quarterly y Yearly. Del pulso intradía al ancla que el position trading vigila durante meses — toda la jerarquía temporal cubierta.</p>
+        </div>
+        <div class="fcell">
+          <h3>Hasta cinco bandas por VWAP</h3>
+          <p>Canales de desviación con multiplicador, colores y relleno propios por banda — en desviación estándar ponderada por volumen o en cuartos del rango real, al estilo Market Profile.</p>
+        </div>
+        <div class="fcell">
+          <h3>Prior Values: la memoria del período</h3>
+          <p>Al cerrar cada sesión, semana, mes o año, su VWAP y su canal de valor quedan congelados y proyectados hacia delante — los niveles del último acuerdo del mercado, listos para su primer test.</p>
+        </div>
+        <div class="fcell">
+          <h3>Períodos estrictamente individuales</h3>
+          <p>Cada VWAP nace de cero en su apertura y muere en su cierre: ninguna línea cruza jamás al período siguiente. Sin contaminación entre sesiones, sin herencias falsas.</p>
+        </div>
+        <div class="fcell">
+          <h3>Anclaje institucional</h3>
+          <p>Semanas, meses, trimestres y años anclados al día de trading — la convención de los profesionales. Festivos, sesiones recortadas y huecos de datos no pueden mover el ancla.</p>
+        </div>
+        <div class="fcell">
+          <h3>Tu sesión, tu zona horaria</h3>
+          <p>Horarios de sesión configurables e interpretados en la zona que elijas, con horario de verano automático. Las 09:30 de Nueva York son la apertura, estés donde estés.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>5 MANUALES COMPLETOS EN ESPAÑOL E INGLÉS · INCLUIDOS</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card" style="border-color:rgba(255,165,0,.35);box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(255,165,0,.05)">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="mgi">MGI Suite</h2>
+          <p class="sub">Market Generated Information en cinco horizontes — diario, semanal, mensual, trimestral y anual: los niveles que el mercado genera y luego respeta, dibujados solos en tu gráfico.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">5 INDICADORES</span>
+          <span class="badge b2">SELLADO AL SEGUNDO</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>El mapa del día, listo antes de la apertura.</b> Rango overnight, Initial Balance con extensiones, niveles del período anterior, value areas exactas al tick, Half Gap y VWAPs de sesión — cada nivel aparece solo cuando queda definido, congelado en su hora exacta, y jamás se repinta.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>El arsenal intradía completo</h3>
+          <p>ONH/ONL, Initial Balance con extensiones proyectadas, niveles RTH y ETH del día previo, value areas PRTH, PETH y overnight, VWAPs de sesión y el Half Gap — el imán clásico del gap.</p>
+        </div>
+        <div class="fcell">
+          <h3>La memoria de cada horizonte</h3>
+          <p>Máximo, mínimo, punto medio, apertura, cierre y value area del período anterior — semanal, mensual, trimestral y anual. Los POC sin testear de estos marcos se revisitan semanas después.</p>
+        </div>
+        <div class="fcell">
+          <h3>Zonas de confluencia automáticas</h3>
+          <p>Cuando dos o más niveles independientes se apilan a pocos ticks, el indicador sombrea la franja: las áreas de reacción de mayor probabilidad, detectadas por ti.</p>
+        </div>
+        <div class="fcell">
+          <h3>Clasificación de la subasta</h3>
+          <p>Value Higher, Lower, Inside, Outside u Overlap: cada período se autoclasifica comparando su valor en desarrollo con el anterior. El contexto del día, resumido en una etiqueta.</p>
+        </div>
+        <div class="fcell">
+          <h3>Alertas al primer toque</h3>
+          <p>Una alerta la primera vez que el precio toca cada nivel clave — una vez por nivel y período, solo en tiempo real. Deja de vigilar líneas: espera la llamada.</p>
+        </div>
+        <div class="fcell">
+          <h3>Modo estudio del pasado</h3>
+          <p>Activa los períodos previos y cada día, semana o mes pasado muestra exactamente lo que su operador vio entonces — la herramienta perfecta para estudiar cómo el precio respeta cada nivel.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>5 MANUALES COMPLETOS EN ESPAÑOL E INGLÉS · INCLUIDOS</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="lagsentinel">Lag Sentinel</h2>
+          <p class="sub">El guardián silencioso de tu operativa: vigila las tres tuberías por las que fluye tu dinero — los datos que entran, las órdenes que salen y la plataforma que lo pinta todo.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">VIGILANCIA 3 TUBERÍAS</span>
+          <span class="badge b2">SILENCIOSO HASTA QUE IMPORTA</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>¿Lo que ves en pantalla es realmente el mercado, ahora mismo?</b> Lag Sentinel responde esa pregunta con honestidad: guarda silencio mientras todo está sano, y cuando una tubería se degrada, una línea nombra al culpable. Cuando sana, desaparece.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Medición honesta, no teatro</h3>
+          <p>Los detectores de lag baratos imprimen números físicamente imposibles porque mezclan el error del reloj del PC con la latencia. Lag Sentinel mide la desviación contra la línea base de tu propia sesión — inmune a zonas horarias y relojes descuadrados.</p>
+        </div>
+        <div class="fcell">
+          <h3>Datos: feed vivo o congelado</h3>
+          <p>Distingue lo que otros confunden: una cinta callada no es un feed muerto. Vigila trades y quotes por separado — silencio de quotes es feed congelado; silencio de trades con quotes vivas es solo mercado quieto.</p>
+        </div>
+        <div class="fcell">
+          <h3>Órdenes: el lag que cuesta dinero</h3>
+          <p>Mide el tiempo real de envío a acuse de tus propias órdenes — solo escucha, jamás las toca. Hacer scalping con acuses lentos es pagar un spread oculto; aquí lo ves antes de pagarlo.</p>
+        </div>
+        <div class="fcell">
+          <h3>Plataforma: cuando NT8 se ahoga</h3>
+          <p>Un latido en segundo plano detecta si la interfaz de NinjaTrader pinta por detrás de la realidad — demasiados gráficos, demasiados indicadores. Tus datos pueden estar bien; tu imagen de ellos, no.</p>
+        </div>
+        <div class="fcell">
+          <h3>Ámbar avisa, rojo ordena parar</h3>
+          <p>Fondo ámbar: algo va lento — opera con margen. Fondo rojo, feed congelado: deja de confiar en el gráfico y gestiona el riesgo desde el bróker. El color siempre refleja la peor tubería.</p>
+        </div>
+        <div class="fcell">
+          <h3>Estadística robusta por construcción</h3>
+          <p>Medianas y P95 sobre ventanas de 60 segundos con histéresis: un tick suelto jamás grita, un retraso sostenido siempre lo hace. Y todo sana solo, sin intervención.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card" style="border-color:rgba(255,165,0,.35);box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(255,165,0,.05)">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="auctioncontext">Auction Context</h2>
+          <p class="sub">Un solo panel que responde, antes y durante cada sesión, la pregunta que todo trader de subastas se hace: ¿qué tan grande es hoy comparado con un día normal?</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1">EL CONTEXTO EN UN PANEL</span>
+          <span class="badge b2">SIN VALORES DEGRADADOS</span>
+        </div>
+      </div>
+
+      <div class="fc-promise">
+        <p><b>El pre-open en diez segundos.</b> Rangos contra su típico, volumen relativo por minuto de reloj, inventario overnight y rotaciones — cada número es una medición real de tu propio instrumento, y el día en curso jamás contamina sus propios promedios. Contexto honesto, no señales mágicas.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3>Rangos contra lo normal</h3>
+          <p>Overnight, Initial Balance, RTH y ETH medidos contra su típico de N días. Un porcentaje y lo sabes: hoy viene comprimido, normal o extendido — y ajustas targets en lugar de operar todos los días igual.</p>
+        </div>
+        <div class="fcell">
+          <h3>RVOL por minuto de reloj</h3>
+          <p>Tu volumen acumulado comparado contra el acumulado típico en este minuto exacto de la sesión — porque comparar las 10:00 contra un promedio de día completo no significa nada.</p>
+        </div>
+        <div class="fcell">
+          <h3>Inventario overnight</h3>
+          <p>Qué parte de la noche operó por encima o por debajo del settlement: quién llega cargado a la apertura. Una noche 100% de un solo bando es información que la primera hora pondrá a prueba.</p>
+        </div>
+        <div class="fcell">
+          <h3>Delta exacto, no estimado</h3>
+          <p>El delta overnight y de sesión clasificado tick a tick contra el bid/ask grabado con cada operación — congelado el nocturno en la apertura, acumulado en vivo el del día.</p>
+        </div>
+        <div class="fcell">
+          <h3>Calculadora de rotaciones</h3>
+          <p>Tres detectores en paralelo con umbrales que se adaptan a la volatilidad actual: la unidad natural de swing de tu instrumento, ahora mismo. Y el leg en curso medido contra la media — ¿rotación rutinaria o algo mayor?</p>
+        </div>
+        <div class="fcell">
+          <h3>Honestidad radical con los datos</h3>
+          <p>Cada valor es una medición real o un N/A explícito con su motivo — nunca un número degradado en silencio. Los promedios solo se alimentan con sesiones completas y cerradas.</p>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
+        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Pruébalo todo, 7 días, gratis</h2>
+      <p>Acceso completo al pack, sin tarjeta. Así compras sabiendo exactamente lo que llevas.</p>
+      <a class="btn btn-orange" href="index.html#contacto">Solicitar demo</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <span>© 2026 MATE · matetrading.com</span>
+      <span>NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.</span>
+    </div>
+    <p class="disclaimer">Aviso de riesgo: operar futuros y otros instrumentos apalancados conlleva un alto riesgo de pérdida y no es adecuado para todos los inversores. El rendimiento pasado no garantiza resultados futuros. Las herramientas MATE son ayudas de análisis y no constituyen asesoramiento financiero.</p>
+  </div>
+</footer>
+</body>
+</html>

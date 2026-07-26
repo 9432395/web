@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATE — Order Flow Tools para NinjaTrader 8</title>
+<meta name="description" content="MATE: pack de 20 indicadores profesionales de order flow para NinjaTrader 8. Liquidity Heatmap, Footprint, Big Trades, TPO, Perfil de Volumen, Delta, VWAP y MGI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05070B;
+    --panel:#0C111A;
+    --line:rgba(255,255,255,.07);
+    --line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;
+    --muted:#7E8A9C;
+    --blue:#5E9FD8;
+    --blue-raw:#4682B4;
+    --orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);
+    --orange-dim:rgba(255,165,0,.12);
+    --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:
+      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+  .bg-glow{
+    position:fixed;z-index:-1;pointer-events:none;
+    width:760px;height:760px;top:-360px;left:60%;
+    background:radial-gradient(circle, rgba(70,130,180,.15), transparent 62%);
+    filter:blur(10px);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;text-decoration:none}
+  .logo-stack{display:flex;flex-direction:column;line-height:1}
+  .logo-word{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:1.25rem;letter-spacing:.3em;
+  }
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{
+    font-family:'JetBrains Mono',monospace;font-size:.5rem;
+    letter-spacing:.34em;color:var(--orange);margin-top:4px;
+  }
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    font-family:'Inter',sans-serif;
+    transition:transform .15s, box-shadow .15s, background .2s, border-color .2s;
+  }
+  .btn-orange{background:var(--orange);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .btn-ghost{border:1px solid var(--line-2);color:var(--text);background:rgba(255,255,255,.02)}
+  .btn-ghost:hover{border-color:var(--blue);background:var(--blue-dim)}
+  @media(max-width:720px){.nav-links{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 56px;
+    display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;
+  }
+  @media(max-width:920px){.hero{grid-template-columns:1fr;padding-top:56px}}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--blue);
+    border:1px solid rgba(94,159,216,.35);background:var(--blue-dim);
+    border-radius:99px;padding:6px 14px;letter-spacing:.08em;margin-bottom:26px;
+  }
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(2.2rem,4.6vw,3.4rem);
+    line-height:1.08;letter-spacing:-.03em;margin-bottom:20px;
+  }
+  h1 .grad{
+    background:linear-gradient(90deg, #5E9FD8, #FFA500);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{color:var(--muted);font-size:1.05rem;max-width:46ch;margin-bottom:32px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+  .hero-note{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.05em}
+
+  /* ---------- MONITOR con footprint ---------- */
+  .station{position:relative;display:flex;flex-direction:column;align-items:center}
+  .monitor{
+    width:100%;
+    background:#0A0D13;
+    border:1px solid var(--line-2);
+    border-radius:14px;
+    padding:10px;
+    box-shadow:
+      0 40px 90px rgba(0,0,0,.65),
+      0 0 0 1px rgba(70,130,180,.08),
+      0 -2px 50px rgba(70,130,180,.06);
+  }
+  .screen{
+    background:#070A10;border-radius:8px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.05);
+  }
+  .scr-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:9px 14px;border-bottom:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);
+  }
+  .win-dots{display:flex;gap:6px}
+  .win-dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.1)}
+  .rec{display:flex;align-items:center;gap:6px;color:var(--muted);letter-spacing:.14em}
+  .rec i{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
+  
+  /* footprint */
+  .fp{padding:12px 8px 12px 12px;display:flex;gap:7px;align-items:stretch;overflow:hidden}
+  .col{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+  .col .cell{flex:1;align-items:center}
+  .cell{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(7.5px,0.95vw,10.5px);
+    line-height:1;
+    padding:4px 3px;border-radius:3px;
+    display:flex;justify-content:center;gap:3px;
+    color:#C7D2E2;white-space:nowrap;
+    background:rgba(255,255,255,.025);
+  }
+  .cell b{font-weight:500}
+  .cell .bq{color:var(--blue)}
+  .cell .aq{color:var(--orange)}
+  .cell.bi{background:rgba(70,130,180,.28)}      /* imbalance comprador */
+  .cell.ai{background:rgba(255,165,0,.24)}       /* imbalance vendedor */
+  .cell.poc{outline:1px solid rgba(255,165,0,.75)}
+  /* perfil de volumen lateral */
+  .vp{
+    border-left:1px solid var(--line);
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:12px 10px;
+  }
+  .vp .row{flex:1;display:flex;align-items:center}
+  .vp .row{display:flex;align-items:center;gap:5px}
+  .vp .bar{height:7px;border-radius:2px;background:linear-gradient(90deg, rgba(70,130,180,.85), rgba(70,130,180,.35))}
+  .vp .row.p .bar{background:linear-gradient(90deg, var(--orange), rgba(255,165,0,.4))}
+  
+  /* delta strip */
+  .scr-foot{
+    border-top:1px solid var(--line);
+    display:flex;gap:16px;padding:8px 14px;
+    font-family:'JetBrains Mono',monospace;font-size:.64rem;color:var(--muted);
+  }
+  .scr-foot .lg{display:flex;align-items:center;gap:7px;letter-spacing:.12em}
+  .scr-foot .sq{width:8px;height:8px;border-radius:2px;display:inline-block}
+  .scr-foot .sq.b{background:var(--blue)}
+  .scr-foot .sq.a{background:var(--orange)}
+  .scr-foot .sq.i{background:rgba(255,255,255,.25)}
+  .stand{
+    width:110px;height:22px;
+    background:linear-gradient(180deg,#141924,#0B0F16);
+    border:1px solid var(--line);border-top:none;
+    border-radius:0 0 8px 8px;
+  }
+  .base{
+    width:190px;height:8px;margin-top:-1px;
+    background:linear-gradient(180deg,#161B27,#0A0E15);
+    border:1px solid var(--line);
+    border-radius:99px;
+  }
+  .station .reflect{
+    width:70%;height:26px;margin-top:10px;border-radius:50%;
+    background:radial-gradient(ellipse, rgba(70,130,180,.10), transparent 70%);
+    filter:blur(6px);
+  }
+
+
+  /* --- rotacion de modos --- */
+  .scr-body{position:relative;height:340px}
+  .mode{
+    position:absolute;inset:0;opacity:0;pointer-events:none;
+    transition:opacity .8s ease;
+    display:grid;grid-template-columns:1fr 92px;
+  }
+  .mode.active{opacity:1}
+  #m-dom,#m-tpo,#m-vol{grid-template-columns:1fr}
+  .mode-dots{display:flex;gap:5px;margin-left:14px}
+  .mode-dots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .4s}
+  .mode-dots span.on{background:var(--blue)}
+
+  /* --- DOM --- */
+  .dom-grid{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:14px 18px}
+  .dl{display:grid;grid-template-columns:1fr 14px 1fr;align-items:center;gap:8px;height:22px}
+  .dl .side{position:relative;height:100%;display:flex;align-items:center}
+  .dl .side.bid{justify-content:flex-end}
+  .dl .side .qbar{position:absolute;top:15%;height:70%;border-radius:3px;opacity:.3}
+  .dl .side.bid .qbar{right:0;background:var(--blue)}
+  .dl .side.ask .qbar{left:0;background:var(--orange)}
+  .dl .q{font-family:'JetBrains Mono',monospace;font-size:10px;position:relative;z-index:1;padding:0 6px}
+  .dl .side.bid .q{color:var(--blue)}
+  .dl .side.ask .q{color:var(--orange)}
+  .dl .mid{width:14px;display:flex;justify-content:center}
+  .dl .mid i{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .dl.spread .mid i{background:var(--orange);box-shadow:0 0 8px rgba(255,165,0,.6)}
+
+  /* --- TPO --- */
+  .tpo{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:14px 22px}
+  .tr{display:flex;gap:3px;align-items:center;height:20px}
+  .tr .lt{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
+    width:16px;height:100%;display:flex;align-items:center;justify-content:center;
+    border-radius:3px;background:rgba(255,255,255,.03);color:#93A3B8;
+  }
+  .tr .lt.va{background:rgba(70,130,180,.22);color:#BFD6EC}
+  .tr.poc .lt{background:rgba(255,165,0,.22);color:#FFD9A0}
+  .tr .lt.new{animation:ltIn .5s ease}
+  @keyframes ltIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+
+  /* --- VOLUME PROFILE --- */
+  .volp{display:flex;flex-direction:column;justify-content:center;gap:4px;padding:14px 26px}
+  .vr{display:flex;align-items:center;height:20px}
+  .vr .vbar{
+    height:78%;border-radius:3px;
+    background:linear-gradient(90deg, rgba(70,130,180,.9), rgba(70,130,180,.25));
+    transition:width 1s ease;
+  }
+  .vr.va .vbar{background:linear-gradient(90deg, rgba(94,159,216,1), rgba(94,159,216,.35))}
+  .vr.poc .vbar{background:linear-gradient(90deg, var(--orange), rgba(255,165,0,.35))}
+
+  /* ---------- STATS ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--line);border-radius:var(--radius);
+    margin-top:8px;overflow:hidden;background:rgba(255,255,255,.015);
+  }
+  @media(max-width:640px){.stats{grid-template-columns:1fr}}
+  .stat{padding:26px 30px;text-align:center}
+  .stat + .stat{border-left:1px solid var(--line)}
+  @media(max-width:640px){.stat + .stat{border-left:none;border-top:1px solid var(--line)}}
+  .stat b{
+    font-family:'Space Grotesk',sans-serif;font-size:1.7rem;font-weight:700;display:block;
+    letter-spacing:-.02em;
+  }
+  .stat span{color:var(--muted);font-size:.84rem}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:88px 0}
+  .sec-head{max-width:620px;margin-bottom:48px}
+  .sec-head.center{margin-inline:auto;text-align:center}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--blue);
+    letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:14px;
+  }
+  .sec-head h2{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(1.8rem,3.4vw,2.5rem);letter-spacing:-.02em;margin-bottom:12px;line-height:1.12;
+  }
+  .sec-head p{color:var(--muted)}
+
+  /* ---------- BENTO ---------- */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.bento{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.bento{grid-template-columns:1fr}}
+  .bcell{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px;transition:border-color .2s, background .2s;
+  }
+  .bcell:hover{border-color:rgba(94,159,216,.4);background:#0D131D}
+  .bcell .ic{
+    width:38px;height:38px;border-radius:10px;background:var(--blue-dim);
+    border:1px solid rgba(94,159,216,.3);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .bcell .ic svg{width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .bcell h3{font-family:'Space Grotesk',sans-serif;font-size:1.02rem;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+  .bcell p{color:var(--muted);font-size:.88rem}
+
+  /* ---------- PRICING ---------- */
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:960px){.prod-grid{grid-template-columns:1fr}}
+  .prod{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;display:flex;flex-direction:column;gap:18px;position:relative;
+    transition:border-color .2s, transform .2s;
+  }
+  .prod:hover{border-color:rgba(94,159,216,.45);transform:translateY(-3px)}
+  .prod.hot{border-color:rgba(255,165,0,.5);box-shadow:0 0 40px rgba(255,165,0,.08)}
+  .prod .flag{
+    position:absolute;top:-11px;left:26px;
+    font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+    background:var(--orange);color:#1A1000;font-weight:600;
+    padding:4px 10px;border-radius:99px;
+  }
+  .prod .cat{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--blue);letter-spacing:.14em;text-transform:uppercase}
+  .prod h3{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
+  .prod .desc{color:var(--muted);font-size:.9rem;flex-grow:1}
+  .prod ul{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:.86rem}
+  .prod ul li{display:flex;gap:10px;align-items:flex-start;color:#B9C3D2}
+  .prod ul li::before{
+    content:"";width:14px;height:14px;flex-shrink:0;margin-top:3px;border-radius:4px;
+    background:var(--blue-dim) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFA500" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>') center/9px no-repeat;
+  }
+  .price-row{display:flex;align-items:baseline;justify-content:space-between;padding-top:16px;border-top:1px solid var(--line)}
+  .price{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.9rem;letter-spacing:-.02em}
+  .price small{font-size:.72rem;color:var(--muted);font-weight:400;font-family:'Inter',sans-serif;margin-left:4px}
+
+  /* ---------- FAQ ---------- */
+  .faq-wrap{max-width:720px;margin:0 auto}
+  details{
+    border:1px solid var(--line);border-radius:12px;background:var(--panel);
+    margin-bottom:10px;overflow:hidden;
+  }
+  summary{
+    cursor:pointer;padding:18px 22px;font-weight:500;font-size:.94rem;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--orange);font-size:1.3rem;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 22px 18px;color:var(--muted);font-size:.9rem}
+
+  /* ---------- CTA ---------- */
+  .cta-box{
+    border:1px solid rgba(94,159,216,.3);border-radius:20px;
+    padding:64px 40px;text-align:center;position:relative;overflow:hidden;
+    background:
+      radial-gradient(600px 240px at 50% -20%, rgba(70,130,180,.2), transparent 70%),
+      var(--panel);
+  }
+  .cta-box h2{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(1.7rem,3.2vw,2.4rem);margin-bottom:14px;letter-spacing:-.02em;
+  }
+  .cta-box p{color:var(--muted);margin-bottom:30px;max-width:50ch;margin-inline:auto}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .disclaimer{margin-top:16px;font-size:.74rem;max-width:84ch;color:#5A6474}
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#" aria-label="MATE, inicio">
+        <span class="logo-stack">
+          <span class="logo-word">MATE</span>
+          <span class="logo-sub">ORDER FLOW TOOLS</span>
+        </span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Capacidades</a></li>
+        <li><a href="indicadores.html">Indicadores</a></li>
+        <li><a href="#productos">Precios</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <a class="btn btn-orange" href="#productos">Empezar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="pill"><span class="dot"></span>NINJATRADER 8</div>
+      <h1>Un nuevo estándar en la lectura del <span class="grad">order flow</span></h1>
+      <p>Un pack de 20 indicadores profesionales de order flow para NinjaTrader 8 — Liquidity Heatmap, Footprint, Big Trades, TPO, Perfil de Volumen, Delta, VWAP y MGI. Cada herramienta, diseñada y testeada por ingenieros y traders.</p>
+      <div class="hero-cta">
+        <a class="btn btn-orange" href="#productos">Ver planes</a>
+        <a class="btn btn-ghost" href="https://buy.stripe.com/28E3cuczP9uH1ooabPfQI02">Demo gratuita · 7 días</a>
+      </div>
+      <p class="hero-note">Compatible con cualquier broker y feed de datos</p>
+    </div>
+
+    <div class="station" aria-hidden="true">
+      <div class="monitor">
+        <div class="screen">
+          <div class="scr-bar">
+            <div class="win-dots"><span></span><span></span><span></span></div>
+            <div class="mode-dots" id="mode-dots"><span class="on"></span><span></span><span></span><span></span></div>
+            <span class="rec"><i></i>LIVE</span>
+          </div>
+          <div class="scr-body">
+            <div class="mode" id="m-dom"><div class="dom-grid" id="dom"></div></div>
+            <div class="mode" id="m-tpo"><div class="tpo" id="tpo"></div></div>
+            <div class="mode active" id="m-fp"><div class="fp" id="fp"></div><div class="vp" id="vp"></div></div>
+            <div class="mode" id="m-vol"><div class="volp" id="volp"></div></div>
+          </div>
+          <div class="scr-foot" id="legend">
+            <span class="lg"><i class="sq b"></i>BID</span>
+            <span class="lg"><i class="sq a"></i>ASK</span>
+            <span class="lg" style="margin-left:auto"><i class="sq i"></i>IMBALANCE</span>
+          </div>
+        </div>
+      </div>
+      <div class="stand"></div>
+      <div class="base"></div>
+      <div class="reflect"></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>Calidad sin concesiones</b><span>herramientas de primer nivel a un precio justo</span></div>
+    <div class="stat"><b>+4,700 horas</b><span>de testeo en mercado real antes de cada versión</span></div>
+    <div class="stat"><b>Mejora continua</b><span>actualizaciones constantes guiadas por nuestros usuarios</span></div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="kicker">Capacidades</span>
+      <h2>Todo lo que el precio no te cuenta</h2>
+      <p>El gráfico muestra qué pasó. MATE muestra quién lo hizo, con cuánto tamaño y dónde volverá a hacerlo.</p>
+    </div>
+    <div class="bento">
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M8 4v16M14 4v16"/></svg></div>
+        <h3>Liquidity Heatmap</h3>
+        <p>El libro de órdenes pintado sobre el gráfico: ve dónde se acumula y desaparece la liquidez antes de que el precio llegue.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" stroke-dasharray="3 4"/></svg></div>
+        <h3>Big Trades</h3>
+        <p>Cada ejecución de gran tamaño, detectada y marcada en tiempo real. Sigue a los participantes que mueven el mercado.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4v16M9 4v16M14 4v16M19 4v16" opacity=".35"/><path d="M4 8h5M9 12h5M14 10h5M4 15h5M14 16h5"/></svg></div>
+        <h3>Footprint</h3>
+        <p>Bid × ask dentro de cada vela, con imbalances y absorción resaltados automáticamente. La radiografía de cada movimiento.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 10h16M4 14h12M4 18h7"/></svg></div>
+        <h3>TPO &amp; Volume Profile</h3>
+        <p>Perfiles de tiempo y de volumen por sesión, compuestos y por rango: POC, áreas de valor y niveles naked siempre a la vista.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></div>
+        <h3>Delta &amp; CVD</h3>
+        <p>La presión neta compradora y vendedora, por vela y acumulada, con divergencias que anticipan los giros.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12c3-6 6-6 9 0s6 6 9 0"/></svg></div>
+        <h3>VWAP Suite</h3>
+        <p>VWAPs de sesión, semanales y anclados con sus bandas: los precios de referencia que vigilan los profesionales.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="compromiso" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="kicker">Nuestra promesa</span>
+      <h2>Herramientas de élite, sin precios de élite</h2>
+      <p>Nuestro compromiso es simple: entregarte soluciones del más alto nivel a un precio justo, sin ceder un solo milímetro en calidad.</p>
+    </div>
+    <div class="bento" style="grid-template-columns:repeat(2,1fr)">
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" opacity=".3"/><circle cx="12" cy="12" r="8"/></svg></div>
+        <h3>Instrumentos, no cajas negras</h3>
+        <p>No vendemos sistemas automáticos ni fórmulas mágicas. Construimos instrumentos versátiles que se integran en <em>tu</em> estrategia — del scalping al swing, del índice al crudo. Tu ventaja la construyes tú; nosotros ponemos la mejor óptica del mercado.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-9M22 20H2"/></svg></div>
+        <h3>Conceptos probados, no modas</h3>
+        <p>Cada herramienta se apoya en principios con décadas de validez: el order flow y la información generada por el mercado. Nada de indicadores milagro — lectura profesional de lo que el mercado realmente hace.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg></div>
+        <h3>En evolución permanente</h3>
+        <p>Escuchamos a quienes operan con MATE cada día. Sus ideas se convierten en nuevas funciones, y cada actualización mejora velocidad, precisión y usabilidad — incluida en tu plan, siempre.</p>
+      </div>
+      <div class="bcell">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13z"/><path d="M9 8h7M9 11h5"/></svg></div>
+        <h3>Documentado de principio a fin</h3>
+        <p>Cada indicador incluye su manual completo: qué mide, cómo configurarlo y cómo leerlo. Dominarás tus herramientas al cien por cien desde el primer día.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="productos">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="kicker">Precios</span>
+      <h2>El paquete completo. Un precio simple.</h2>
+      <p>Los 20 indicadores del pack incluidos en todos los planes, con actualizaciones y soporte en español.</p>
+    </div>
+    <div class="prod-grid">
+      <div class="prod">
+        <span class="cat">Para empezar</span>
+        <h3>1 mes</h3>
+        <p class="desc">Todas las herramientas, sin compromiso. Cancela cuando quieras.</p>
+        <ul>
+          <li>Los 20 indicadores incluidos</li>
+          <li>Actualizaciones incluidas</li>
+          <li>Soporte en español e inglés</li>
+        </ul>
+        <div class="price-row">
+          <div class="price">$29<small>/mes</small></div>
+          <a class="btn btn-ghost" href="https://buy.stripe.com/28E3cuczP9uH1ooabPfQI02">Empezar</a>
+        </div>
+      </div>
+      <div class="prod">
+        <span class="cat">Ahorra un 9%</span>
+        <h3>3 meses</h3>
+        <p class="desc">Un trimestre completo a $26.33/mes efectivos. Ideal para consolidar tu operativa.</p>
+        <ul>
+          <li>Los 20 indicadores incluidos</li>
+          <li>$8 de ahorro por trimestre</li>
+          <li>Actualizaciones incluidas</li>
+        </ul>
+        <div class="price-row">
+          <div class="price">$79<small>/3 meses</small></div>
+          <a class="btn btn-ghost" href="https://buy.stripe.com/8x2dR86brayL4AAes5fQI01">Elegir trimestral</a>
+        </div>
+      </div>
+      <div class="prod hot">
+        <span class="flag">MEJOR PRECIO · $20.75/MES</span>
+        <span class="cat">El favorito</span>
+        <h3>1 año</h3>
+        <p class="desc">El mejor precio por mes: pagas 12 meses al precio de 8.6. Soporte prioritario incluido.</p>
+        <ul>
+          <li>Los 20 indicadores incluidos</li>
+          <li>Ahorras $99 al año vs mensual</li>
+          <li>Soporte prioritario</li>
+        </ul>
+        <div class="price-row">
+          <div class="price">$249<small>/año</small></div>
+          <a class="btn btn-orange" href="https://buy.stripe.com/eVqdR88jz22f3ww0BffQI00">Elegir anual</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="kicker">FAQ</span>
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-wrap">
+      <details>
+        <summary>¿Cómo recibo las herramientas después de comprar?</summary>
+        <p>Recibes un correo con el enlace de descarga y tu clave de licencia inmediatamente después del pago. La instalación es un import estándar de NinjaTrader 8: menos de 5 minutos.</p>
+      </details>
+      <details>
+        <summary>¿Funciona con mi cuenta de fondeo o broker?</summary>
+        <p>Sí. Las herramientas MATE funcionan en cualquier instalación de NinjaTrader 8, con cualquier broker o proveedor de datos.</p>
+      </details>
+      <details>
+        <summary>¿En cuántos ordenadores puedo usar mi licencia?</summary>
+        <p>Cada licencia es personal y puede activarse en hasta dos máquinas.</p>
+      </details>
+      <details>
+        <summary>¿Ofrecen versión de prueba?</summary>
+        <p>Sí. Solicita la demo gratuita de 7 días desde la sección de contacto: acceso completo al pack, sin tarjeta. Así compras sabiendo exactamente lo que llevas.</p>
+      </details>
+      <details>
+        <summary>¿Qué incluye cada plan?</summary>
+        <p>Todos los planes incluyen el pack completo de 20 indicadores de order flow, con actualizaciones y soporte. La única diferencia es la duración: 1 mes, 3 meses o 1 año — cuanto más largo, mejor precio mensual.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Empieza a ver el flujo</h2>
+      <p>Escríbenos para comprar, pedir tu demo gratuita de 7 días o resolver cualquier duda. Respondemos en menos de 24 horas.</p>
+      <a class="btn btn-orange" href="mailto:support@matetrading.com">support@matetrading.com</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <span>© 2026 MATE · matetrading.com</span>
+      <span>NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.</span>
+    </div>
+    <p class="disclaimer">Aviso de riesgo: operar futuros y otros instrumentos apalancados conlleva un alto riesgo de pérdida y no es adecuado para todos los inversores. El rendimiento pasado no garantiza resultados futuros. Las herramientas MATE son ayudas de análisis y no constituyen asesoramiento financiero.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function rnd(a,b){ return Math.floor(a + Math.random()*(b-a)); }
+  const NROW = 9;
+
+  /* ============ MODO 1: DOM (bid/ask ladder) ============ */
+  const domEl = document.getElementById('dom');
+  function renderDOM(){
+    let html='';
+    for(let i=0;i<12;i++){
+      const isSpread = i===6;
+      const bid = i>=6 ? rnd(20,420) : 0;
+      const ask = i<=6 ? rnd(20,420) : 0;
+      html += '<div class="dl'+(isSpread?' spread':'')+'">'
+        +'<div class="side bid">'+(bid?'<span class="qbar" style="width:'+Math.min(96,bid/4.4)+'%"></span><span class="q">'+bid+'</span>':'')+'</div>'
+        +'<div class="mid"><i></i></div>'
+        +'<div class="side ask">'+(ask?'<span class="qbar" style="width:'+Math.min(96,ask/4.4)+'%"></span><span class="q">'+ask+'</span>':'')+'</div>'
+        +'</div>';
+    }
+    domEl.innerHTML = html;
+  }
+
+  /* ============ MODO 2: TPO ============ */
+  const tpoEl = document.getElementById('tpo');
+  const LETTERS = 'ABCDEFGHIJKLMNP';
+  let tpoRows, tpoPeriod;
+  function tpoInit(){
+    tpoRows = Array.from({length:11},()=>[]);
+    tpoPeriod = 0;
+    const start = rnd(3,8);
+    tpoRows[start].push(0);
+  }
+  function tpoStep(){
+    tpoPeriod = Math.min(LETTERS.length-1, tpoPeriod + (Math.random()<.4?1:0));
+    // el periodo actual imprime en 1-3 filas cercanas al "centro de gravedad"
+    const weights = tpoRows.map(r=>r.length+0.3);
+    let center = 0, best = -1;
+    weights.forEach((w,i)=>{ if(w>best){best=w;center=i;} });
+    const n = rnd(1,4);
+    for(let k=0;k<n;k++){
+      let r = center + rnd(-2,3);
+      r = Math.max(0, Math.min(10, r));
+      if(!tpoRows[r].includes(tpoPeriod) || Math.random()<.3){
+        tpoRows[r].push(tpoPeriod);
+      }
+    }
+    if(tpoRows.reduce((s,r)=>s+r.length,0) > 90) tpoInit();
+    renderTPO();
+  }
+  function renderTPO(){
+    const counts = tpoRows.map(r=>r.length);
+    const max = Math.max(...counts,1);
+    const pocRow = counts.indexOf(max);
+    let html='';
+    tpoRows.forEach((row,i)=>{
+      const isVA = counts[i] >= max*0.45 && i!==pocRow;
+      html += '<div class="tr'+(i===pocRow?' poc':'')+'">';
+      row.forEach((p,j)=>{
+        const last = (j===row.length-1);
+        html += '<span class="lt'+(isVA?' va':'')+(last?' new':'')+'">'+LETTERS[p]+'</span>';
+      });
+      html += '</div>';
+    });
+    tpoEl.innerHTML = html;
+  }
+
+  /* ============ MODO 3: FOOTPRINT ============ */
+  const fpEl = document.getElementById('fp');
+  const vpEl = document.getElementById('vp');
+  const NCOL = 6;
+  function genCol(){
+    const cells = [];
+    const peak = rnd(2, NROW-2);
+    for(let r=0;r<NROW;r++){
+      const dist = Math.abs(r-peak);
+      const mag = Math.max(1, 8-dist*2.4);
+      let bid = rnd(8*mag, 46*mag);
+      let ask = rnd(8*mag, 46*mag);
+      let cls = '';
+      const ratio = bid/Math.max(1,ask);
+      if(ratio > 2.6) cls = 'bi';
+      else if(ratio < 0.38) cls = 'ai';
+      cells.push({bid, ask, cls, poc:r===peak});
+    }
+    return cells;
+  }
+  let cols = [];
+  for(let i=0;i<NCOL;i++) cols.push(genCol());
+  function renderFP(){
+    let html = '';
+    cols.forEach(col=>{
+      html += '<div class="col">';
+      col.forEach(c=>{
+        html += '<div class="cell '+c.cls+(c.poc?' poc':'')+'">'
+             + '<b class="bq">'+c.bid+'</b><span>×</span><b class="aq">'+c.ask+'</b></div>';
+      });
+      html += '</div>';
+    });
+    fpEl.innerHTML = html;
+    let vhtml = '';
+    const totals = Array.from({length:NROW},(_,i)=>cols.reduce((s,col)=>s+col[i].bid+col[i].ask,0));
+    const max = Math.max(...totals);
+    for(let r=0;r<NROW;r++){
+      const w = Math.max(10, (totals[r]/max)*80);
+      const isP = totals[r]===max;
+      vhtml += '<div class="row'+(isP?' p':'')+'"><span class="bar" style="width:'+w+'px"></span></div>';
+    }
+    vpEl.innerHTML = vhtml;
+  }
+  function fpTick(){
+    const last = cols[cols.length-1];
+    const r = rnd(0,NROW);
+    last[r].bid += rnd(1,14);
+    last[r].ask += rnd(1,14);
+    const ratio = last[r].bid/Math.max(1,last[r].ask);
+    last[r].cls = ratio>2.6 ? 'bi' : (ratio<0.38 ? 'ai' : last[r].cls);
+    renderFP();
+  }
+
+  /* ============ MODO 4: VOLUME PROFILE ============ */
+  const volpEl = document.getElementById('volp');
+  let volRows;
+  function volInit(){
+    const peak = rnd(3,8);
+    volRows = Array.from({length:11},(_,i)=>{
+      const dist = Math.abs(i-peak);
+      return Math.max(6, 100 - dist*rnd(14,24) + rnd(-8,8));
+    });
+  }
+  function renderVOL(){
+    const max = Math.max(...volRows);
+    const pocRow = volRows.indexOf(max);
+    let html='';
+    volRows.forEach((v,i)=>{
+      const isVA = v >= max*0.55 && i!==pocRow;
+      html += '<div class="vr'+(i===pocRow?' poc':(isVA?' va':''))+'"><span class="vbar" style="width:'+Math.max(4,(v/max)*92)+'%"></span></div>';
+    });
+    volpEl.innerHTML = html;
+  }
+  function volTick(){
+    const i = rnd(0,11);
+    volRows[i] = Math.min(110, volRows[i] + rnd(1,7));
+    renderVOL();
+  }
+
+  /* ============ ROTACION ============ */
+  const modes = ['m-dom','m-tpo','m-fp','m-vol'];
+  const legends = [
+    '<span class="lg"><i class="sq b"></i>BID</span><span class="lg"><i class="sq a"></i>ASK</span><span class="lg" style="margin-left:auto"><i class="sq i"></i>SPREAD</span>',
+    '<span class="lg"><i class="sq b"></i>VALUE AREA</span><span class="lg" style="margin-left:auto"><i class="sq a"></i>POC</span>',
+    '<span class="lg"><i class="sq b"></i>BID</span><span class="lg"><i class="sq a"></i>ASK</span><span class="lg" style="margin-left:auto"><i class="sq i"></i>IMBALANCE</span>',
+    '<span class="lg"><i class="sq b"></i>VOLUMEN</span><span class="lg" style="margin-left:auto"><i class="sq a"></i>POC</span>'
+  ];
+  const legendEl = document.getElementById('legend');
+  const dots = document.querySelectorAll('#mode-dots span');
+  let mi = 2; // arranca en footprint
+
+  function show(i){
+    modes.forEach((id,k)=>{
+      document.getElementById(id).classList.toggle('active', k===i);
+      dots[k].classList.toggle('on', k===i);
+    });
+    legendEl.innerHTML = legends[i];
+  }
+
+  // arranque
+  renderDOM(); tpoInit(); renderTPO(); renderFP(); volInit(); renderVOL();
+  show(mi);
+
+  if(!reduced){
+    // vida interna de cada modo
+    setInterval(renderDOM, 1500);
+    setInterval(tpoStep, 900);
+    setInterval(fpTick, 2200);
+    setInterval(volTick, 1100);
+    // rotacion de modos
+    setInterval(()=>{ mi = (mi+1)%modes.length; show(mi); }, 6500);
+  }
+})();
+</script>
+</body>
+</html>
