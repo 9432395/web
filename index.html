@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATE — Order Flow Tools para NinjaTrader 8</title>
-<meta name="description" content="MATE: pack de 20 indicadores profesionales de order flow para NinjaTrader 8. Liquidity Heatmap, Footprint, Big Trades, TPO, Perfil de Volumen, Delta, VWAP y MGI.">
+<title>MATE — Order Flow Tools for NinjaTrader 8</title>
+<meta name="description" content="MATE: a suite of 20 professional order flow indicators for NinjaTrader 8. Liquidity Heatmap, Footprint, Big Trades, TPO, Volume Profile, Delta, VWAP and MGI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -56,6 +56,11 @@
     filter:blur(10px);
   }
 
+  /* ---------- scroll reveal ---------- */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none}}
+
   /* ---------- NAV ---------- */
   header{
     position:sticky;top:0;z-index:50;
@@ -63,7 +68,7 @@
     backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px}
   .logo{display:flex;align-items:center;text-decoration:none}
   .logo-stack{display:flex;flex-direction:column;line-height:1}
   .logo-word{
@@ -78,6 +83,16 @@
   .nav-links{display:flex;gap:28px;list-style:none}
   .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
   .nav-links a:hover{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{
+    display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  }
+  .lang-sw button{
+    background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;
+    font-family:inherit;font-size:inherit;letter-spacing:.06em;transition:color .2s, background .2s;
+  }
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
   .btn{
     display:inline-flex;align-items:center;gap:8px;
     padding:11px 22px;border-radius:10px;
@@ -89,7 +104,35 @@
   .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
   .btn-ghost{border:1px solid var(--line-2);color:var(--text);background:rgba(255,255,255,.02)}
   .btn-ghost:hover{border-color:var(--blue);background:var(--blue-dim)}
-  @media(max-width:720px){.nav-links{display:none}}
+  .burger{
+    display:none;background:none;border:1px solid var(--line-2);border-radius:9px;
+    width:38px;height:38px;cursor:pointer;position:relative;flex:none;
+  }
+  .burger span{
+    position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);
+    transition:transform .25s, opacity .25s, top .25s;
+  }
+  .burger span:nth-child(1){top:12px}
+  .burger span:nth-child(2){top:18px}
+  .burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{
+    display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;
+    border-bottom:1px solid var(--line);background:rgba(5,7,11,.97);
+  }
+  .m-menu a{
+    text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;
+    padding:11px 4px;border-bottom:1px solid var(--line);
+  }
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){
+    .nav-links{display:none}
+    .burger{display:block}
+    .nav-cta{display:none}
+  }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -118,7 +161,7 @@
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
   .hero-note{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.05em}
 
-  /* ---------- MONITOR con footprint ---------- */
+  /* ---------- MONITOR ---------- */
   .station{position:relative;display:flex;flex-direction:column;align-items:center}
   .monitor{
     width:100%;
@@ -144,8 +187,7 @@
   .win-dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.1)}
   .rec{display:flex;align-items:center;gap:6px;color:var(--muted);letter-spacing:.14em}
   .rec i{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
-  
-  /* footprint */
+
   .fp{padding:12px 8px 12px 12px;display:flex;gap:7px;align-items:stretch;overflow:hidden}
   .col{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
   .col .cell{flex:1;align-items:center}
@@ -161,21 +203,18 @@
   .cell b{font-weight:500}
   .cell .bq{color:var(--blue)}
   .cell .aq{color:var(--orange)}
-  .cell.bi{background:rgba(70,130,180,.28)}      /* imbalance comprador */
-  .cell.ai{background:rgba(255,165,0,.24)}       /* imbalance vendedor */
+  .cell.bi{background:rgba(70,130,180,.28)}
+  .cell.ai{background:rgba(255,165,0,.24)}
   .cell.poc{outline:1px solid rgba(255,165,0,.75)}
-  /* perfil de volumen lateral */
   .vp{
     border-left:1px solid var(--line);
     display:flex;flex-direction:column;justify-content:space-between;
     padding:12px 10px;
   }
-  .vp .row{flex:1;display:flex;align-items:center}
-  .vp .row{display:flex;align-items:center;gap:5px}
+  .vp .row{flex:1;display:flex;align-items:center;gap:5px}
   .vp .bar{height:7px;border-radius:2px;background:linear-gradient(90deg, rgba(70,130,180,.85), rgba(70,130,180,.35))}
   .vp .row.p .bar{background:linear-gradient(90deg, var(--orange), rgba(255,165,0,.4))}
-  
-  /* delta strip */
+
   .scr-foot{
     border-top:1px solid var(--line);
     display:flex;gap:16px;padding:8px 14px;
@@ -204,8 +243,6 @@
     filter:blur(6px);
   }
 
-
-  /* --- rotacion de modos --- */
   .scr-body{position:relative;height:340px}
   .mode{
     position:absolute;inset:0;opacity:0;pointer-events:none;
@@ -218,7 +255,6 @@
   .mode-dots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .4s}
   .mode-dots span.on{background:var(--blue)}
 
-  /* --- DOM --- */
   .dom-grid{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:14px 18px}
   .dl{display:grid;grid-template-columns:1fr 14px 1fr;align-items:center;gap:8px;height:22px}
   .dl .side{position:relative;height:100%;display:flex;align-items:center}
@@ -233,7 +269,6 @@
   .dl .mid i{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.12)}
   .dl.spread .mid i{background:var(--orange);box-shadow:0 0 8px rgba(255,165,0,.6)}
 
-  /* --- TPO --- */
   .tpo{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:14px 22px}
   .tr{display:flex;gap:3px;align-items:center;height:20px}
   .tr .lt{
@@ -246,7 +281,6 @@
   .tr .lt.new{animation:ltIn .5s ease}
   @keyframes ltIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 
-  /* --- VOLUME PROFILE --- */
   .volp{display:flex;flex-direction:column;justify-content:center;gap:4px;padding:14px 26px}
   .vr{display:flex;align-items:center;height:20px}
   .vr .vbar{
@@ -256,6 +290,24 @@
   }
   .vr.va .vbar{background:linear-gradient(90deg, rgba(94,159,216,1), rgba(94,159,216,.35))}
   .vr.poc .vbar{background:linear-gradient(90deg, var(--orange), rgba(255,165,0,.35))}
+
+  /* ---------- MARQUEE (20 indicators) ---------- */
+  .marquee{
+    margin-top:30px;border-block:1px solid var(--line);
+    overflow:hidden;position:relative;padding:16px 0;
+    mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .mq-track{
+    display:flex;gap:34px;width:max-content;
+    animation:mq 46s linear infinite;
+  }
+  .marquee:hover .mq-track{animation-play-state:paused}
+  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .mq-item{
+    font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.12em;
+    color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:34px;
+  }
+  .mq-item::after{content:"·";color:var(--orange)}
 
   /* ---------- STATS ---------- */
   .stats{
@@ -304,6 +356,19 @@
   .bcell .ic svg{width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .bcell h3{font-family:'Space Grotesk',sans-serif;font-size:1.02rem;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
   .bcell p{color:var(--muted);font-size:.88rem}
+
+  /* ---------- DEMO BANNER ---------- */
+  .demo-band{
+    display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+    border:1px solid rgba(255,165,0,.35);border-radius:var(--radius);
+    background:
+      radial-gradient(420px 160px at 12% 0%, rgba(255,165,0,.10), transparent 70%),
+      var(--panel);
+    padding:30px 34px;margin-top:44px;
+  }
+  .demo-band h3{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+  .demo-band p{color:var(--muted);font-size:.92rem;max-width:52ch}
+  .demo-band .btn{flex:none}
 
   /* ---------- PRICING ---------- */
   .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -362,6 +427,7 @@
     font-size:clamp(1.7rem,3.2vw,2.4rem);margin-bottom:14px;letter-spacing:-.02em;
   }
   .cta-box p{color:var(--muted);margin-bottom:30px;max-width:50ch;margin-inline:auto}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
   footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem}
   .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -375,21 +441,35 @@
 <header>
   <div class="wrap">
     <nav>
-      <a class="logo" href="#" aria-label="MATE, inicio">
+      <a class="logo" href="#" aria-label="MATE, home">
         <span class="logo-stack">
           <span class="logo-word">MATE</span>
           <span class="logo-sub">ORDER FLOW TOOLS</span>
         </span>
       </a>
       <ul class="nav-links">
-        <li><a href="#features">Capacidades</a></li>
-        <li><a href="indicadores.html">Indicadores</a></li>
-        <li><a href="#productos">Precios</a></li>
+        <li><a href="#features" data-en="Features" data-es="Capacidades">Features</a></li>
+        <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+        <li><a href="#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
       </ul>
-      <a class="btn btn-orange" href="#productos">Empezar</a>
+      <div class="nav-right">
+        <div class="lang-sw" role="group" aria-label="Language">
+          <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+          <button id="langES" onclick="setLang('es')">ES</button>
+        </div>
+        <a class="btn btn-orange nav-cta" href="#productos" data-en="Get started" data-es="Empezar">Get started</a>
+        <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      </div>
     </nav>
+  </div>
+  <div class="m-menu" id="mmenu">
+    <a href="#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contacto" data-en="Contact" data-es="Contacto">Contact</a>
   </div>
 </header>
 
@@ -398,13 +478,16 @@
   <div class="hero">
     <div>
       <div class="pill"><span class="dot"></span>NINJATRADER 8</div>
-      <h1>Un nuevo estándar en la lectura del <span class="grad">order flow</span></h1>
-      <p>Un pack de 20 indicadores profesionales de order flow para NinjaTrader 8 — Liquidity Heatmap, Footprint, Big Trades, TPO, Perfil de Volumen, Delta, VWAP y MGI. Cada herramienta, diseñada y testeada por ingenieros y traders.</p>
+      <h1 data-en='A new standard in <span class="grad">order flow</span> reading'
+          data-es='Un nuevo estándar en la lectura del <span class="grad">order flow</span>'>A new standard in <span class="grad">order flow</span> reading</h1>
+      <p data-en="A suite of 20 professional order flow indicators for NinjaTrader 8 — Liquidity Heatmap, Footprint, Big Trades, TPO, Volume Profile, Delta, VWAP and MGI. Every tool engineered and tested by engineers and traders."
+         data-es="Un pack de 20 indicadores profesionales de order flow para NinjaTrader 8 — Liquidity Heatmap, Footprint, Big Trades, TPO, Perfil de Volumen, Delta, VWAP y MGI. Cada herramienta, diseñada y testeada por ingenieros y traders.">A suite of 20 professional order flow indicators for NinjaTrader 8 — Liquidity Heatmap, Footprint, Big Trades, TPO, Volume Profile, Delta, VWAP and MGI. Every tool engineered and tested by engineers and traders.</p>
       <div class="hero-cta">
-        <a class="btn btn-orange" href="#productos">Ver planes</a>
-        <a class="btn btn-ghost" href="https://buy.stripe.com/7sY28qeHXfT5aYY5VzfQI03">Demo gratuita · 7 días</a>
+        <a class="btn btn-orange" href="#productos" data-en="See plans" data-es="Ver planes">See plans</a>
+        <a class="btn btn-ghost" href="https://buy.stripe.com/7sY28qeHXfT5aYY5VzfQI03" data-en="Free trial · 7 days" data-es="Demo gratuita · 7 días">Free trial · 7 days</a>
       </div>
-      <p class="hero-note">Compatible con cualquier broker y feed de datos</p>
+      <p class="hero-note" data-en="No credit card required for the trial · Works with any broker and data feed"
+         data-es="La demo no requiere tarjeta · Compatible con cualquier broker y feed de datos">No credit card required for the trial · Works with any broker and data feed</p>
     </div>
 
     <div class="station" aria-hidden="true">
@@ -433,83 +516,110 @@
       <div class="reflect"></div>
     </div>
   </div>
+</div>
 
-  <div class="stats">
-    <div class="stat"><b>Calidad sin concesiones</b><span>herramientas de primer nivel a un precio justo</span></div>
-    <div class="stat"><b>+4,700 horas</b><span>de testeo en mercado real antes de cada versión</span></div>
-    <div class="stat"><b>Mejora continua</b><span>actualizaciones constantes guiadas por nuestros usuarios</span></div>
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track" id="mq"></div>
+</div>
+
+<div class="wrap">
+  <div class="stats rv">
+    <div class="stat"><b data-en="Uncompromising quality" data-es="Calidad sin concesiones">Uncompromising quality</b><span data-en="top-tier tools at a fair price" data-es="herramientas de primer nivel a un precio justo">top-tier tools at a fair price</span></div>
+    <div class="stat"><b data-en="+4,700 hours" data-es="+4,700 horas">+4,700 hours</b><span data-en="of live-market testing behind every release" data-es="de testeo en mercado real antes de cada versión">of live-market testing behind every release</span></div>
+    <div class="stat"><b data-en="Always improving" data-es="Mejora continua">Always improving</b><span data-en="constant updates driven by our users" data-es="actualizaciones constantes guiadas por nuestros usuarios">constant updates driven by our users</span></div>
   </div>
 </div>
 
 <section id="features">
   <div class="wrap">
-    <div class="sec-head center">
-      <span class="kicker">Capacidades</span>
-      <h2>Todo lo que el precio no te cuenta</h2>
-      <p>El gráfico muestra qué pasó. MATE muestra quién lo hizo, con cuánto tamaño y dónde volverá a hacerlo.</p>
+    <div class="sec-head center rv">
+      <span class="kicker" data-en="Features" data-es="Capacidades">Features</span>
+      <h2 data-en="Everything price alone won't tell you" data-es="Todo lo que el precio no te cuenta">Everything price alone won't tell you</h2>
+      <p data-en="The chart shows what happened. MATE shows who did it, with how much size, and where they'll do it again."
+         data-es="El gráfico muestra qué pasó. MATE muestra quién lo hizo, con cuánto tamaño y dónde volverá a hacerlo.">The chart shows what happened. MATE shows who did it, with how much size, and where they'll do it again.</p>
     </div>
     <div class="bento">
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M8 4v16M14 4v16"/></svg></div>
         <h3>Liquidity Heatmap</h3>
-        <p>El libro de órdenes pintado sobre el gráfico: ve dónde se acumula y desaparece la liquidez antes de que el precio llegue.</p>
+        <p data-en="The order book painted over your chart: watch liquidity build and vanish before price even gets there."
+           data-es="El libro de órdenes pintado sobre el gráfico: ve dónde se acumula y desaparece la liquidez antes de que el precio llegue.">The order book painted over your chart: watch liquidity build and vanish before price even gets there.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" stroke-dasharray="3 4"/></svg></div>
         <h3>Big Trades</h3>
-        <p>Cada ejecución de gran tamaño, detectada y marcada en tiempo real. Sigue a los participantes que mueven el mercado.</p>
+        <p data-en="Every large execution, detected and marked in real time. Follow the participants who actually move the market."
+           data-es="Cada ejecución de gran tamaño, detectada y marcada en tiempo real. Sigue a los participantes que mueven el mercado.">Every large execution, detected and marked in real time. Follow the participants who actually move the market.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4v16M9 4v16M14 4v16M19 4v16" opacity=".35"/><path d="M4 8h5M9 12h5M14 10h5M4 15h5M14 16h5"/></svg></div>
         <h3>Footprint</h3>
-        <p>Bid × ask dentro de cada vela, con imbalances y absorción resaltados automáticamente. La radiografía de cada movimiento.</p>
+        <p data-en="Bid × ask inside every candle, with imbalances and absorption highlighted automatically. An X-ray of every move."
+           data-es="Bid × ask dentro de cada vela, con imbalances y absorción resaltados automáticamente. La radiografía de cada movimiento.">Bid × ask inside every candle, with imbalances and absorption highlighted automatically. An X-ray of every move.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 10h16M4 14h12M4 18h7"/></svg></div>
         <h3>TPO &amp; Volume Profile</h3>
-        <p>Perfiles de tiempo y de volumen por sesión, compuestos y por rango: POC, áreas de valor y niveles naked siempre a la vista.</p>
+        <p data-en="Time and volume profiles per session, composite and by range: POC, value areas and naked levels always in sight."
+           data-es="Perfiles de tiempo y de volumen por sesión, compuestos y por rango: POC, áreas de valor y niveles naked siempre a la vista.">Time and volume profiles per session, composite and by range: POC, value areas and naked levels always in sight.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></div>
         <h3>Delta &amp; CVD</h3>
-        <p>La presión neta compradora y vendedora, por vela y acumulada, con divergencias que anticipan los giros.</p>
+        <p data-en="Net buying and selling pressure, per candle and cumulative, with divergences that anticipate the turns."
+           data-es="La presión neta compradora y vendedora, por vela y acumulada, con divergencias que anticipan los giros.">Net buying and selling pressure, per candle and cumulative, with divergences that anticipate the turns.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12c3-6 6-6 9 0s6 6 9 0"/></svg></div>
         <h3>VWAP Suite</h3>
-        <p>VWAPs de sesión, semanales y anclados con sus bandas: los precios de referencia que vigilan los profesionales.</p>
+        <p data-en="Session, weekly and anchored VWAPs with their bands: the reference prices professionals watch."
+           data-es="VWAPs de sesión, semanales y anclados con sus bandas: los precios de referencia que vigilan los profesionales.">Session, weekly and anchored VWAPs with their bands: the reference prices professionals watch.</p>
       </div>
+    </div>
+
+    <div class="demo-band rv">
+      <div>
+        <h3 data-en="Try the full suite free for 7 days" data-es="Prueba el pack completo gratis 7 días">Try the full suite free for 7 days</h3>
+        <p data-en="All 20 indicators, full features, no credit card. See the flow on your own charts before you decide."
+           data-es="Los 20 indicadores, todas las funciones, sin tarjeta. Ve el flujo en tus propios charts antes de decidir.">All 20 indicators, full features, no credit card. See the flow on your own charts before you decide.</p>
+      </div>
+      <a class="btn btn-orange" href="https://buy.stripe.com/7sY28qeHXfT5aYY5VzfQI03" data-en="Start free trial" data-es="Empezar demo gratis">Start free trial</a>
     </div>
   </div>
 </section>
 
 <section id="compromiso" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head center">
-      <span class="kicker">Nuestra promesa</span>
-      <h2>Herramientas de élite, sin precios de élite</h2>
-      <p>Nuestro compromiso es simple: entregarte soluciones del más alto nivel a un precio justo, sin ceder un solo milímetro en calidad.</p>
+    <div class="sec-head center rv">
+      <span class="kicker" data-en="Our promise" data-es="Nuestra promesa">Our promise</span>
+      <h2 data-en="Elite tools, without elite prices" data-es="Herramientas de élite, sin precios de élite">Elite tools, without elite prices</h2>
+      <p data-en="Our commitment is simple: deliver top-level tools at a fair price, without giving up a single inch of quality."
+         data-es="Nuestro compromiso es simple: entregarte soluciones del más alto nivel a un precio justo, sin ceder un solo milímetro en calidad.">Our commitment is simple: deliver top-level tools at a fair price, without giving up a single inch of quality.</p>
     </div>
     <div class="bento" style="grid-template-columns:repeat(2,1fr)">
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" opacity=".3"/><circle cx="12" cy="12" r="8"/></svg></div>
-        <h3>Instrumentos, no cajas negras</h3>
-        <p>No vendemos sistemas automáticos ni fórmulas mágicas. Construimos instrumentos versátiles que se integran en <em>tu</em> estrategia — del scalping al swing, del índice al crudo. Tu ventaja la construyes tú; nosotros ponemos la mejor óptica del mercado.</p>
+        <h3 data-en="Instruments, not black boxes" data-es="Instrumentos, no cajas negras">Instruments, not black boxes</h3>
+        <p data-en="We don't sell automated systems or magic formulas. We build versatile instruments that fit into <em>your</em> strategy — from scalping to swing, from indices to crude. You build your edge; we provide the best optics on the market."
+           data-es="No vendemos sistemas automáticos ni fórmulas mágicas. Construimos instrumentos versátiles que se integran en <em>tu</em> estrategia — del scalping al swing, del índice al crudo. Tu ventaja la construyes tú; nosotros ponemos la mejor óptica del mercado.">We don't sell automated systems or magic formulas. We build versatile instruments that fit into <em>your</em> strategy — from scalping to swing, from indices to crude. You build your edge; we provide the best optics on the market.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-9M22 20H2"/></svg></div>
-        <h3>Conceptos probados, no modas</h3>
-        <p>Cada herramienta se apoya en principios con décadas de validez: el order flow y la información generada por el mercado. Nada de indicadores milagro — lectura profesional de lo que el mercado realmente hace.</p>
+        <h3 data-en="Proven concepts, not fads" data-es="Conceptos probados, no modas">Proven concepts, not fads</h3>
+        <p data-en="Every tool rests on principles with decades of validity: order flow and market-generated information. No miracle indicators — professional reading of what the market actually does."
+           data-es="Cada herramienta se apoya en principios con décadas de validez: el order flow y la información generada por el mercado. Nada de indicadores milagro — lectura profesional de lo que el mercado realmente hace.">Every tool rests on principles with decades of validity: order flow and market-generated information. No miracle indicators — professional reading of what the market actually does.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg></div>
-        <h3>En evolución permanente</h3>
-        <p>Escuchamos a quienes operan con MATE cada día. Sus ideas se convierten en nuevas funciones, y cada actualización mejora velocidad, precisión y usabilidad — incluida en tu plan, siempre.</p>
+        <h3 data-en="Permanently evolving" data-es="En evolución permanente">Permanently evolving</h3>
+        <p data-en="We listen to the traders who use MATE every day. Their ideas become new features, and every update improves speed, precision and usability — always included in your plan."
+           data-es="Escuchamos a quienes operan con MATE cada día. Sus ideas se convierten en nuevas funciones, y cada actualización mejora velocidad, precisión y usabilidad — incluida en tu plan, siempre.">We listen to the traders who use MATE every day. Their ideas become new features, and every update improves speed, precision and usability — always included in your plan.</p>
       </div>
-      <div class="bcell">
+      <div class="bcell rv">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13z"/><path d="M9 8h7M9 11h5"/></svg></div>
-        <h3>Documentado de principio a fin</h3>
-        <p>Cada indicador incluye su manual completo: qué mide, cómo configurarlo y cómo leerlo. Dominarás tus herramientas al cien por cien desde el primer día.</p>
+        <h3 data-en="Documented end to end" data-es="Documentado de principio a fin">Documented end to end</h3>
+        <p data-en="Every indicator ships with its full manual: what it measures, how to configure it and how to read it. Master your tools completely from day one."
+           data-es="Cada indicador incluye su manual completo: qué mide, cómo configurarlo y cómo leerlo. Dominarás tus herramientas al cien por cien desde el primer día.">Every indicator ships with its full manual: what it measures, how to configure it and how to read it. Master your tools completely from day one.</p>
       </div>
     </div>
   </div>
@@ -517,53 +627,57 @@
 
 <section id="productos">
   <div class="wrap">
-    <div class="sec-head center">
-      <span class="kicker">Precios</span>
-      <h2>El paquete completo. Un precio simple.</h2>
-      <p>Los 20 indicadores del pack incluidos en todos los planes, con actualizaciones y soporte en español.</p>
+    <div class="sec-head center rv">
+      <span class="kicker" data-en="Pricing" data-es="Precios">Pricing</span>
+      <h2 data-en="The complete suite. One simple price." data-es="El paquete completo. Un precio simple.">The complete suite. One simple price.</h2>
+      <p data-en="All 20 indicators included in every plan, with updates and support in English and Spanish."
+         data-es="Los 20 indicadores del pack incluidos en todos los planes, con actualizaciones y soporte en español e inglés.">All 20 indicators included in every plan, with updates and support in English and Spanish.</p>
     </div>
     <div class="prod-grid">
-      <div class="prod">
-        <span class="cat">Para empezar</span>
-        <h3>1 mes</h3>
-        <p class="desc">Todas las herramientas, sin compromiso. Cancela cuando quieras.</p>
+      <div class="prod rv">
+        <span class="cat" data-en="To get started" data-es="Para empezar">To get started</span>
+        <h3 data-en="1 month" data-es="1 mes">1 month</h3>
+        <p class="desc" data-en="Every tool, no commitment. Cancel anytime."
+           data-es="Todas las herramientas, sin compromiso. Cancela cuando quieras.">Every tool, no commitment. Cancel anytime.</p>
         <ul>
-          <li>Los 20 indicadores incluidos</li>
-          <li>Actualizaciones incluidas</li>
-          <li>Soporte en español e inglés</li>
+          <li data-en="All 20 indicators included" data-es="Los 20 indicadores incluidos">All 20 indicators included</li>
+          <li data-en="Updates included" data-es="Actualizaciones incluidas">Updates included</li>
+          <li data-en="Support in English and Spanish" data-es="Soporte en español e inglés">Support in English and Spanish</li>
         </ul>
         <div class="price-row">
-          <div class="price">$29<small>/mes</small></div>
-          <a class="btn btn-ghost" href="https://buy.stripe.com/28E3cuczP9uH1ooabPfQI02">Empezar</a>
+          <div class="price">$29<small data-en="/month" data-es="/mes">/month</small></div>
+          <a class="btn btn-ghost" href="https://buy.stripe.com/28E3cuczP9uH1ooabPfQI02" data-en="Start" data-es="Empezar">Start</a>
         </div>
       </div>
-      <div class="prod">
-        <span class="cat">Ahorra un 9%</span>
-        <h3>3 meses</h3>
-        <p class="desc">Un trimestre completo a $26.33/mes efectivos. Ideal para consolidar tu operativa.</p>
+      <div class="prod rv">
+        <span class="cat" data-en="Save 9%" data-es="Ahorra un 9%">Save 9%</span>
+        <h3 data-en="3 months" data-es="3 meses">3 months</h3>
+        <p class="desc" data-en="A full quarter at an effective $26.33/month. Ideal to consolidate your trading."
+           data-es="Un trimestre completo a $26.33/mes efectivos. Ideal para consolidar tu operativa.">A full quarter at an effective $26.33/month. Ideal to consolidate your trading.</p>
         <ul>
-          <li>Los 20 indicadores incluidos</li>
-          <li>$8 de ahorro por trimestre</li>
-          <li>Actualizaciones incluidas</li>
+          <li data-en="All 20 indicators included" data-es="Los 20 indicadores incluidos">All 20 indicators included</li>
+          <li data-en="$8 saved per quarter" data-es="$8 de ahorro por trimestre">$8 saved per quarter</li>
+          <li data-en="Updates included" data-es="Actualizaciones incluidas">Updates included</li>
         </ul>
         <div class="price-row">
-          <div class="price">$79<small>/3 meses</small></div>
-          <a class="btn btn-ghost" href="https://buy.stripe.com/8x2dR86brayL4AAes5fQI01">Elegir trimestral</a>
+          <div class="price">$79<small data-en="/3 months" data-es="/3 meses">/3 months</small></div>
+          <a class="btn btn-ghost" href="https://buy.stripe.com/8x2dR86brayL4AAes5fQI01" data-en="Choose quarterly" data-es="Elegir trimestral">Choose quarterly</a>
         </div>
       </div>
-      <div class="prod hot">
-        <span class="flag">MEJOR PRECIO · $20.75/MES</span>
-        <span class="cat">El favorito</span>
-        <h3>1 año</h3>
-        <p class="desc">El mejor precio por mes: pagas 12 meses al precio de 8.6. Soporte prioritario incluido.</p>
+      <div class="prod hot rv">
+        <span class="flag" data-en="BEST PRICE · $20.75/MO" data-es="MEJOR PRECIO · $20.75/MES">BEST PRICE · $20.75/MO</span>
+        <span class="cat" data-en="The favorite" data-es="El favorito">The favorite</span>
+        <h3 data-en="1 year" data-es="1 año">1 year</h3>
+        <p class="desc" data-en="The best monthly price: 12 months for the price of 8.6. Priority support included."
+           data-es="El mejor precio por mes: pagas 12 meses al precio de 8.6. Soporte prioritario incluido.">The best monthly price: 12 months for the price of 8.6. Priority support included.</p>
         <ul>
-          <li>Los 20 indicadores incluidos</li>
-          <li>Ahorras $99 al año vs mensual</li>
-          <li>Soporte prioritario</li>
+          <li data-en="All 20 indicators included" data-es="Los 20 indicadores incluidos">All 20 indicators included</li>
+          <li data-en="Save $99/year vs monthly" data-es="Ahorras $99 al año vs mensual">Save $99/year vs monthly</li>
+          <li data-en="Priority support" data-es="Soporte prioritario">Priority support</li>
         </ul>
         <div class="price-row">
-          <div class="price">$249<small>/año</small></div>
-          <a class="btn btn-orange" href="https://buy.stripe.com/eVqdR88jz22f3ww0BffQI00">Elegir anual</a>
+          <div class="price">$249<small data-en="/year" data-es="/año">/year</small></div>
+          <a class="btn btn-orange" href="https://buy.stripe.com/eVqdR88jz22f3ww0BffQI00" data-en="Choose yearly" data-es="Elegir anual">Choose yearly</a>
         </div>
       </div>
     </div>
@@ -572,30 +686,35 @@
 
 <section id="faq">
   <div class="wrap">
-    <div class="sec-head center">
+    <div class="sec-head center rv">
       <span class="kicker">FAQ</span>
-      <h2>Preguntas frecuentes</h2>
+      <h2 data-en="Frequently asked questions" data-es="Preguntas frecuentes">Frequently asked questions</h2>
     </div>
-    <div class="faq-wrap">
+    <div class="faq-wrap rv">
       <details>
-        <summary>¿Cómo recibo las herramientas después de comprar?</summary>
-        <p>Recibes un correo con el enlace de descarga y tu clave de licencia inmediatamente después del pago. La instalación es un import estándar de NinjaTrader 8: menos de 5 minutos.</p>
+        <summary data-en="How do I receive the tools after purchase?" data-es="¿Cómo recibo las herramientas después de comprar?">How do I receive the tools after purchase?</summary>
+        <p data-en="Right after payment you see your license key on screen and receive it by email, together with the download link. Installation is a standard NinjaTrader 8 import: under 5 minutes."
+           data-es="Justo después del pago ves tu clave de licencia en pantalla y la recibes por correo, junto con el enlace de descarga. La instalación es un import estándar de NinjaTrader 8: menos de 5 minutos.">Right after payment you see your license key on screen and receive it by email, together with the download link. Installation is a standard NinjaTrader 8 import: under 5 minutes.</p>
       </details>
       <details>
-        <summary>¿Funciona con mi cuenta de fondeo o broker?</summary>
-        <p>Sí. Las herramientas MATE funcionan en cualquier instalación de NinjaTrader 8, con cualquier broker o proveedor de datos.</p>
+        <summary data-en="Does it work with my funded account or broker?" data-es="¿Funciona con mi cuenta de fondeo o broker?">Does it work with my funded account or broker?</summary>
+        <p data-en="Yes. MATE tools run on any NinjaTrader 8 installation, with any broker or data provider."
+           data-es="Sí. Las herramientas MATE funcionan en cualquier instalación de NinjaTrader 8, con cualquier broker o proveedor de datos.">Yes. MATE tools run on any NinjaTrader 8 installation, with any broker or data provider.</p>
       </details>
       <details>
-        <summary>¿En cuántos ordenadores puedo usar mi licencia?</summary>
-        <p>Cada licencia es personal y puede activarse en hasta dos máquinas.</p>
+        <summary data-en="On how many computers can I use my license?" data-es="¿En cuántos ordenadores puedo usar mi licencia?">On how many computers can I use my license?</summary>
+        <p data-en="Each license is personal and tied to your machine. Switching to a new computer? Write to support and we'll move it at no cost."
+           data-es="Cada licencia es personal y va vinculada a tu máquina. ¿Cambias de ordenador? Escribe a soporte y la trasladamos sin coste.">Each license is personal and tied to your machine. Switching to a new computer? Write to support and we'll move it at no cost.</p>
       </details>
       <details>
-        <summary>¿Ofrecen versión de prueba?</summary>
-        <p>Sí. Solicita la demo gratuita de 7 días desde la sección de contacto: acceso completo al pack, sin tarjeta. Así compras sabiendo exactamente lo que llevas.</p>
+        <summary data-en="Is there a free trial?" data-es="¿Ofrecen versión de prueba?">Is there a free trial?</summary>
+        <p data-en="Yes. Start the 7-day free trial with one click — full access to the whole suite, no credit card required. Buy knowing exactly what you're getting."
+           data-es="Sí. Empieza la demo gratuita de 7 días con un clic — acceso completo al pack, sin tarjeta. Así compras sabiendo exactamente lo que llevas.">Yes. Start the 7-day free trial with one click — full access to the whole suite, no credit card required. Buy knowing exactly what you're getting.</p>
       </details>
       <details>
-        <summary>¿Qué incluye cada plan?</summary>
-        <p>Todos los planes incluyen el pack completo de 20 indicadores de order flow, con actualizaciones y soporte. La única diferencia es la duración: 1 mes, 3 meses o 1 año — cuanto más largo, mejor precio mensual.</p>
+        <summary data-en="What does each plan include?" data-es="¿Qué incluye cada plan?">What does each plan include?</summary>
+        <p data-en="Every plan includes the complete suite of 20 order flow indicators, with updates and support. The only difference is duration: 1 month, 3 months or 1 year — the longer, the better the monthly price."
+           data-es="Todos los planes incluyen el pack completo de 20 indicadores de order flow, con actualizaciones y soporte. La única diferencia es la duración: 1 mes, 3 meses o 1 año — cuanto más largo, mejor precio mensual.">Every plan includes the complete suite of 20 order flow indicators, with updates and support. The only difference is duration: 1 month, 3 months or 1 year — the longer, the better the monthly price.</p>
       </details>
     </div>
   </div>
@@ -603,10 +722,14 @@
 
 <section id="contacto">
   <div class="wrap">
-    <div class="cta-box">
-      <h2>Empieza a ver el flujo</h2>
-      <p>Escríbenos para comprar, pedir tu demo gratuita de 7 días o resolver cualquier duda. Respondemos en menos de 24 horas.</p>
-      <a class="btn btn-orange" href="mailto:support@matetrading.com">support@matetrading.com</a>
+    <div class="cta-box rv">
+      <h2 data-en="Start seeing the flow" data-es="Empieza a ver el flujo">Start seeing the flow</h2>
+      <p data-en="Try the full suite free for 7 days, or write to us with any question. We reply within 24 hours."
+         data-es="Prueba el pack completo gratis 7 días, o escríbenos cualquier duda. Respondemos en menos de 24 horas.">Try the full suite free for 7 days, or write to us with any question. We reply within 24 hours.</p>
+      <div class="cta-actions">
+        <a class="btn btn-orange" href="https://buy.stripe.com/7sY28qeHXfT5aYY5VzfQI03" data-en="Start free trial" data-es="Empezar demo gratis">Start free trial</a>
+        <a class="btn btn-ghost" href="mailto:support@matetrading.com">support@matetrading.com</a>
+      </div>
     </div>
   </div>
 </section>
@@ -616,19 +739,74 @@
   <div class="wrap">
     <div class="foot">
       <span>© 2026 MATE · matetrading.com</span>
-      <span>NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.</span>
+      <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+            data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
     </div>
-    <p class="disclaimer">Aviso de riesgo: operar futuros y otros instrumentos apalancados conlleva un alto riesgo de pérdida y no es adecuado para todos los inversores. El rendimiento pasado no garantiza resultados futuros. Las herramientas MATE son ayudas de análisis y no constituyen asesoramiento financiero.</p>
+    <p class="disclaimer"
+       data-en="Risk disclosure: trading futures and other leveraged instruments involves a high risk of loss and is not suitable for all investors. Past performance does not guarantee future results. MATE tools are analysis aids and do not constitute financial advice."
+       data-es="Aviso de riesgo: operar futuros y otros instrumentos apalancados conlleva un alto riesgo de pérdida y no es adecuado para todos los inversores. El rendimiento pasado no garantiza resultados futuros. Las herramientas MATE son ayudas de análisis y no constituyen asesoramiento financiero.">Risk disclosure: trading futures and other leveraged instruments involves a high risk of loss and is not suitable for all investors. Past performance does not guarantee future results. MATE tools are analysis aids and do not constitute financial advice.</p>
   </div>
 </footer>
 
 <script>
+/* ============ LANGUAGE ============ */
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? 'MATE — Order Flow Tools for NinjaTrader 8'
+                            : 'MATE — Order Flow Tools para NinjaTrader 8';
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+
+/* ============ MOBILE MENU ============ */
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+
+/* ============ MARQUEE ============ */
+(function(){
+  const names = ['LIQUIDITY BOOKMAP','FOOTPRINT','BIG TRADES','DELTA PROFILE','DELTA SUITE',
+    'SESSION TPO + VP','FIXED RANGE VP','ANCHORED VP','AUCTION CONTEXT','LAG SENTINEL',
+    'DAILY VWAP','WEEKLY VWAP','MONTHLY VWAP','QUARTERLY VWAP','YEARLY VWAP',
+    'DAILY MGI','WEEKLY MGI','MONTHLY MGI','QUARTERLY MGI','YEARLY MGI'];
+  const half = names.map(n=>'<span class="mq-item">'+n+'</span>').join('');
+  document.getElementById('mq').innerHTML = half + half; /* duplicated for seamless loop */
+})();
+
+/* ============ SCROLL REVEAL ============ */
+(function(){
+  if(!('IntersectionObserver' in window)){ document.querySelectorAll('.rv').forEach(e=>e.classList.add('in')); return; }
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+})();
+
+/* ============ ANIMATED MONITOR ============ */
 (function(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function rnd(a,b){ return Math.floor(a + Math.random()*(b-a)); }
   const NROW = 9;
 
-  /* ============ MODO 1: DOM (bid/ask ladder) ============ */
   const domEl = document.getElementById('dom');
   function renderDOM(){
     let html='';
@@ -645,7 +823,6 @@
     domEl.innerHTML = html;
   }
 
-  /* ============ MODO 2: TPO ============ */
   const tpoEl = document.getElementById('tpo');
   const LETTERS = 'ABCDEFGHIJKLMNP';
   let tpoRows, tpoPeriod;
@@ -657,7 +834,6 @@
   }
   function tpoStep(){
     tpoPeriod = Math.min(LETTERS.length-1, tpoPeriod + (Math.random()<.4?1:0));
-    // el periodo actual imprime en 1-3 filas cercanas al "centro de gravedad"
     const weights = tpoRows.map(r=>r.length+0.3);
     let center = 0, best = -1;
     weights.forEach((w,i)=>{ if(w>best){best=w;center=i;} });
@@ -689,7 +865,6 @@
     tpoEl.innerHTML = html;
   }
 
-  /* ============ MODO 3: FOOTPRINT ============ */
   const fpEl = document.getElementById('fp');
   const vpEl = document.getElementById('vp');
   const NCOL = 6;
@@ -742,7 +917,6 @@
     renderFP();
   }
 
-  /* ============ MODO 4: VOLUME PROFILE ============ */
   const volpEl = document.getElementById('volp');
   let volRows;
   function volInit(){
@@ -768,17 +942,16 @@
     renderVOL();
   }
 
-  /* ============ ROTACION ============ */
   const modes = ['m-dom','m-tpo','m-fp','m-vol'];
   const legends = [
     '<span class="lg"><i class="sq b"></i>BID</span><span class="lg"><i class="sq a"></i>ASK</span><span class="lg" style="margin-left:auto"><i class="sq i"></i>SPREAD</span>',
     '<span class="lg"><i class="sq b"></i>VALUE AREA</span><span class="lg" style="margin-left:auto"><i class="sq a"></i>POC</span>',
     '<span class="lg"><i class="sq b"></i>BID</span><span class="lg"><i class="sq a"></i>ASK</span><span class="lg" style="margin-left:auto"><i class="sq i"></i>IMBALANCE</span>',
-    '<span class="lg"><i class="sq b"></i>VOLUMEN</span><span class="lg" style="margin-left:auto"><i class="sq a"></i>POC</span>'
+    '<span class="lg"><i class="sq b"></i>VOLUME</span><span class="lg" style="margin-left:auto"><i class="sq a"></i>POC</span>'
   ];
   const legendEl = document.getElementById('legend');
   const dots = document.querySelectorAll('#mode-dots span');
-  let mi = 2; // arranca en footprint
+  let mi = 2;
 
   function show(i){
     modes.forEach((id,k)=>{
@@ -788,17 +961,14 @@
     legendEl.innerHTML = legends[i];
   }
 
-  // arranque
   renderDOM(); tpoInit(); renderTPO(); renderFP(); volInit(); renderVOL();
   show(mi);
 
   if(!reduced){
-    // vida interna de cada modo
     setInterval(renderDOM, 1500);
     setInterval(tpoStep, 900);
     setInterval(fpTick, 2200);
     setInterval(volTick, 1100);
-    // rotacion de modos
     setInterval(()=>{ mi = (mi+1)%modes.length; show(mi); }, 6500);
   }
 })();
