@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Indicadores — MATE · Order Flow Tools para NinjaTrader 8</title>
-<meta name="description" content="Los 20 indicadores del pack MATE: Footprint, Liquidity Heatmap, Big Trades, TPO, perfiles de volumen, Delta, VWAP Suite, MGI Suite, Lag Sentinel y Auction Context. Cada uno con su manual completo.">
+<title>Indicators — MATE · Order Flow Tools for NinjaTrader 8</title>
+<meta name="description" content="The 20 indicators of the MATE suite: Footprint, Liquidity Heatmap, Big Trades, TPO, volume profiles, Delta, VWAP Suite, MGI Suite, Lag Sentinel and Auction Context. Each with its full manual.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070B'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='bold' fill='%235E9FD8' text-anchor='middle'%3EM%3C/text%3E%3Ccircle cx='50' cy='16' r='5' fill='%23FFA500'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MATE — Order Flow Tools">
+<meta property="og:title" content="The 20 MATE Indicators — Order Flow Tools for NinjaTrader 8">
+<meta property="og:description" content="20 professional order flow indicators for NinjaTrader 8. Footprint, Liquidity Heatmap, TPO, Volume Profile, Delta, VWAP & MGI. 7-day free trial, no credit card.">
+<meta property="og:url" content="https://www.matetrading.com/indicadores.html">
+<meta property="og:image" content="https://www.matetrading.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MATE — Order Flow Tools for NinjaTrader 8">
+<meta name="twitter:description" content="20 professional order flow indicators for NinjaTrader 8. 7-day free trial, no credit card.">
+<meta name="twitter:image" content="https://www.matetrading.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -58,7 +71,7 @@
     background:rgba(5,7,11,.78);backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px}
   .logo{display:flex;align-items:center;text-decoration:none}
   .logo-stack{display:flex;flex-direction:column;line-height:1}
   .logo-word{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
@@ -67,6 +80,16 @@
   .nav-links{display:flex;gap:28px;list-style:none}
   .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
   .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{
+    display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  }
+  .lang-sw button{
+    background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;
+    font-family:inherit;font-size:inherit;letter-spacing:.06em;transition:color .2s, background .2s;
+  }
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
   .btn{
     display:inline-flex;align-items:center;gap:8px;
     padding:11px 22px;border-radius:10px;
@@ -77,7 +100,35 @@
   .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
   .btn-ghost{border:1px solid var(--line-2);color:var(--text);background:rgba(255,255,255,.02)}
   .btn-ghost:hover{border-color:var(--blue);background:var(--blue-dim)}
-  @media(max-width:720px){.nav-links{display:none}}
+  .burger{
+    display:none;background:none;border:1px solid var(--line-2);border-radius:9px;
+    width:38px;height:38px;cursor:pointer;position:relative;flex:none;
+  }
+  .burger span{
+    position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);
+    transition:transform .25s, opacity .25s, top .25s;
+  }
+  .burger span:nth-child(1){top:12px}
+  .burger span:nth-child(2){top:18px}
+  .burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{
+    display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;
+    border-bottom:1px solid var(--line);background:rgba(5,7,11,.97);
+  }
+  .m-menu a{
+    text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;
+    padding:11px 4px;border-bottom:1px solid var(--line);
+  }
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){
+    .nav-links{display:none}
+    .burger{display:block}
+    .nav-cta{display:none}
+  }
 
   .page-head{padding:72px 0 20px;text-align:center}
   .kicker{
@@ -102,9 +153,21 @@
     transition:color .2s, border-color .2s, background .2s;
   }
   .chip:hover{color:var(--text);border-color:var(--blue);background:var(--blue-dim)}
+  .jump{display:none;margin-top:28px}
+  .jump select{
+    width:100%;max-width:420px;appearance:none;-webkit-appearance:none;
+    background:var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFA500" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>') right 16px center/14px no-repeat;
+    border:1px solid var(--line-2);border-radius:12px;color:var(--text);
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.06em;
+    padding:14px 44px 14px 16px;cursor:pointer;outline:none;
+  }
+  .jump select:focus{border-color:var(--blue)}
+  @media(max-width:700px){
+    .chips{display:none}
+    .jump{display:block}
+  }
   section{padding:56px 0}
 
-  /* ---------- FICHA DESTACADA ---------- */
   .feature-card{
     background:var(--panel);
     border:1px solid rgba(94,159,216,.35);
@@ -164,31 +227,6 @@
     width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;
   }
 
-  /* ---------- RESTO DEL PACK ---------- */
-  .roster{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  @media(max-width:900px){.roster{grid-template-columns:1fr 1fr}}
-  @media(max-width:600px){.roster{grid-template-columns:1fr}}
-  .rcell{
-    background:var(--panel);border:1px solid var(--line);border-radius:14px;
-    padding:22px;display:flex;flex-direction:column;gap:8px;
-    transition:border-color .2s, transform .2s;
-  }
-  .rcell:hover{border-color:rgba(94,159,216,.35);transform:translateY(-2px)}
-  .rcell h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;letter-spacing:-.01em}
-  .rcell p{color:var(--muted);font-size:.85rem;flex-grow:1}
-  .rcell .soon{
-    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;
-    color:var(--muted);align-self:flex-start;
-    border:1px solid var(--line-2);border-radius:99px;padding:3px 10px;margin-top:6px;
-  }
-
-  .sec-head{max-width:640px;margin:0 auto 40px;text-align:center}
-  .sec-head h2{
-    font-family:'Space Grotesk',sans-serif;font-weight:700;
-    font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px;
-  }
-  .sec-head p{color:var(--muted)}
-
   .cta-box{
     border:1px solid rgba(94,159,216,.3);border-radius:20px;
     padding:56px 40px;text-align:center;
@@ -210,31 +248,45 @@
 
 <header>
   <div class="wrap">
-    <nav>
-      <a class="logo" href="index.html" aria-label="MATE, inicio">
+    <nav class="top">
+      <a class="logo" href="index.html" aria-label="MATE, home">
         <span class="logo-stack">
           <span class="logo-word">MATE</span>
           <span class="logo-sub">ORDER FLOW TOOLS</span>
         </span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html#features">Capacidades</a></li>
-        <li><a href="indicadores.html" class="on">Indicadores</a></li>
-        <li><a href="index.html#productos">Precios</a></li>
-        <li><a href="index.html#contacto">Contacto</a></li>
+        <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+        <li><a href="indicadores.html" class="on" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+        <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+        <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
       </ul>
-      <a class="btn btn-orange" href="index.html#productos">Empezar</a>
+      <div class="nav-right">
+        <div class="lang-sw" role="group" aria-label="Language">
+          <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+          <button id="langES" onclick="setLang('es')">ES</button>
+        </div>
+        <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+        <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      </div>
     </nav>
+  </div>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
   </div>
 </header>
 
 <main>
 <div class="wrap">
   <div class="page-head">
-    <span class="kicker">El arsenal</span>
-    <h1>Los indicadores del pack <span class="grad">MATE</span></h1>
-    <p>Los 20 indicadores del pack, cada uno con su manual completo en español e inglés. Qué mide cada uno, cómo se lee y qué lugar ocupa en tu operativa — el catálogo completo, sin secretos.</p>
-    <nav class="chips" aria-label="Índice de indicadores">
+    <span class="kicker" data-en="The arsenal" data-es="El arsenal">The arsenal</span>
+    <h1 data-en='The indicators of the <span class="grad">MATE</span> suite' data-es='Los indicadores del pack <span class="grad">MATE</span>'>The indicators of the <span class="grad">MATE</span> suite</h1>
+    <p data-en="All 20 indicators of the suite. What each one measures, how to read it and where it fits in your trading — the complete catalog, no secrets."
+       data-es="Los 20 indicadores del pack. Qué mide cada uno, cómo se lee y qué lugar ocupa en tu operativa — el catálogo completo, sin secretos.">All 20 indicators of the suite. What each one measures, how to read it and where it fits in your trading — the complete catalog, no secrets.</p>
+    <nav class="chips" aria-label="Indicator index">
       <a class="chip" href="#footprint">FOOTPRINT</a>
       <a class="chip" href="#heatmap">LIQUIDITY HEATMAP</a>
       <a class="chip" href="#tpo">TPO &amp; VOLUME PROFILE</a>
@@ -248,6 +300,23 @@
       <a class="chip" href="#lagsentinel">LAG SENTINEL</a>
       <a class="chip" href="#auctioncontext">AUCTION CONTEXT</a>
     </nav>
+    <div class="jump">
+      <select id="jumpSel" aria-label="Jump to an indicator" onchange="if(this.value){location.hash=this.value;this.selectedIndex=0;}">
+        <option value="" data-en="Jump to an indicator…" data-es="Ir a un indicador…">Jump to an indicator…</option>
+        <option value="footprint">FOOTPRINT</option>
+        <option value="heatmap">LIQUIDITY HEATMAP</option>
+        <option value="tpo">TPO &amp; VOLUME PROFILE</option>
+        <option value="bigtrades">BIG TRADES</option>
+        <option value="deltasuite">DELTA SUITE</option>
+        <option value="deltaprofile">DELTA PROFILE</option>
+        <option value="fixedrange">FIXED RANGE VP</option>
+        <option value="anchored">ANCHORED VP</option>
+        <option value="vwap">VWAP SUITE</option>
+        <option value="mgi">MGI SUITE</option>
+        <option value="lagsentinel">LAG SENTINEL</option>
+        <option value="auctioncontext">AUCTION CONTEXT</option>
+      </select>
+    </div>
   </div>
 </div>
 
@@ -257,60 +326,71 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="footprint">Footprint Order Flow</h2>
-          <p class="sub">La radiografía de cada vela: quién agredió, con cuánto tamaño y en qué precio exacto — con cinco capas de análisis construidas sobre datos tick a tick.</p>
+          <p class="sub" data-en="The X-ray of every candle: who attacked, with how much size and at which exact price — with five layers of analysis built on tick-by-tick data."
+             data-es="La radiografía de cada vela: quién agredió, con cuánto tamaño y en qué precio exacto — con cinco capas de análisis construidas sobre datos tick a tick.">The X-ray of every candle: who attacked, with how much size and at which exact price — with five layers of analysis built on tick-by-tick data.</p>
         </div>
         <div class="fc-badges">
           <span class="badge b1">TICK-EXACT</span>
-          <span class="badge b2">SIN REPINTADO</span>
+          <span class="badge b2" data-en="NO REPAINTING" data-es="SIN REPINTADO">NO REPAINTING</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>Lo que ves, ocurrió.</b> Cada número proviene de operaciones individuales clasificadas tick a tick contra el bid/ask vivo en el momento exacto de cada ejecución. Nada interpolado, nada suavizado, nada repintado.</p>
+        <p data-en="<b>What you see, happened.</b> Every number comes from individual trades classified tick by tick against the live bid/ask at the exact moment of each execution. Nothing interpolated, nothing smoothed, nothing repainted."
+           data-es="<b>Lo que ves, ocurrió.</b> Cada número proviene de operaciones individuales clasificadas tick a tick contra el bid/ask vivo en el momento exacto de cada ejecución. Nada interpolado, nada suavizado, nada repintado."><b>What you see, happened.</b> Every number comes from individual trades classified tick by tick against the live bid/ask at the exact moment of each execution. Nothing interpolated, nothing smoothed, nothing repainted.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Delta y volumen por precio</h3>
-          <p>Cada vela desglosada fila a fila: compras contra el ask, ventas contra el bid, su diferencia neta y el negocio total. POC de delta y de volumen marcados en oro.</p>
+          <h3 data-en="Delta and volume by price" data-es="Delta y volumen por precio">Delta and volume by price</h3>
+          <p data-en="Every candle broken down row by row: buys against the ask, sells against the bid, their net difference and total business. Delta and volume POCs marked in gold."
+             data-es="Cada vela desglosada fila a fila: compras contra el ask, ventas contra el bid, su diferencia neta y el negocio total. POC de delta y de volumen marcados en oro.">Every candle broken down row by row: buys against the ask, sells against the bid, their net difference and total business. Delta and volume POCs marked in gold.</p>
         </div>
         <div class="fcell">
-          <h3>Imbalances diagonales</h3>
-          <p>Detección automática con la convención diagonal clásica, ratio y filtro de mínimo delta configurables. El desequilibrio real, sin falsos positivos en los extremos.</p>
+          <h3 data-en="Diagonal imbalances" data-es="Imbalances diagonales">Diagonal imbalances</h3>
+          <p data-en="Automatic detection with the classic diagonal convention, configurable ratio and minimum-delta filter. Real imbalance, without false positives at the extremes."
+             data-es="Detección automática con la convención diagonal clásica, ratio y filtro de mínimo delta configurables. El desequilibrio real, sin falsos positivos en los extremos.">Automatic detection with the classic diagonal convention, configurable ratio and minimum-delta filter. Real imbalance, without false positives at the extremes.</p>
         </div>
         <div class="fcell">
-          <h3>Zonas stacked &amp; trapped</h3>
-          <p>Los imbalances apilados se convierten en zonas de soporte y resistencia vivas — y cuando una falla, renace como zona de traders atrapados: combustible para el otro lado.</p>
+          <h3 data-en="Stacked &amp; trapped zones" data-es="Zonas stacked &amp; trapped">Stacked &amp; trapped zones</h3>
+          <p data-en="Stacked imbalances become living support and resistance zones — and when one fails, it is reborn as a trapped-traders zone: fuel for the other side."
+             data-es="Los imbalances apilados se convierten en zonas de soporte y resistencia vivas — y cuando una falla, renace como zona de traders atrapados: combustible para el otro lado.">Stacked imbalances become living support and resistance zones — and when one fails, it is reborn as a trapped-traders zone: fuel for the other side.</p>
         </div>
         <div class="fcell">
-          <h3>Absorción y agotamiento</h3>
-          <p>Señales inteligentes calculadas al cierre de cada vela: volumen enorme sin delta en un extremo (absorción) o la agresión quedándose sin gasolina (agotamiento).</p>
+          <h3 data-en="Absorption and exhaustion" data-es="Absorción y agotamiento">Absorption and exhaustion</h3>
+          <p data-en="Smart signals computed at each candle close: huge volume with no delta at an extreme (absorption) or aggression running out of gas (exhaustion)."
+             data-es="Señales inteligentes calculadas al cierre de cada vela: volumen enorme sin delta en un extremo (absorción) o la agresión quedándose sin gasolina (agotamiento).">Smart signals computed at each candle close: huge volume with no delta at an extreme (absorption) or aggression running out of gas (exhaustion).</p>
         </div>
         <div class="fcell">
-          <h3>Subastas sin terminar y Big Prints</h3>
-          <p>Extremos donde la subasta no acabó su negocio y ejecuciones individuales de gran tamaño, marcadas por lado directamente sobre la celda donde golpearon.</p>
+          <h3 data-en="Unfinished auctions and Big Prints" data-es="Subastas sin terminar y Big Prints">Unfinished auctions and Big Prints</h3>
+          <p data-en="Extremes where the auction didn't finish its business, and individual large executions, marked by side directly on the cell where they hit."
+             data-es="Extremos donde la subasta no acabó su negocio y ejecuciones individuales de gran tamaño, marcadas por lado directamente sobre la celda donde golpearon.">Extremes where the auction didn't finish its business, and individual large executions, marked by side directly on the cell where they hit.</p>
         </div>
         <div class="fcell">
-          <h3>Área de valor y migración del POC</h3>
-          <p>VAH, VAL y área de valor por vela con porcentaje configurable, y la línea de migración del POC conectando el centro de gravedad de vela en vela.</p>
+          <h3 data-en="Value area and POC migration" data-es="Área de valor y migración del POC">Value area and POC migration</h3>
+          <p data-en="VAH, VAL and per-candle value area with configurable percentage, plus the POC migration line connecting the center of gravity candle to candle."
+             data-es="VAH, VAL y área de valor por vela con porcentaje configurable, y la línea de migración del POC conectando el centro de gravedad de vela en vela.">VAH, VAL and per-candle value area with configurable percentage, plus the POC migration line connecting the center of gravity candle to candle.</p>
         </div>
         <div class="fcell">
-          <h3>Tabla de estadísticas por vela</h3>
-          <p>Delta, cambio de delta, delta %, volumen total, imbalances y más — en tres estilos visuales, con cada fila activable por separado.</p>
+          <h3 data-en="Per-candle statistics table" data-es="Tabla de estadísticas por vela">Per-candle statistics table</h3>
+          <p data-en="Delta, delta change, delta %, total volume, imbalances and more — in three visual styles, with every row toggleable separately."
+             data-es="Delta, cambio de delta, delta %, volumen total, imbalances y más — en tres estilos visuales, con cada fila activable por separado.">Delta, delta change, delta %, total volume, imbalances and more — in three visual styles, with every row toggleable separately.</p>
         </div>
         <div class="fcell">
-          <h3>Alertas en tiempo real</h3>
-          <p>Toque de zona, nacimiento de zona, absorción y agotamiento. Todas cebadas al conectar: el histórico jamás dispara una falsa alarma.</p>
+          <h3 data-en="Real-time alerts" data-es="Alertas en tiempo real">Real-time alerts</h3>
+          <p data-en="Zone touch, zone birth, absorption and exhaustion. All primed on connect: historical data never fires a false alarm."
+             data-es="Toque de zona, nacimiento de zona, absorción y agotamiento. Todas cebadas al conectar: el histórico jamás dispara una falsa alarma.">Zone touch, zone birth, absorption and exhaustion. All primed on connect: historical data never fires a false alarm.</p>
         </div>
         <div class="fcell">
-          <h3>Zoom inteligente</h3>
-          <p>Los números nunca cambian con el zoom: el texto se adapta, se compacta o cede el sitio a las celdas — el footprint sigue hablando a cualquier distancia.</p>
+          <h3 data-en="Smart zoom" data-es="Zoom inteligente">Smart zoom</h3>
+          <p data-en="The numbers never change with zoom: the text adapts, compacts or yields to the cells — the footprint keeps speaking at any distance."
+             data-es="Los números nunca cambian con el zoom: el texto se adapta, se compacta o cede el sitio a las celdas — el footprint sigue hablando a cualquier distancia.">The numbers never change with zoom: the text adapts, compacts or yields to the cells — the footprint keeps speaking at any distance.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -322,60 +402,71 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="heatmap">Liquidity Heatmap</h2>
-          <p class="sub">El lado del mercado que la cinta no puede mostrar: las órdenes en reposo — dónde espera el tamaño, cómo se mueve y qué ocurre cuando el precio llega.</p>
+          <p class="sub" data-en="The side of the market the tape can't show: resting orders — where size waits, how it moves and what happens when price arrives."
+             data-es="El lado del mercado que la cinta no puede mostrar: las órdenes en reposo — dónde espera el tamaño, cómo se mueve y qué ocurre cuando el precio llega.">The side of the market the tape can't show: resting orders — where size waits, how it moves and what happens when price arrives.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">TIEMPO REAL</span>
-          <span class="badge b2">SOLO HECHOS</span>
+          <span class="badge b1" data-en="REAL TIME" data-es="TIEMPO REAL">REAL TIME</span>
+          <span class="badge b2" data-en="FACTS ONLY" data-es="SOLO HECHOS">FACTS ONLY</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>Solo hechos crudos.</b> Sin puntuaciones, sin predicciones, sin repintar el pasado. Cada episodio termina en un hecho medido — y toda defensa tiene su desenlace: quién ganó se lee directo del mapa.</p>
+        <p data-en="<b>Raw facts only.</b> No scores, no predictions, no repainting the past. Every episode ends in a measured fact — and every defense has its outcome: who won reads straight off the map."
+           data-es="<b>Solo hechos crudos.</b> Sin puntuaciones, sin predicciones, sin repintar el pasado. Cada episodio termina en un hecho medido — y toda defensa tiene su desenlace: quién ganó se lee directo del mapa."><b>Raw facts only.</b> No scores, no predictions, no repainting the past. Every episode ends in a measured fact — and every defense has its outcome: who won reads straight off the map.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Mapa térmico del libro</h3>
-          <p>La historia de cada precio pintada como bandas de calor: caliente = mucho tamaño en reposo. Los muros esperando al precio, visibles antes de que llegue.</p>
+          <h3 data-en="Thermal map of the book" data-es="Mapa térmico del libro">Thermal map of the book</h3>
+          <p data-en="The history of every price painted as heat bands: hot = lots of resting size. The walls waiting for price, visible before it gets there."
+             data-es="La historia de cada precio pintada como bandas de calor: caliente = mucho tamaño en reposo. Los muros esperando al precio, visibles antes de que llegue.">The history of every price painted as heat bands: hot = lots of resting size. The walls waiting for price, visible before it gets there.</p>
         </div>
         <div class="fcell">
-          <h3>Absorciones detectadas</h3>
-          <p>Un nivel que muere comiendo volumen real queda marcado en el mapa: ahí alguien peleó. El número interior te dice cuántos contratos tragó.</p>
+          <h3 data-en="Detected absorptions" data-es="Absorciones detectadas">Detected absorptions</h3>
+          <p data-en="A level that dies eating real volume gets marked on the map: someone fought there. The number inside tells you how many contracts it swallowed."
+             data-es="Un nivel que muere comiendo volumen real queda marcado en el mapa: ahí alguien peleó. El número interior te dice cuántos contratos tragó.">A level that dies eating real volume gets marked on the map: someone fought there. The number inside tells you how many contracts it swallowed.</p>
         </div>
         <div class="fcell">
-          <h3>Icebergs al descubierto</h3>
-          <p>Cuando un nivel ejecuta más de lo que jamás mostró, estaba reponiendo en secreto. Borde verde: el hecho más fuerte que imprime esta herramienta.</p>
+          <h3 data-en="Icebergs uncovered" data-es="Icebergs al descubierto">Icebergs uncovered</h3>
+          <p data-en="When a level executes more than it ever displayed, it was secretly replenishing. Green edge: the strongest fact this tool prints."
+             data-es="Cuando un nivel ejecuta más de lo que jamás mostró, estaba reponiendo en secreto. Borde verde: el hecho más fuerte que imprime esta herramienta.">When a level executes more than it ever displayed, it was secretly replenishing. Green edge: the strongest fact this tool prints.</p>
         </div>
         <div class="fcell">
-          <h3>Muros retirados</h3>
-          <p>Tamaño que se anuncia y se va sin ejecutar casi nada, registrado como hecho medido. Cuando se acumulan de un lado, desconfía de ese lado.</p>
+          <h3 data-en="Pulled walls" data-es="Muros retirados">Pulled walls</h3>
+          <p data-en="Size that announces itself and leaves having executed almost nothing, recorded as a measured fact. When they pile up on one side, distrust that side."
+             data-es="Tamaño que se anuncia y se va sin ejecutar casi nada, registrado como hecho medido. Cuando se acumulan de un lado, desconfía de ese lado.">Size that announces itself and leaves having executed almost nothing, recorded as a measured fact. When they pile up on one side, distrust that side.</p>
         </div>
         <div class="fcell">
-          <h3>Desenlace de cada defensa</h3>
-          <p>Si el precio cruza después un nivel defendido, su marca se atenúa. El mapa te dice quién ganó cada batalla — sin interpretaciones.</p>
+          <h3 data-en="Outcome of every defense" data-es="Desenlace de cada defensa">Outcome of every defense</h3>
+          <p data-en="If price later crosses a defended level, its mark fades. The map tells you who won each battle — no interpretations."
+             data-es="Si el precio cruza después un nivel defendido, su marca se atenúa. El mapa te dice quién ganó cada batalla — sin interpretaciones.">If price later crosses a defended level, its mark fades. The map tells you who won each battle — no interpretations.</p>
         </div>
         <div class="fcell">
           <h3>Bookmap Mode + Volume Dots</h3>
-          <p>Lienzo térmico de plataforma dedicada con el volumen ejecutado como puntos por agresor: dónde descansó el tamaño, dónde ejecutó, quién ganó.</p>
+          <p data-en="Dedicated-platform thermal canvas with executed volume as dots by aggressor: where size rested, where it executed, who won."
+             data-es="Lienzo térmico de plataforma dedicada con el volumen ejecutado como puntos por agresor: dónde descansó el tamaño, dónde ejecutó, quién ganó.">Dedicated-platform thermal canvas with executed volume as dots by aggressor: where size rested, where it executed, who won.</p>
         </div>
         <div class="fcell">
-          <h3>Panel del libro estilo DOM</h3>
-          <p>El libro en vivo anclado al eje de precios: barras por nivel, best bid/ask con filo blanco y aviso de spread abierto. Números que nunca se encogen.</p>
+          <h3 data-en="DOM-style book panel" data-es="Panel del libro estilo DOM">DOM-style book panel</h3>
+          <p data-en="The live book anchored to the price axis: bars per level, best bid/ask with a white edge and open-spread warning. Numbers that never shrink."
+             data-es="El libro en vivo anclado al eje de precios: barras por nivel, best bid/ask con filo blanco y aviso de spread abierto. Números que nunca se encogen.">The live book anchored to the price axis: bars per level, best bid/ask with a white edge and open-spread warning. Numbers that never shrink.</p>
         </div>
         <div class="fcell">
-          <h3>Una sola escala, toda la sesión</h3>
-          <p>El mismo tamaño produce el mismo color a las 9:31 y a las 15:59. El muro de la mañana y el de la tarde se comparan a ojo, con honestidad.</p>
+          <h3 data-en="One scale, the whole session" data-es="Una sola escala, toda la sesión">One scale, the whole session</h3>
+          <p data-en="The same size produces the same color at 9:31 and at 15:59. The morning wall and the afternoon wall compare by eye, honestly."
+             data-es="El mismo tamaño produce el mismo color a las 9:31 y a las 15:59. El muro de la mañana y el de la tarde se comparan a ojo, con honestidad.">The same size produces the same color at 9:31 and at 15:59. The morning wall and the afternoon wall compare by eye, honestly.</p>
         </div>
         <div class="fcell">
-          <h3>Persistencia de sesión</h3>
-          <p>Mapa, marcas y desenlaces se guardan cada minuto: recarga el gráfico y recupera tu sesión intacta. Una recarga no perdona ni condena ninguna marca.</p>
+          <h3 data-en="Session persistence" data-es="Persistencia de sesión">Session persistence</h3>
+          <p data-en="Map, marks and outcomes are saved every minute: reload the chart and recover your session intact. A reload neither pardons nor condemns any mark."
+             data-es="Mapa, marcas y desenlaces se guardan cada minuto: recarga el gráfico y recupera tu sesión intacta. Una recarga no perdona ni condena ninguna marca.">Map, marks and outcomes are saved every minute: reload the chart and recover your session intact. A reload neither pardons nor condemns any mark.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · REQUIERE DATOS LEVEL II</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="REQUIRES LEVEL II DATA · UPDATES &amp; SUPPORT INCLUDED" data-es="REQUIERE DATOS LEVEL II · ACTUALIZACIONES Y SOPORTE INCLUIDOS">REQUIRES LEVEL II DATA · UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -387,60 +478,71 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="tpo">Session TPO &amp; Volume Profile</h2>
-          <p class="sub">Una estación de Market Profile completa en un solo indicador: el mapa de la subasta por letras y el volumen real por precio, lado a lado, sesión a sesión.</p>
+          <p class="sub" data-en="A complete Market Profile station in a single indicator: the auction map in letters and real volume by price, side by side, session by session."
+             data-es="Una estación de Market Profile completa en un solo indicador: el mapa de la subasta por letras y el volumen real por precio, lado a lado, sesión a sesión.">A complete Market Profile station in a single indicator: the auction map in letters and real volume by price, side by side, session by session.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">2 VISTAS EN 1</span>
-          <span class="badge b2">CERO REPINTADO</span>
+          <span class="badge b1" data-en="2 VIEWS IN 1" data-es="2 VISTAS EN 1">2 VIEWS IN 1</span>
+          <span class="badge b2" data-en="ZERO REPAINTING" data-es="CERO REPINTADO">ZERO REPAINTING</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>Dos verdades, cara a cara.</b> Dónde pasó su tiempo el mercado y dónde comprometió su volumen. Cuando ambas coinciden, hay aceptación; cuando divergen, hay información — y tú la ves antes que nadie.</p>
+        <p data-en="<b>Two truths, face to face.</b> Where the market spent its time and where it committed its volume. When both agree, there's acceptance; when they diverge, there's information — and you see it before anyone else."
+           data-es="<b>Dos verdades, cara a cara.</b> Dónde pasó su tiempo el mercado y dónde comprometió su volumen. Cuando ambas coinciden, hay aceptación; cuando divergen, hay información — y tú la ves antes que nadie."><b>Two truths, face to face.</b> Where the market spent its time and where it committed its volume. When both agree, there's acceptance; when they diverge, there's information — and you see it before anyone else.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>El perfil TPO clásico</h3>
-          <p>El alfabeto de la subasta letra a letra, con POC, área de valor, single prints, colas de rechazo y poor highs/lows — la gramática completa del Market Profile, automatizada.</p>
+          <h3 data-en="The classic TPO profile" data-es="El perfil TPO clásico">The classic TPO profile</h3>
+          <p data-en="The auction's alphabet letter by letter, with POC, value area, single prints, rejection tails and poor highs/lows — the complete grammar of Market Profile, automated."
+             data-es="El alfabeto de la subasta letra a letra, con POC, área de valor, single prints, colas de rechazo y poor highs/lows — la gramática completa del Market Profile, automatizada.">The auction's alphabet letter by letter, with POC, value area, single prints, rejection tails and poor highs/lows — the complete grammar of Market Profile, automated.</p>
         </div>
         <div class="fcell">
-          <h3>Volume Profile independiente</h3>
-          <p>El volumen real negociado por precio con su propio VPOC y su propia área de valor, con resolución de filas configurable por separado. Dos lentes, un gráfico.</p>
+          <h3 data-en="Independent Volume Profile" data-es="Volume Profile independiente">Independent Volume Profile</h3>
+          <p data-en="Real traded volume by price with its own VPOC and its own value area, with separately configurable row resolution. Two lenses, one chart."
+             data-es="El volumen real negociado por precio con su propio VPOC y su propia área de valor, con resolución de filas configurable por separado. Dos lentes, un gráfico.">Real traded volume by price with its own VPOC and its own value area, with separately configurable row resolution. Two lenses, one chart.</p>
         </div>
         <div class="fcell">
-          <h3>POC vs VPOC: el desacuerdo que paga</h3>
-          <p>Cuando el punto de control por tiempo y el de volumen divergen, el mercado te está contando algo. La resolución de ese conflicto es de las lecturas más finas del profile trading.</p>
+          <h3 data-en="POC vs VPOC: the disagreement that pays" data-es="POC vs VPOC: el desacuerdo que paga">POC vs VPOC: the disagreement that pays</h3>
+          <p data-en="When the time-based and volume-based points of control diverge, the market is telling you something. Resolving that conflict is one of the finest reads in profile trading."
+             data-es="Cuando el punto de control por tiempo y el de volumen divergen, el mercado te está contando algo. La resolución de ese conflicto es de las lecturas más finas del profile trading.">When the time-based and volume-based points of control diverge, the market is telling you something. Resolving that conflict is one of the finest reads in profile trading.</p>
         </div>
         <div class="fcell">
-          <h3>Fusiona y divide con clic derecho</h3>
-          <p>Une varios días de balance en un perfil compuesto y opera sus bordes; divide un día de doble distribución para ver ambas subastas. Tus decisiones de vista sobreviven recargas y reinicios.</p>
+          <h3 data-en="Merge and split with right-click" data-es="Fusiona y divide con clic derecho">Merge and split with right-click</h3>
+          <p data-en="Merge several balance days into a composite profile and trade its edges; split a double-distribution day to see both auctions. Your view decisions survive reloads and restarts."
+             data-es="Une varios días de balance en un perfil compuesto y opera sus bordes; divide un día de doble distribución para ver ambas subastas. Tus decisiones de vista sobreviven recargas y reinicios.">Merge several balance days into a composite profile and trade its edges; split a double-distribution day to see both auctions. Your view decisions survive reloads and restarts.</p>
         </div>
         <div class="fcell">
-          <h3>Cinco familias de niveles naked</h3>
-          <p>POC, VPOC, áreas de valor y medios sin reexaminar, extendidos hacia adelante hasta que el precio los atraviesa — con detección exacta al tick. Las preguntas abiertas del mercado, siempre a la vista.</p>
+          <h3 data-en="Five families of naked levels" data-es="Cinco familias de niveles naked">Five families of naked levels</h3>
+          <p data-en="Untested POCs, VPOCs, value areas and midpoints, extended forward until price trades through them — with tick-exact detection. The market's open questions, always in sight."
+             data-es="POC, VPOC, áreas de valor y medios sin reexaminar, extendidos hacia adelante hasta que el precio los atraviesa — con detección exacta al tick. Las preguntas abiertas del mercado, siempre a la vista.">Untested POCs, VPOCs, value areas and midpoints, extended forward until price trades through them — with tick-exact detection. The market's open questions, always in sight.</p>
         </div>
         <div class="fcell">
-          <h3>Initial Balance y marcadores</h3>
-          <p>El rango inicial que enmarca la hipótesis del día, más los marcadores de apertura y cierre de cada sesión. El contexto del día, de un vistazo.</p>
+          <h3 data-en="Initial Balance and markers" data-es="Initial Balance y marcadores">Initial Balance and markers</h3>
+          <p data-en="The initial range that frames the day's hypothesis, plus open and close markers for every session. The day's context, at a glance."
+             data-es="El rango inicial que enmarca la hipótesis del día, más los marcadores de apertura y cierre de cada sesión. El contexto del día, de un vistazo.">The initial range that frames the day's hypothesis, plus open and close markers for every session. The day's context, at a glance.</p>
         </div>
         <div class="fcell">
-          <h3>Zoom institucional continuo</h3>
-          <p>Las letras crecen y se encogen con el gráfico de forma fluida, y el perfil se ensancha bajo zoom fuerte — el comportamiento de las plataformas de escritorio de gama alta.</p>
+          <h3 data-en="Continuous institutional zoom" data-es="Zoom institucional continuo">Continuous institutional zoom</h3>
+          <p data-en="Letters grow and shrink fluidly with the chart, and the profile widens under heavy zoom — the behavior of high-end desktop platforms."
+             data-es="Las letras crecen y se encogen con el gráfico de forma fluida, y el perfil se ensancha bajo zoom fuerte — el comportamiento de las plataformas de escritorio de gama alta.">Letters grow and shrink fluidly with the chart, and the profile widens under heavy zoom — the behavior of high-end desktop platforms.</p>
         </div>
         <div class="fcell">
-          <h3>Sesiones a tu medida</h3>
-          <p>RTH, overnight, sesión del gráfico o horarios personalizados. Cada perfil respeta tu definición de sesión, en tu zona horaria.</p>
+          <h3 data-en="Sessions your way" data-es="Sesiones a tu medida">Sessions your way</h3>
+          <p data-en="RTH, overnight, the chart's session or custom hours. Every profile respects your session definition, in your time zone."
+             data-es="RTH, overnight, sesión del gráfico o horarios personalizados. Cada perfil respeta tu definición de sesión, en tu zona horaria.">RTH, overnight, the chart's session or custom hours. Every profile respects your session definition, in your time zone.</p>
         </div>
         <div class="fcell">
-          <h3>Carga en segundos</h3>
-          <p>Perfiles históricos al instante o reconstrucción exacta tick a tick: tú eliges el equilibrio entre velocidad y precisión absoluta. El tiempo real siempre es tick a tick.</p>
+          <h3 data-en="Loads in seconds" data-es="Carga en segundos">Loads in seconds</h3>
+          <p data-en="Instant historical profiles or exact tick-by-tick reconstruction: you choose the balance between speed and absolute precision. Real time is always tick by tick."
+             data-es="Perfiles históricos al instante o reconstrucción exacta tick a tick: tú eliges el equilibrio entre velocidad y precisión absoluta. El tiempo real siempre es tick a tick.">Instant historical profiles or exact tick-by-tick reconstruction: you choose the balance between speed and absolute precision. Real time is always tick by tick.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -452,48 +554,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="bigtrades">Big Trades</h2>
-          <p class="sub">El detector de ejecución institucional: cada burbuja del gráfico es una operación de gran tamaño que realmente ocurrió — precio exacto, volumen exacto, agresor identificado.</p>
+          <p class="sub" data-en="The institutional execution detector: every bubble on the chart is a large trade that actually happened — exact price, exact volume, aggressor identified."
+             data-es="El detector de ejecución institucional: cada burbuja del gráfico es una operación de gran tamaño que realmente ocurrió — precio exacto, volumen exacto, agresor identificado.">The institutional execution detector: every bubble on the chart is a large trade that actually happened — exact price, exact volume, aggressor identified.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">DETECCIÓN DE SWEEPS</span>
-          <span class="badge b2">LO QUE VES, SE EJECUTÓ</span>
-          </div>
+          <span class="badge b1" data-en="SWEEP DETECTION" data-es="DETECCIÓN DE SWEEPS">SWEEP DETECTION</span>
+          <span class="badge b2" data-en="WHAT YOU SEE, EXECUTED" data-es="LO QUE VES, SE EJECUTÓ">WHAT YOU SEE, EXECUTED</span>
+        </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>La capa que los detectores baratos no ven.</b> Cuando una institución envía 127 contratos, el exchange los reporta como 70+57 en el mismo instante — y los detectores simples ven dos operaciones “pequeñas” y callan. Big Trades reconstruye la orden original y la dibuja con su tamaño verdadero.</p>
+        <p data-en="<b>The layer cheap detectors can't see.</b> When an institution sends 127 contracts, the exchange reports them as 70+57 in the same instant — and simple detectors see two “small” trades and stay silent. Big Trades reconstructs the original order and draws it at its true size."
+           data-es="<b>La capa que los detectores baratos no ven.</b> Cuando una institución envía 127 contratos, el exchange los reporta como 70+57 en el mismo instante — y los detectores simples ven dos operaciones “pequeñas” y callan. Big Trades reconstruye la orden original y la dibuja con su tamaño verdadero."><b>The layer cheap detectors can't see.</b> When an institution sends 127 contracts, the exchange reports them as 70+57 in the same instant — and simple detectors see two “small” trades and stay silent. Big Trades reconstructs the original order and draws it at its true size.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Sweeps reconstruidos</h3>
-          <p>Mismo instante, mismo lado agresor, precio sin retroceso: la orden institucional recompuesta y dibujada como un solo evento en el precio donde realmente operó.</p>
+          <h3 data-en="Reconstructed sweeps" data-es="Sweeps reconstruidos">Reconstructed sweeps</h3>
+          <p data-en="Same instant, same aggressor side, price without pullback: the institutional order recomposed and drawn as a single event at the price where it really traded."
+             data-es="Mismo instante, mismo lado agresor, precio sin retroceso: la orden institucional recompuesta y dibujada como un solo evento en el precio donde realmente operó.">Same instant, same aggressor side, price without pullback: the institutional order recomposed and drawn as a single event at the price where it really traded.</p>
         </div>
         <div class="fcell">
-          <h3>Burbujas que no mienten</h3>
-          <p>Área proporcional al volumen, el número exacto dentro, color por lado agresor — y un anillo dorado señalando el mayor evento a la vista.</p>
+          <h3 data-en="Bubbles that don't lie" data-es="Burbujas que no mienten">Bubbles that don't lie</h3>
+          <p data-en="Area proportional to volume, the exact number inside, color by aggressor side — and a golden ring marking the largest event in sight."
+             data-es="Área proporcional al volumen, el número exacto dentro, color por lado agresor — y un anillo dorado señalando el mayor evento a la vista.">Area proportional to volume, the exact number inside, color by aggressor side — and a golden ring marking the largest event in sight.</p>
         </div>
         <div class="fcell">
-          <h3>Niveles de acumulación</h3>
-          <p>Los precios donde el tamaño institucional se apila se convierten en líneas de interés con su insignia: “708 S54%” = 708 contratos, 54% vendidos. Sin ambigüedad.</p>
+          <h3 data-en="Accumulation levels" data-es="Niveles de acumulación">Accumulation levels</h3>
+          <p data-en="Prices where institutional size stacks up become lines of interest with their badge: “708 S54%” = 708 contracts, 54% sold. No ambiguity."
+             data-es="Los precios donde el tamaño institucional se apila se convierten en líneas de interés con su insignia: “708 S54%” = 708 contratos, 54% vendidos. Sin ambigüedad.">Prices where institutional size stacks up become lines of interest with their badge: “708 S54%” = 708 contracts, 54% sold. No ambiguity.</p>
         </div>
         <div class="fcell">
           <h3>Big Delta</h3>
-          <p>Un CVD construido solo con operaciones de tamaño institucional — a menudo más limpio que el delta completo. Si el precio rompe y el Big Delta no acompaña, el tamaño no está participando.</p>
+          <p data-en="A CVD built only from institutional-size trades — often cleaner than the full delta. If price breaks out and Big Delta doesn't follow, size isn't participating."
+             data-es="Un CVD construido solo con operaciones de tamaño institucional — a menudo más limpio que el delta completo. Si el precio rompe y el Big Delta no acompaña, el tamaño no está participando.">A CVD built only from institutional-size trades — often cleaner than the full delta. If price breaks out and Big Delta doesn't follow, size isn't participating.</p>
         </div>
         <div class="fcell">
-          <h3>Cazador de icebergs en acción</h3>
-          <p>Las recargas de un iceberg dejan prints y sweeps repetidos en el mismo precio — exactamente lo que los niveles de acumulación sacan a la superficie.</p>
+          <h3 data-en="Iceberg hunter in action" data-es="Cazador de icebergs en acción">Iceberg hunter in action</h3>
+          <p data-en="An iceberg's refills leave repeated prints and sweeps at the same price — exactly what accumulation levels bring to the surface."
+             data-es="Las recargas de un iceberg dejan prints y sweeps repetidos en el mismo precio — exactamente lo que los niveles de acumulación sacan a la superficie.">An iceberg's refills leave repeated prints and sweeps at the same price — exactly what accumulation levels bring to the surface.</p>
         </div>
         <div class="fcell">
-          <h3>Modo sesión fresca</h3>
-          <p>Abre el gráfico limpio y convierte cada burbuja nueva en un acontecimiento, mientras las estadísticas siguen procesando la sesión completa por debajo.</p>
+          <h3 data-en="Fresh session mode" data-es="Modo sesión fresca">Fresh session mode</h3>
+          <p data-en="Open the chart clean and turn every new bubble into an event, while statistics keep processing the full session underneath."
+             data-es="Abre el gráfico limpio y convierte cada burbuja nueva en un acontecimiento, mientras las estadísticas siguen procesando la sesión completa por debajo.">Open the chart clean and turn every new bubble into an event, while statistics keep processing the full session underneath.</p>
         </div>
-        </div>
+      </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -505,48 +615,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="deltasuite">Delta Suite</h2>
-          <p class="sub">La agresión de cada operación — quién levantó la oferta, quién golpeó la demanda — convertida en tres vistas profesionales en su propio panel.</p>
+          <p class="sub" data-en="The aggression of every trade — who lifted the offer, who hit the bid — turned into three professional views in its own panel."
+             data-es="La agresión de cada operación — quién levantó la oferta, quién golpeó la demanda — convertida en tres vistas profesionales en su propio panel.">The aggression of every trade — who lifted the offer, who hit the bid — turned into three professional views in its own panel.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">3 VISTAS EN 1</span>
-          <span class="badge b2">SIN REPINTADO</span>
-          </div>
+          <span class="badge b1" data-en="3 VIEWS IN 1" data-es="3 VISTAS EN 1">3 VIEWS IN 1</span>
+          <span class="badge b2" data-en="NO REPAINTING" data-es="SIN REPINTADO">NO REPAINTING</span>
+        </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>El número neto esconde la batalla.</b> Una vela que cierra en +50 después de visitar −300 no es lo mismo que un +50 limpio. La mecha de excursión de Delta Suite te muestra la absorción que el delta final no cuenta.</p>
+        <p data-en="<b>The net number hides the battle.</b> A candle closing at +50 after visiting −300 is not the same as a clean +50. Delta Suite's excursion wick shows you the absorption the final delta doesn't tell."
+           data-es="<b>El número neto esconde la batalla.</b> Una vela que cierra en +50 después de visitar −300 no es lo mismo que un +50 limpio. La mecha de excursión de Delta Suite te muestra la absorción que el delta final no cuenta."><b>The net number hides the battle.</b> A candle closing at +50 after visiting −300 is not the same as a clean +50. Delta Suite's excursion wick shows you the absorption the final delta doesn't tell.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>BarDelta con mecha de excursión</h3>
-          <p>El delta neto de cada vela más la historia intra-vela: desde el mínimo hasta el máximo que visitó la agresión. La batalla completa, no solo el resultado.</p>
+          <h3 data-en="BarDelta with excursion wick" data-es="BarDelta con mecha de excursión">BarDelta with excursion wick</h3>
+          <p data-en="Each candle's net delta plus the intra-candle story: from the lowest to the highest point aggression visited. The whole battle, not just the result."
+             data-es="El delta neto de cada vela más la historia intra-vela: desde el mínimo hasta el máximo que visitó la agresión. La batalla completa, no solo el resultado.">Each candle's net delta plus the intra-candle story: from the lowest to the highest point aggression visited. The whole battle, not just the result.</p>
         </div>
         <div class="fcell">
-          <h3>DeltaPct: la vista de la convicción</h3>
-          <p>+200 de delta con 400 contratos es dominancia del 50%; con 4,000 es un empate del 5%. En los clímax, esta vista delata al que absorbe.</p>
+          <h3 data-en="DeltaPct: the conviction view" data-es="DeltaPct: la vista de la convicción">DeltaPct: the conviction view</h3>
+          <p data-en="+200 delta on 400 contracts is 50% dominance; on 4,000 it's a 5% stalemate. In climaxes, this view exposes the absorber."
+             data-es="+200 de delta con 400 contratos es dominancia del 50%; con 4,000 es un empate del 5%. En los clímax, esta vista delata al que absorbe.">+200 delta on 400 contracts is 50% dominance; on 4,000 it's a 5% stalemate. In climaxes, this view exposes the absorber.</p>
         </div>
         <div class="fcell">
-          <h3>CVD en velas o línea</h3>
-          <p>El delta acumulado de la sesión como velas OHLC de la acumulación. La pregunta de fondo, respondida: quién controla, y si ese control crece.</p>
+          <h3 data-en="CVD as candles or line" data-es="CVD en velas o línea">CVD as candles or line</h3>
+          <p data-en="The session's cumulative delta as OHLC candles of accumulation. The underlying question, answered: who's in control, and whether that control is growing."
+             data-es="El delta acumulado de la sesión como velas OHLC de la acumulación. La pregunta de fondo, respondida: quién controla, y si ese control crece.">The session's cumulative delta as OHLC candles of accumulation. The underlying question, answered: who's in control, and whether that control is growing.</p>
         </div>
         <div class="fcell">
-          <h3>Divergencias que jamás repintan</h3>
-          <p>Máximos del precio sin máximos del CVD, marcados sobre swings confirmados. Una marca puesta es una marca que no se mueve — nunca.</p>
+          <h3 data-en="Divergences that never repaint" data-es="Divergencias que jamás repintan">Divergences that never repaint</h3>
+          <p data-en="Price highs without CVD highs, marked on confirmed swings. A mark placed is a mark that doesn't move — ever."
+             data-es="Máximos del precio sin máximos del CVD, marcados sobre swings confirmados. Una marca puesta es una marca que no se mueve — nunca.">Price highs without CVD highs, marked on confirmed swings. A mark placed is a mark that doesn't move — ever.</p>
         </div>
         <div class="fcell">
-          <h3>Lente institucional</h3>
-          <p>Un interruptor reconstruye las tres vistas usando solo operaciones grandes: si el CVD del tamaño discrepa del total, sabes qué está haciendo cada público.</p>
+          <h3 data-en="Institutional lens" data-es="Lente institucional">Institutional lens</h3>
+          <p data-en="One switch rebuilds all three views using only large trades: if size's CVD disagrees with the total, you know what each crowd is doing."
+             data-es="Un interruptor reconstruye las tres vistas usando solo operaciones grandes: si el CVD del tamaño discrepa del total, sabes qué está haciendo cada público.">One switch rebuilds all three views using only large trades: if size's CVD disagrees with the total, you know what each crowd is doing.</p>
         </div>
         <div class="fcell">
-          <h3>Autoauditable al contrato</h3>
-          <p>El total por vela coincide exactamente con el volumen nativo de NinjaTrader — compruébalo tú mismo cuando quieras. Datos que dan la cara.</p>
+          <h3 data-en="Self-auditable to the contract" data-es="Autoauditable al contrato">Self-auditable to the contract</h3>
+          <p data-en="The per-candle total matches NinjaTrader's native volume exactly — check it yourself anytime. Data that shows its face."
+             data-es="El total por vela coincide exactamente con el volumen nativo de NinjaTrader — compruébalo tú mismo cuando quieras. Datos que dan la cara.">The per-candle total matches NinjaTrader's native volume exactly — check it yourself anytime. Data that shows its face.</p>
         </div>
-        </div>
+      </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -558,48 +676,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="deltaprofile">Delta Profile</h2>
-          <p class="sub">Quién está ganando la subasta en cada precio, como una franja limpia anclada al borde del gráfico — con tres maneras de definir “ahora”.</p>
+          <p class="sub" data-en="Who is winning the auction at every price, as a clean strip anchored to the chart's edge — with three ways to define “now”."
+             data-es="Quién está ganando la subasta en cada precio, como una franja limpia anclada al borde del gráfico — con tres maneras de definir “ahora”.">Who is winning the auction at every price, as a clean strip anchored to the chart's edge — with three ways to define “now”.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">MODO ROLLING</span>
-          <span class="badge b2">MEMORIA DE AGRESIÓN</span>
-          </div>
+          <span class="badge b1" data-en="ROLLING MODE" data-es="MODO ROLLING">ROLLING MODE</span>
+          <span class="badge b2" data-en="AGGRESSION MEMORY" data-es="MEMORIA DE AGRESIÓN">AGGRESSION MEMORY</span>
+        </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>¿Estás comprando el empuje… o su eco?</b> El modo Rolling contiene siempre exactamente los últimos N minutos, y sus puntos de frescura marcan dónde la agresión está ocurriendo ahora mismo — no el residuo de una batalla que ya expiró.</p>
+        <p data-en="<b>Are you buying the push… or its echo?</b> Rolling mode always contains exactly the last N minutes, and its freshness dots mark where aggression is happening right now — not the residue of a battle that already expired."
+           data-es="<b>¿Estás comprando el empuje… o su eco?</b> El modo Rolling contiene siempre exactamente los últimos N minutos, y sus puntos de frescura marcan dónde la agresión está ocurriendo ahora mismo — no el residuo de una batalla que ya expiró."><b>Are you buying the push… or its echo?</b> Rolling mode always contains exactly the last N minutes, and its freshness dots mark where aggression is happening right now — not the residue of a battle that already expired.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>La subasta por precio</h3>
-          <p>Delta agresivo por fila de precio, con gradiente de intensidad y la fila del máximo delta contorneada en oro: el precio donde un lado se comprometió con más fuerza.</p>
+          <h3 data-en="The auction by price" data-es="La subasta por precio">The auction by price</h3>
+          <p data-en="Aggressive delta per price row, with an intensity gradient and the max-delta row outlined in gold: the price where one side committed hardest."
+             data-es="Delta agresivo por fila de precio, con gradiente de intensidad y la fila del máximo delta contorneada en oro: el precio donde un lado se comprometió con más fuerza.">Aggressive delta per price row, with an intensity gradient and the max-delta row outlined in gold: the price where one side committed hardest.</p>
         </div>
         <div class="fcell">
-          <h3>Rolling: siempre lo último</h3>
-          <p>Una ventana que se desliza de forma continua, sin punto ciego tras un reinicio y sin delta viejo de hace horas. Frescura de datos garantizada en todo instante.</p>
+          <h3 data-en="Rolling: always the latest" data-es="Rolling: siempre lo último">Rolling: always the latest</h3>
+          <p data-en="A window that slides continuously, with no blind spot after a restart and no stale delta from hours ago. Data freshness guaranteed at every instant."
+             data-es="Una ventana que se desliza de forma continua, sin punto ciego tras un reinicio y sin delta viejo de hace horas. Frescura de datos garantizada en todo instante.">A window that slides continuously, with no blind spot after a restart and no stale delta from hours ago. Data freshness guaranteed at every instant.</p>
         </div>
         <div class="fcell">
-          <h3>Puntos de frescura</h3>
-          <p>Marcas blancas en las filas donde la agresión es reciente de verdad — la diferencia entre sumarse a un movimiento vivo y llegar tarde a uno muerto.</p>
+          <h3 data-en="Freshness dots" data-es="Puntos de frescura">Freshness dots</h3>
+          <p data-en="White marks on the rows where aggression is genuinely recent — the difference between joining a live move and arriving late to a dead one."
+             data-es="Marcas blancas en las filas donde la agresión es reciente de verdad — la diferencia entre sumarse a un movimiento vivo y llegar tarde a uno muerto.">White marks on the rows where aggression is genuinely recent — the difference between joining a live move and arriving late to a dead one.</p>
         </div>
         <div class="fcell">
-          <h3>DELTA vs PREV: la derivada</h3>
-          <p>La tarjeta compara la ventana actual con la anterior: +840 ahora frente a +200 antes = compradores acelerando. Signos opuestos = giro en marcha.</p>
+          <h3 data-en="DELTA vs PREV: the derivative" data-es="DELTA vs PREV: la derivada">DELTA vs PREV: the derivative</h3>
+          <p data-en="The card compares the current window with the previous one: +840 now versus +200 before = buyers accelerating. Opposite signs = a turn in progress."
+             data-es="La tarjeta compara la ventana actual con la anterior: +840 ahora frente a +200 antes = compradores acelerando. Signos opuestos = giro en marcha.">The card compares the current window with the previous one: +840 now versus +200 before = buyers accelerating. Opposite signs = a turn in progress.</p>
         </div>
         <div class="fcell">
-          <h3>Niveles naked de máximo delta</h3>
-          <p>Cada período cerrado deja su línea dorada donde el agresor se impuso — viva hasta que el precio la reexamina, con detección exacta al tick. Memoria de agresión pura.</p>
+          <h3 data-en="Naked max-delta levels" data-es="Niveles naked de máximo delta">Naked max-delta levels</h3>
+          <p data-en="Every closed period leaves its golden line where the aggressor prevailed — alive until price retests it, with tick-exact detection. Pure aggression memory."
+             data-es="Cada período cerrado deja su línea dorada donde el agresor se impuso — viva hasta que el precio la reexamina, con detección exacta al tick. Memoria de agresión pura.">Every closed period leaves its golden line where the aggressor prevailed — alive until price retests it, with tick-exact detection. Pure aggression memory.</p>
         </div>
         <div class="fcell">
-          <h3>El pulso de la sesión</h3>
-          <p>B 62% / S 38% de un vistazo: un 50/50 con total enorme es una batalla; un 70/30 con total pequeño es una deriva sin oposición.</p>
+          <h3 data-en="The session's pulse" data-es="El pulso de la sesión">The session's pulse</h3>
+          <p data-en="B 62% / S 38% at a glance: a 50/50 with a huge total is a battle; a 70/30 with a small total is an unopposed drift."
+             data-es="B 62% / S 38% de un vistazo: un 50/50 con total enorme es una batalla; un 70/30 con total pequeño es una deriva sin oposición.">B 62% / S 38% at a glance: a 50/50 with a huge total is a battle; a 70/30 with a small total is an unopposed drift.</p>
         </div>
-        </div>
+      </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -611,48 +737,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="fixedrange">Fixed Range Volume Profile</h2>
-          <p class="sub">Perfiles de volumen exactos al tick sobre cualquier rango de velas — dibujados, movidos y redimensionados directamente sobre el gráfico con el ratón.</p>
+          <p class="sub" data-en="Tick-exact volume profiles over any range of candles — drawn, moved and resized directly on the chart with your mouse."
+             data-es="Perfiles de volumen exactos al tick sobre cualquier rango de velas — dibujados, movidos y redimensionados directamente sobre el gráfico con el ratón.">Tick-exact volume profiles over any range of candles — drawn, moved and resized directly on the chart with your mouse.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">DIBUJA CON EL RATÓN</span>
-          <span class="badge b2">DELTA + VOLUMEN</span>
-          </div>
+          <span class="badge b1" data-en="DRAW WITH THE MOUSE" data-es="DIBUJA CON EL RATÓN">DRAW WITH THE MOUSE</span>
+          <span class="badge b2" data-en="DELTA + VOLUME" data-es="DELTA + VOLUMEN">DELTA + VOLUME</span>
+        </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>No solo dónde negoció el mercado: quién ganó en cada precio.</b> Su firma es la disposición “d b”: el delta por fila espalda con espalda con el volumen, desde un eje compartido. Dos preguntas, una silueta.</p>
+        <p data-en="<b>Not just where the market traded: who won at each price.</b> Its signature is the “d b” layout: per-row delta back to back with volume, from a shared axis. Two questions, one silhouette."
+           data-es="<b>No solo dónde negoció el mercado: quién ganó en cada precio.</b> Su firma es la disposición “d b”: el delta por fila espalda con espalda con el volumen, desde un eje compartido. Dos preguntas, una silueta."><b>Not just where the market traded: who won at each price.</b> Its signature is the “d b” layout: per-row delta back to back with volume, from a shared axis. Two questions, one silhouette.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Clic derecho y listo</h3>
-          <p>“Add Fixed Range Profile Here” y nace un perfil donde señalaste. Muévelo, estíralo, mantén varios a la vez — los bordes se anclan a velas, nunca a píxeles.</p>
+          <h3 data-en="Right-click and done" data-es="Clic derecho y listo">Right-click and done</h3>
+          <p data-en="“Add Fixed Range Profile Here” and a profile is born where you pointed. Move it, stretch it, keep several at once — edges snap to candles, never to pixels."
+             data-es="“Add Fixed Range Profile Here” y nace un perfil donde señalaste. Muévelo, estíralo, mantén varios a la vez — los bordes se anclan a velas, nunca a píxeles.">“Add Fixed Range Profile Here” and a profile is born where you pointed. Move it, stretch it, keep several at once — edges snap to candles, never to pixels.</p>
         </div>
         <div class="fcell">
-          <h3>Delta espalda con espalda</h3>
-          <p>El volumen te dice dónde se aceptó precio; el delta te dice quién pagó por ello. La fila del máximo delta queda contorneada: el precio del mayor compromiso del rango.</p>
+          <h3 data-en="Delta back to back" data-es="Delta espalda con espalda">Delta back to back</h3>
+          <p data-en="Volume tells you where price was accepted; delta tells you who paid for it. The max-delta row is outlined: the price of the range's biggest commitment."
+             data-es="El volumen te dice dónde se aceptó precio; el delta te dice quién pagó por ello. La fila del máximo delta queda contorneada: el precio del mayor compromiso del rango.">Volume tells you where price was accepted; delta tells you who paid for it. The max-delta row is outlined: the price of the range's biggest commitment.</p>
         </div>
         <div class="fcell">
-          <h3>Rangos vivos</h3>
-          <p>Arrastra el borde derecho hasta la última vela y el perfil queda pegado al presente: un perfil de sesión que empieza exactamente donde tú decides.</p>
+          <h3 data-en="Living ranges" data-es="Rangos vivos">Living ranges</h3>
+          <p data-en="Drag the right edge to the last candle and the profile stays glued to the present: a session profile that starts exactly where you decide."
+             data-es="Arrastra el borde derecho hasta la última vela y el perfil queda pegado al presente: un perfil de sesión que empieza exactamente donde tú decides.">Drag the right edge to the last candle and the profile stays glued to the present: a session profile that starts exactly where you decide.</p>
         </div>
         <div class="fcell">
-          <h3>Niveles proyectados</h3>
-          <p>vPOC, VAH y VAL extendidos hasta el borde derecho como niveles operables, con sus precios exactos impresos sobre las líneas.</p>
+          <h3 data-en="Projected levels" data-es="Niveles proyectados">Projected levels</h3>
+          <p data-en="vPOC, VAH and VAL extended to the right edge as tradable levels, with their exact prices printed on the lines."
+             data-es="vPOC, VAH y VAL extendidos hasta el borde derecho como niveles operables, con sus precios exactos impresos sobre las líneas.">vPOC, VAH and VAL extended to the right edge as tradable levels, with their exact prices printed on the lines.</p>
         </div>
         <div class="fcell">
-          <h3>Persistencia total</h3>
-          <p>Cada perfil se guarda en disco por instrumento. Recargas, cambios de workspace, reinicios: tus rangos siempre te esperan donde los dejaste.</p>
+          <h3 data-en="Total persistence" data-es="Persistencia total">Total persistence</h3>
+          <p data-en="Every profile is saved to disk per instrument. Reloads, workspace changes, restarts: your ranges always wait for you where you left them."
+             data-es="Cada perfil se guarda en disco por instrumento. Recargas, cambios de workspace, reinicios: tus rangos siempre te esperan donde los dejaste.">Every profile is saved to disk per instrument. Reloads, workspace changes, restarts: your ranges always wait for you where you left them.</p>
         </div>
         <div class="fcell">
-          <h3>Lectura de impulsos</h3>
-          <p>Perfila un tramo fuerte: delta concentrado al inicio = viajó por inercia; concentrado al final = todavía se estaba peleando. Información que ningún gráfico de velas te da.</p>
+          <h3 data-en="Impulse reading" data-es="Lectura de impulsos">Impulse reading</h3>
+          <p data-en="Profile a strong leg: delta concentrated at the start = it traveled on inertia; concentrated at the end = it was still being fought. Information no candlestick chart gives you."
+             data-es="Perfila un tramo fuerte: delta concentrado al inicio = viajó por inercia; concentrado al final = todavía se estaba peleando. Información que ningún gráfico de velas te da.">Profile a strong leg: delta concentrated at the start = it traveled on inertia; concentrated at the end = it was still being fought. Information no candlestick chart gives you.</p>
         </div>
-        </div>
+      </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -664,48 +798,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="anchored">Anchored Volume Profile</h2>
-          <p class="sub">El mapa real del volumen de cualquier ventana temporal — sesión, semana, mes, trimestre, rango fijo o ventana móvil — en un histograma limpio anclado al panel.</p>
+          <p class="sub" data-en="The real volume map of any time window — session, week, month, quarter, fixed range or rolling window — in a clean histogram anchored to the panel."
+             data-es="El mapa real del volumen de cualquier ventana temporal — sesión, semana, mes, trimestre, rango fijo o ventana móvil — en un histograma limpio anclado al panel.">The real volume map of any time window — session, week, month, quarter, fixed range or rolling window — in a clean histogram anchored to the panel.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">CUALQUIER VENTANA</span>
-          <span class="badge b2">CARGA EN SEGUNDOS</span>
-          </div>
+          <span class="badge b1" data-en="ANY WINDOW" data-es="CUALQUIER VENTANA">ANY WINDOW</span>
+          <span class="badge b2" data-en="LOADS IN SECONDS" data-es="CARGA EN SEGUNDOS">LOADS IN SECONDS</span>
+        </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>El contexto que quieras, al instante.</b> Solo carga los datos de la propia ventana — nunca el histórico completo del gráfico — así que abre en segundos tenga los días que tenga tu gráfico. Y si tu conexión cae y vuelve, se recarga solo: siempre exacto.</p>
+        <p data-en="<b>Whatever context you want, instantly.</b> It only loads the window's own data — never the chart's full history — so it opens in seconds no matter how many days your chart holds. And if your connection drops and returns, it reloads itself: always exact."
+           data-es="<b>El contexto que quieras, al instante.</b> Solo carga los datos de la propia ventana — nunca el histórico completo del gráfico — así que abre en segundos tenga los días que tenga tu gráfico. Y si tu conexión cae y vuelve, se recarga solo: siempre exacto."><b>Whatever context you want, instantly.</b> It only loads the window's own data — never the chart's full history — so it opens in seconds no matter how many days your chart holds. And if your connection drops and returns, it reloads itself: always exact.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Once ventanas temporales</h3>
-          <p>Sesión RTH o ETH en curso, semana, mes y trimestre actuales o anteriores, rango fijo al segundo, ventanas móviles de N minutos, días o semanas, o las velas visibles en pantalla.</p>
+          <h3 data-en="Eleven time windows" data-es="Once ventanas temporales">Eleven time windows</h3>
+          <p data-en="Current RTH or ETH session, current or previous week, month and quarter, fixed range to the second, rolling windows of N minutes, days or weeks, or the candles visible on screen."
+             data-es="Sesión RTH o ETH en curso, semana, mes y trimestre actuales o anteriores, rango fijo al segundo, ventanas móviles de N minutos, días o semanas, o las velas visibles en pantalla.">Current RTH or ETH session, current or previous week, month and quarter, fixed range to the second, rolling windows of N minutes, days or weeks, or the candles visible on screen.</p>
         </div>
         <div class="fcell">
-          <h3>Períodos que se gestionan solos</h3>
-          <p>Al nacer una semana nueva, la “semana anterior” se actualiza sola. Las ventanas móviles suman lo nuevo y restan exactamente lo que sale. Cero mantenimiento.</p>
+          <h3 data-en="Periods that manage themselves" data-es="Períodos que se gestionan solos">Periods that manage themselves</h3>
+          <p data-en="When a new week is born, the “previous week” updates itself. Rolling windows add the new and subtract exactly what leaves. Zero maintenance."
+             data-es="Al nacer una semana nueva, la “semana anterior” se actualiza sola. Las ventanas móviles suman lo nuevo y restan exactamente lo que sale. Cero mantenimiento.">When a new week is born, the “previous week” updates itself. Rolling windows add the new and subtract exactly what leaves. Zero maintenance.</p>
         </div>
         <div class="fcell">
-          <h3>VPOC, área de valor, HVN y LVN</h3>
-          <p>El imán más fuerte de la ventana, el rango de aceptación, las repisas donde el precio frena y los huecos que cruza rápido — los niveles que operan los profesionales.</p>
+          <h3 data-en="VPOC, value area, HVN and LVN" data-es="VPOC, área de valor, HVN y LVN">VPOC, value area, HVN and LVN</h3>
+          <p data-en="The window's strongest magnet, the acceptance range, the shelves where price brakes and the gaps it crosses fast — the levels professionals trade."
+             data-es="El imán más fuerte de la ventana, el rango de aceptación, las repisas donde el precio frena y los huecos que cruza rápido — los niveles que operan los profesionales.">The window's strongest magnet, the acceptance range, the shelves where price brakes and the gaps it crosses fast — the levels professionals trade.</p>
         </div>
         <div class="fcell">
-          <h3>Anclaje institucional</h3>
-          <p>Semanas, meses y trimestres anclados al día de trading, no al calendario. Festivos, sesiones recortadas y huecos de datos no pueden mover el ancla.</p>
+          <h3 data-en="Institutional anchoring" data-es="Anclaje institucional">Institutional anchoring</h3>
+          <p data-en="Weeks, months and quarters anchored to the trading day, not the calendar. Holidays, shortened sessions and data gaps can't move the anchor."
+             data-es="Semanas, meses y trimestres anclados al día de trading, no al calendario. Festivos, sesiones recortadas y huecos de datos no pueden mover el ancla.">Weeks, months and quarters anchored to the trading day, not the calendar. Holidays, shortened sessions and data gaps can't move the anchor.</p>
         </div>
         <div class="fcell">
-          <h3>Dos resoluciones</h3>
-          <p>Minuto para cargar en segundos con volumen total exacto, o tick a tick para la precisión absoluta. En vivo, siempre exacto al tick.</p>
+          <h3 data-en="Two resolutions" data-es="Dos resoluciones">Two resolutions</h3>
+          <p data-en="Minute to load in seconds with exact total volume, or tick-by-tick for absolute precision. Live, always tick-exact."
+             data-es="Minuto para cargar en segundos con volumen total exacto, o tick a tick para la precisión absoluta. En vivo, siempre exacto al tick.">Minute to load in seconds with exact total volume, or tick-by-tick for absolute precision. Live, always tick-exact.</p>
         </div>
         <div class="fcell">
-          <h3>Dobla la lectura</h3>
-          <p>Añádelo dos veces — uno a cada borde del panel — y opera con el mapa de la semana anterior frente al de la sesión en curso, cara a cara.</p>
+          <h3 data-en="Double the read" data-es="Dobla la lectura">Double the read</h3>
+          <p data-en="Add it twice — one on each edge of the panel — and trade with last week's map facing the current session's, side by side."
+             data-es="Añádelo dos veces — uno a cada borde del panel — y opera con el mapa de la semana anterior frente al de la sesión en curso, cara a cara.">Add it twice — one on each edge of the panel — and trade with last week's map facing the current session's, side by side.</p>
         </div>
-        </div>
+      </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -717,48 +859,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="vwap">VWAP Suite</h2>
-          <p class="sub">Cinco indicadores, un mismo estándar: el VWAP diario, semanal, mensual, trimestral y anual con canales de desviación — los precios de referencia contra los que las instituciones miden sus ejecuciones.</p>
+          <p class="sub" data-en="Five indicators, one standard: the daily, weekly, monthly, quarterly and yearly VWAP with deviation channels — the reference prices institutions measure their executions against."
+             data-es="Cinco indicadores, un mismo estándar: el VWAP diario, semanal, mensual, trimestral y anual con canales de desviación — los precios de referencia contra los que las instituciones miden sus ejecuciones.">Five indicators, one standard: the daily, weekly, monthly, quarterly and yearly VWAP with deviation channels — the reference prices institutions measure their executions against.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">5 INDICADORES</span>
-          <span class="badge b2">EXACTO AL TICK</span>
+          <span class="badge b1" data-en="5 INDICATORS" data-es="5 INDICADORES">5 INDICATORS</span>
+          <span class="badge b2" data-en="TICK-EXACT" data-es="EXACTO AL TICK">TICK-EXACT</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>El VWAP que imprime el mismo valor en cualquier gráfico.</b> La mayoría de herramientas lo aproximan desde las velas: su valor se desvía y hasta cambia con el timeframe. Los VWAP de MATE se calculan operación a operación — el valor verdadero, en cualquier gráfico, siempre.</p>
+        <p data-en="<b>The VWAP that prints the same value on any chart.</b> Most tools approximate it from candles: their value drifts and even changes with the timeframe. MATE's VWAPs are computed trade by trade — the true value, on any chart, always."
+           data-es="<b>El VWAP que imprime el mismo valor en cualquier gráfico.</b> La mayoría de herramientas lo aproximan desde las velas: su valor se desvía y hasta cambia con el timeframe. Los VWAP de MATE se calculan operación a operación — el valor verdadero, en cualquier gráfico, siempre."><b>The VWAP that prints the same value on any chart.</b> Most tools approximate it from candles: their value drifts and even changes with the timeframe. MATE's VWAPs are computed trade by trade — the true value, on any chart, always.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Los cinco horizontes</h3>
-          <p>Daily (RTH y ETH por separado), Weekly, Monthly, Quarterly y Yearly. Del pulso intradía al ancla que el position trading vigila durante meses — toda la jerarquía temporal cubierta.</p>
+          <h3 data-en="The five horizons" data-es="Los cinco horizontes">The five horizons</h3>
+          <p data-en="Daily (RTH and ETH separately), Weekly, Monthly, Quarterly and Yearly. From the intraday pulse to the anchor that position traders watch for months — the whole time hierarchy covered."
+             data-es="Daily (RTH y ETH por separado), Weekly, Monthly, Quarterly y Yearly. Del pulso intradía al ancla que el position trading vigila durante meses — toda la jerarquía temporal cubierta.">Daily (RTH and ETH separately), Weekly, Monthly, Quarterly and Yearly. From the intraday pulse to the anchor that position traders watch for months — the whole time hierarchy covered.</p>
         </div>
         <div class="fcell">
-          <h3>Hasta cinco bandas por VWAP</h3>
-          <p>Canales de desviación con multiplicador, colores y relleno propios por banda — en desviación estándar ponderada por volumen o en cuartos del rango real, al estilo Market Profile.</p>
+          <h3 data-en="Up to five bands per VWAP" data-es="Hasta cinco bandas por VWAP">Up to five bands per VWAP</h3>
+          <p data-en="Deviation channels with per-band multiplier, colors and fill — in volume-weighted standard deviation or quarters of the true range, Market Profile style."
+             data-es="Canales de desviación con multiplicador, colores y relleno propios por banda — en desviación estándar ponderada por volumen o en cuartos del rango real, al estilo Market Profile.">Deviation channels with per-band multiplier, colors and fill — in volume-weighted standard deviation or quarters of the true range, Market Profile style.</p>
         </div>
         <div class="fcell">
-          <h3>Prior Values: la memoria del período</h3>
-          <p>Al cerrar cada sesión, semana, mes o año, su VWAP y su canal de valor quedan congelados y proyectados hacia delante — los niveles del último acuerdo del mercado, listos para su primer test.</p>
+          <h3 data-en="Prior Values: the period's memory" data-es="Prior Values: la memoria del período">Prior Values: the period's memory</h3>
+          <p data-en="When each session, week, month or year closes, its VWAP and value channel are frozen and projected forward — the levels of the market's last agreement, ready for their first test."
+             data-es="Al cerrar cada sesión, semana, mes o año, su VWAP y su canal de valor quedan congelados y proyectados hacia delante — los niveles del último acuerdo del mercado, listos para su primer test.">When each session, week, month or year closes, its VWAP and value channel are frozen and projected forward — the levels of the market's last agreement, ready for their first test.</p>
         </div>
         <div class="fcell">
-          <h3>Períodos estrictamente individuales</h3>
-          <p>Cada VWAP nace de cero en su apertura y muere en su cierre: ninguna línea cruza jamás al período siguiente. Sin contaminación entre sesiones, sin herencias falsas.</p>
+          <h3 data-en="Strictly individual periods" data-es="Períodos estrictamente individuales">Strictly individual periods</h3>
+          <p data-en="Each VWAP is born from zero at its open and dies at its close: no line ever crosses into the next period. No cross-session contamination, no false inheritances."
+             data-es="Cada VWAP nace de cero en su apertura y muere en su cierre: ninguna línea cruza jamás al período siguiente. Sin contaminación entre sesiones, sin herencias falsas.">Each VWAP is born from zero at its open and dies at its close: no line ever crosses into the next period. No cross-session contamination, no false inheritances.</p>
         </div>
         <div class="fcell">
-          <h3>Anclaje institucional</h3>
-          <p>Semanas, meses, trimestres y años anclados al día de trading — la convención de los profesionales. Festivos, sesiones recortadas y huecos de datos no pueden mover el ancla.</p>
+          <h3 data-en="Institutional anchoring" data-es="Anclaje institucional">Institutional anchoring</h3>
+          <p data-en="Weeks, months, quarters and years anchored to the trading day — the professionals' convention. Holidays, shortened sessions and data gaps can't move the anchor."
+             data-es="Semanas, meses, trimestres y años anclados al día de trading — la convención de los profesionales. Festivos, sesiones recortadas y huecos de datos no pueden mover el ancla.">Weeks, months, quarters and years anchored to the trading day — the professionals' convention. Holidays, shortened sessions and data gaps can't move the anchor.</p>
         </div>
         <div class="fcell">
-          <h3>Tu sesión, tu zona horaria</h3>
-          <p>Horarios de sesión configurables e interpretados en la zona que elijas, con horario de verano automático. Las 09:30 de Nueva York son la apertura, estés donde estés.</p>
+          <h3 data-en="Your session, your time zone" data-es="Tu sesión, tu zona horaria">Your session, your time zone</h3>
+          <p data-en="Configurable session hours interpreted in the zone you choose, with automatic daylight saving. 09:30 New York is the open, wherever you are."
+             data-es="Horarios de sesión configurables e interpretados en la zona que elijas, con horario de verano automático. Las 09:30 de Nueva York son la apertura, estés donde estés.">Configurable session hours interpreted in the zone you choose, with automatic daylight saving. 09:30 New York is the open, wherever you are.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>5 MANUALES COMPLETOS EN ESPAÑOL E INGLÉS · INCLUIDOS</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED" data-es="5 INDICADORES · ACTUALIZACIONES Y SOPORTE INCLUIDOS">5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -770,54 +920,60 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="mgi">MGI Suite</h2>
-          <p class="sub">Market Generated Information en cinco horizontes — diario, semanal, mensual, trimestral y anual: los niveles que el mercado genera y luego respeta, dibujados solos en tu gráfico.</p>
+          <p class="sub" data-en="Market Generated Information across five horizons — daily, weekly, monthly, quarterly and yearly: the levels the market generates and then respects, drawn automatically on your chart."
+             data-es="Market Generated Information en cinco horizontes — diario, semanal, mensual, trimestral y anual: los niveles que el mercado genera y luego respeta, dibujados solos en tu gráfico.">Market Generated Information across five horizons — daily, weekly, monthly, quarterly and yearly: the levels the market generates and then respects, drawn automatically on your chart.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">5 INDICADORES</span>
-          <span class="badge b2">SELLADO AL SEGUNDO</span>
+          <span class="badge b1" data-en="5 INDICATORS" data-es="5 INDICADORES">5 INDICATORS</span>
+          <span class="badge b2" data-en="SEALED TO THE SECOND" data-es="SELLADO AL SEGUNDO">SEALED TO THE SECOND</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>El mapa del día, listo antes de la apertura.</b> Rango overnight, Initial Balance con extensiones, niveles del período anterior, value areas exactas al tick, Half Gap y VWAPs de sesión — cada nivel aparece solo cuando queda definido, congelado en su hora exacta, y jamás se repinta.</p>
+        <p data-en="<b>The day's map, ready before the open.</b> Overnight range, Initial Balance with extensions, previous-period levels, tick-exact value areas, Half Gap and session VWAPs — every level appears only once defined, frozen at its exact time, and never repaints."
+           data-es="<b>El mapa del día, listo antes de la apertura.</b> Rango overnight, Initial Balance con extensiones, niveles del período anterior, value areas exactas al tick, Half Gap y VWAPs de sesión — cada nivel aparece solo cuando queda definido, congelado en su hora exacta, y jamás se repinta."><b>The day's map, ready before the open.</b> Overnight range, Initial Balance with extensions, previous-period levels, tick-exact value areas, Half Gap and session VWAPs — every level appears only once defined, frozen at its exact time, and never repaints.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>El arsenal intradía completo</h3>
-          <p>ONH/ONL, Initial Balance con extensiones proyectadas, niveles RTH y ETH del día previo, value areas PRTH, PETH y overnight, VWAPs de sesión y el Half Gap — el imán clásico del gap.</p>
+          <h3 data-en="The complete intraday arsenal" data-es="El arsenal intradía completo">The complete intraday arsenal</h3>
+          <p data-en="ONH/ONL, Initial Balance with projected extensions, previous-day RTH and ETH levels, PRTH, PETH and overnight value areas, session VWAPs and the Half Gap — the classic gap magnet."
+             data-es="ONH/ONL, Initial Balance con extensiones proyectadas, niveles RTH y ETH del día previo, value areas PRTH, PETH y overnight, VWAPs de sesión y el Half Gap — el imán clásico del gap.">ONH/ONL, Initial Balance with projected extensions, previous-day RTH and ETH levels, PRTH, PETH and overnight value areas, session VWAPs and the Half Gap — the classic gap magnet.</p>
         </div>
         <div class="fcell">
-          <h3>La memoria de cada horizonte</h3>
-          <p>Máximo, mínimo, punto medio, apertura, cierre y value area del período anterior — semanal, mensual, trimestral y anual. Los POC sin testear de estos marcos se revisitan semanas después.</p>
+          <h3 data-en="The memory of every horizon" data-es="La memoria de cada horizonte">The memory of every horizon</h3>
+          <p data-en="Previous period's high, low, midpoint, open, close and value area — weekly, monthly, quarterly and yearly. Untested POCs from these frames get revisited weeks later."
+             data-es="Máximo, mínimo, punto medio, apertura, cierre y value area del período anterior — semanal, mensual, trimestral y anual. Los POC sin testear de estos marcos se revisitan semanas después.">Previous period's high, low, midpoint, open, close and value area — weekly, monthly, quarterly and yearly. Untested POCs from these frames get revisited weeks later.</p>
         </div>
         <div class="fcell">
-          <h3>Zonas de confluencia automáticas</h3>
-          <p>Cuando dos o más niveles independientes se apilan a pocos ticks, el indicador sombrea la franja: las áreas de reacción de mayor probabilidad, detectadas por ti.</p>
+          <h3 data-en="Automatic confluence zones" data-es="Zonas de confluencia automáticas">Automatic confluence zones</h3>
+          <p data-en="When two or more independent levels stack within a few ticks, the indicator shades the band: the highest-probability reaction areas, detected for you."
+             data-es="Cuando dos o más niveles independientes se apilan a pocos ticks, el indicador sombrea la franja: las áreas de reacción de mayor probabilidad, detectadas por ti.">When two or more independent levels stack within a few ticks, the indicator shades the band: the highest-probability reaction areas, detected for you.</p>
         </div>
         <div class="fcell">
-          <h3>Clasificación de la subasta</h3>
-          <p>Value Higher, Lower, Inside, Outside u Overlap: cada período se autoclasifica comparando su valor en desarrollo con el anterior. El contexto del día, resumido en una etiqueta.</p>
+          <h3 data-en="Auction classification" data-es="Clasificación de la subasta">Auction classification</h3>
+          <p data-en="Value Higher, Lower, Inside, Outside or Overlap: each period classifies itself by comparing its developing value with the previous one. The day's context, summed up in one label."
+             data-es="Value Higher, Lower, Inside, Outside u Overlap: cada período se autoclasifica comparando su valor en desarrollo con el anterior. El contexto del día, resumido en una etiqueta.">Value Higher, Lower, Inside, Outside or Overlap: each period classifies itself by comparing its developing value with the previous one. The day's context, summed up in one label.</p>
         </div>
         <div class="fcell">
-          <h3>Alertas al primer toque</h3>
-          <p>Una alerta la primera vez que el precio toca cada nivel clave — una vez por nivel y período, solo en tiempo real. Deja de vigilar líneas: espera la llamada.</p>
+          <h3 data-en="First-touch alerts" data-es="Alertas al primer toque">First-touch alerts</h3>
+          <p data-en="An alert the first time price touches each key level — once per level and period, live only. Stop watching lines: wait for the call."
+             data-es="Una alerta la primera vez que el precio toca cada nivel clave — una vez por nivel y período, solo en tiempo real. Deja de vigilar líneas: espera la llamada.">An alert the first time price touches each key level — once per level and period, live only. Stop watching lines: wait for the call.</p>
         </div>
         <div class="fcell">
-          <h3>Modo estudio del pasado</h3>
-          <p>Activa los períodos previos y cada día, semana o mes pasado muestra exactamente lo que su operador vio entonces — la herramienta perfecta para estudiar cómo el precio respeta cada nivel.</p>
+          <h3 data-en="Study-the-past mode" data-es="Modo estudio del pasado">Study-the-past mode</h3>
+          <p data-en="Enable previous periods and every past day, week or month shows exactly what its trader saw back then — the perfect tool to study how price respects each level."
+             data-es="Activa los períodos previos y cada día, semana o mes pasado muestra exactamente lo que su operador vio entonces — la herramienta perfecta para estudiar cómo el precio respeta cada nivel.">Enable previous periods and every past day, week or month shows exactly what its trader saw back then — the perfect tool to study how price respects each level.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>5 MANUALES COMPLETOS EN ESPAÑOL E INGLÉS · INCLUIDOS</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED" data-es="5 INDICADORES · ACTUALIZACIONES Y SOPORTE INCLUIDOS">5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
 </section>
-
-
 
 <section style="padding-top:0">
   <div class="wrap">
@@ -825,48 +981,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="lagsentinel">Lag Sentinel</h2>
-          <p class="sub">El guardián silencioso de tu operativa: vigila las tres tuberías por las que fluye tu dinero — los datos que entran, las órdenes que salen y la plataforma que lo pinta todo.</p>
+          <p class="sub" data-en="The silent guardian of your trading: it watches the three pipes your money flows through — the data coming in, the orders going out and the platform painting it all."
+             data-es="El guardián silencioso de tu operativa: vigila las tres tuberías por las que fluye tu dinero — los datos que entran, las órdenes que salen y la plataforma que lo pinta todo.">The silent guardian of your trading: it watches the three pipes your money flows through — the data coming in, the orders going out and the platform painting it all.</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">VIGILANCIA 3 TUBERÍAS</span>
-          <span class="badge b2">SILENCIOSO HASTA QUE IMPORTA</span>
+          <span class="badge b1" data-en="3-PIPE WATCH" data-es="VIGILANCIA 3 TUBERÍAS">3-PIPE WATCH</span>
+          <span class="badge b2" data-en="SILENT UNTIL IT MATTERS" data-es="SILENCIOSO HASTA QUE IMPORTA">SILENT UNTIL IT MATTERS</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>¿Lo que ves en pantalla es realmente el mercado, ahora mismo?</b> Lag Sentinel responde esa pregunta con honestidad: guarda silencio mientras todo está sano, y cuando una tubería se degrada, una línea nombra al culpable. Cuando sana, desaparece.</p>
+        <p data-en="<b>Is what you see on screen really the market, right now?</b> Lag Sentinel answers that question honestly: it stays silent while everything is healthy, and when a pipe degrades, one line names the culprit. When it heals, it disappears."
+           data-es="<b>¿Lo que ves en pantalla es realmente el mercado, ahora mismo?</b> Lag Sentinel responde esa pregunta con honestidad: guarda silencio mientras todo está sano, y cuando una tubería se degrada, una línea nombra al culpable. Cuando sana, desaparece."><b>Is what you see on screen really the market, right now?</b> Lag Sentinel answers that question honestly: it stays silent while everything is healthy, and when a pipe degrades, one line names the culprit. When it heals, it disappears.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Medición honesta, no teatro</h3>
-          <p>Los detectores de lag baratos imprimen números físicamente imposibles porque mezclan el error del reloj del PC con la latencia. Lag Sentinel mide la desviación contra la línea base de tu propia sesión — inmune a zonas horarias y relojes descuadrados.</p>
+          <h3 data-en="Honest measurement, not theater" data-es="Medición honesta, no teatro">Honest measurement, not theater</h3>
+          <p data-en="Cheap lag detectors print physically impossible numbers because they mix PC clock error with latency. Lag Sentinel measures deviation against your own session's baseline — immune to time zones and skewed clocks."
+             data-es="Los detectores de lag baratos imprimen números físicamente imposibles porque mezclan el error del reloj del PC con la latencia. Lag Sentinel mide la desviación contra la línea base de tu propia sesión — inmune a zonas horarias y relojes descuadrados.">Cheap lag detectors print physically impossible numbers because they mix PC clock error with latency. Lag Sentinel measures deviation against your own session's baseline — immune to time zones and skewed clocks.</p>
         </div>
         <div class="fcell">
-          <h3>Datos: feed vivo o congelado</h3>
-          <p>Distingue lo que otros confunden: una cinta callada no es un feed muerto. Vigila trades y quotes por separado — silencio de quotes es feed congelado; silencio de trades con quotes vivas es solo mercado quieto.</p>
+          <h3 data-en="Data: live feed or frozen" data-es="Datos: feed vivo o congelado">Data: live feed or frozen</h3>
+          <p data-en="It distinguishes what others confuse: a quiet tape is not a dead feed. It watches trades and quotes separately — quote silence is a frozen feed; trade silence with live quotes is just a quiet market."
+             data-es="Distingue lo que otros confunden: una cinta callada no es un feed muerto. Vigila trades y quotes por separado — silencio de quotes es feed congelado; silencio de trades con quotes vivas es solo mercado quieto.">It distinguishes what others confuse: a quiet tape is not a dead feed. It watches trades and quotes separately — quote silence is a frozen feed; trade silence with live quotes is just a quiet market.</p>
         </div>
         <div class="fcell">
-          <h3>Órdenes: el lag que cuesta dinero</h3>
-          <p>Mide el tiempo real de envío a acuse de tus propias órdenes — solo escucha, jamás las toca. Hacer scalping con acuses lentos es pagar un spread oculto; aquí lo ves antes de pagarlo.</p>
+          <h3 data-en="Orders: the lag that costs money" data-es="Órdenes: el lag que cuesta dinero">Orders: the lag that costs money</h3>
+          <p data-en="It measures the real submit-to-acknowledge time of your own orders — it only listens, never touches them. Scalping with slow acknowledgements is paying a hidden spread; here you see it before you pay it."
+             data-es="Mide el tiempo real de envío a acuse de tus propias órdenes — solo escucha, jamás las toca. Hacer scalping con acuses lentos es pagar un spread oculto; aquí lo ves antes de pagarlo.">It measures the real submit-to-acknowledge time of your own orders — it only listens, never touches them. Scalping with slow acknowledgements is paying a hidden spread; here you see it before you pay it.</p>
         </div>
         <div class="fcell">
-          <h3>Plataforma: cuando NT8 se ahoga</h3>
-          <p>Un latido en segundo plano detecta si la interfaz de NinjaTrader pinta por detrás de la realidad — demasiados gráficos, demasiados indicadores. Tus datos pueden estar bien; tu imagen de ellos, no.</p>
+          <h3 data-en="Platform: when NT8 chokes" data-es="Plataforma: cuando NT8 se ahoga">Platform: when NT8 chokes</h3>
+          <p data-en="A background heartbeat detects when NinjaTrader's interface paints behind reality — too many charts, too many indicators. Your data may be fine; your picture of it, not."
+             data-es="Un latido en segundo plano detecta si la interfaz de NinjaTrader pinta por detrás de la realidad — demasiados gráficos, demasiados indicadores. Tus datos pueden estar bien; tu imagen de ellos, no.">A background heartbeat detects when NinjaTrader's interface paints behind reality — too many charts, too many indicators. Your data may be fine; your picture of it, not.</p>
         </div>
         <div class="fcell">
-          <h3>Ámbar avisa, rojo ordena parar</h3>
-          <p>Fondo ámbar: algo va lento — opera con margen. Fondo rojo, feed congelado: deja de confiar en el gráfico y gestiona el riesgo desde el bróker. El color siempre refleja la peor tubería.</p>
+          <h3 data-en="Amber warns, red means stop" data-es="Ámbar avisa, rojo ordena parar">Amber warns, red means stop</h3>
+          <p data-en="Amber background: something is slow — trade with margin. Red background, frozen feed: stop trusting the chart and manage risk from the broker. The color always reflects the worst pipe."
+             data-es="Fondo ámbar: algo va lento — opera con margen. Fondo rojo, feed congelado: deja de confiar en el gráfico y gestiona el riesgo desde el bróker. El color siempre refleja la peor tubería.">Amber background: something is slow — trade with margin. Red background, frozen feed: stop trusting the chart and manage risk from the broker. The color always reflects the worst pipe.</p>
         </div>
         <div class="fcell">
-          <h3>Estadística robusta por construcción</h3>
-          <p>Medianas y P95 sobre ventanas de 60 segundos con histéresis: un tick suelto jamás grita, un retraso sostenido siempre lo hace. Y todo sana solo, sin intervención.</p>
+          <h3 data-en="Robust statistics by construction" data-es="Estadística robusta por construcción">Robust statistics by construction</h3>
+          <p data-en="Medians and P95 over 60-second windows with hysteresis: a stray tick never screams, a sustained delay always does. And everything heals by itself, no intervention."
+             data-es="Medianas y P95 sobre ventanas de 60 segundos con histéresis: un tick suelto jamás grita, un retraso sostenido siempre lo hace. Y todo sana solo, sin intervención.">Medians and P95 over 60-second windows with hysteresis: a stray tick never screams, a sustained delay always does. And everything heals by itself, no intervention.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -878,48 +1042,56 @@
       <div class="fc-head">
         <div class="t">
           <h2 id="auctioncontext">Auction Context</h2>
-          <p class="sub">Un solo panel que responde, antes y durante cada sesión, la pregunta que todo trader de subastas se hace: ¿qué tan grande es hoy comparado con un día normal?</p>
+          <p class="sub" data-en="A single panel answering, before and during every session, the question every auction trader asks: how big is today compared to a normal day?"
+             data-es="Un solo panel que responde, antes y durante cada sesión, la pregunta que todo trader de subastas se hace: ¿qué tan grande es hoy comparado con un día normal?">A single panel answering, before and during every session, the question every auction trader asks: how big is today compared to a normal day?</p>
         </div>
         <div class="fc-badges">
-          <span class="badge b1">EL CONTEXTO EN UN PANEL</span>
-          <span class="badge b2">SIN VALORES DEGRADADOS</span>
+          <span class="badge b1" data-en="CONTEXT IN ONE PANEL" data-es="EL CONTEXTO EN UN PANEL">CONTEXT IN ONE PANEL</span>
+          <span class="badge b2" data-en="NO DEGRADED VALUES" data-es="SIN VALORES DEGRADADOS">NO DEGRADED VALUES</span>
         </div>
       </div>
 
       <div class="fc-promise">
-        <p><b>El pre-open en diez segundos.</b> Rangos contra su típico, volumen relativo por minuto de reloj, inventario overnight y rotaciones — cada número es una medición real de tu propio instrumento, y el día en curso jamás contamina sus propios promedios. Contexto honesto, no señales mágicas.</p>
+        <p data-en="<b>The pre-open in ten seconds.</b> Ranges against their typical, relative volume by clock minute, overnight inventory and rotations — every number is a real measurement of your own instrument, and the developing day never contaminates its own averages. Honest context, not magic signals."
+           data-es="<b>El pre-open en diez segundos.</b> Rangos contra su típico, volumen relativo por minuto de reloj, inventario overnight y rotaciones — cada número es una medición real de tu propio instrumento, y el día en curso jamás contamina sus propios promedios. Contexto honesto, no señales mágicas."><b>The pre-open in ten seconds.</b> Ranges against their typical, relative volume by clock minute, overnight inventory and rotations — every number is a real measurement of your own instrument, and the developing day never contaminates its own averages. Honest context, not magic signals.</p>
       </div>
 
       <div class="fc-grid">
         <div class="fcell">
-          <h3>Rangos contra lo normal</h3>
-          <p>Overnight, Initial Balance, RTH y ETH medidos contra su típico de N días. Un porcentaje y lo sabes: hoy viene comprimido, normal o extendido — y ajustas targets en lugar de operar todos los días igual.</p>
+          <h3 data-en="Ranges against normal" data-es="Rangos contra lo normal">Ranges against normal</h3>
+          <p data-en="Overnight, Initial Balance, RTH and ETH measured against their N-day typical. One percentage and you know: today is compressed, normal or extended — and you adjust targets instead of trading every day the same."
+             data-es="Overnight, Initial Balance, RTH y ETH medidos contra su típico de N días. Un porcentaje y lo sabes: hoy viene comprimido, normal o extendido — y ajustas targets en lugar de operar todos los días igual.">Overnight, Initial Balance, RTH and ETH measured against their N-day typical. One percentage and you know: today is compressed, normal or extended — and you adjust targets instead of trading every day the same.</p>
         </div>
         <div class="fcell">
-          <h3>RVOL por minuto de reloj</h3>
-          <p>Tu volumen acumulado comparado contra el acumulado típico en este minuto exacto de la sesión — porque comparar las 10:00 contra un promedio de día completo no significa nada.</p>
+          <h3 data-en="RVOL by clock minute" data-es="RVOL por minuto de reloj">RVOL by clock minute</h3>
+          <p data-en="Your cumulative volume compared against the typical cumulative at this exact minute of the session — because comparing 10:00 against a full-day average means nothing."
+             data-es="Tu volumen acumulado comparado contra el acumulado típico en este minuto exacto de la sesión — porque comparar las 10:00 contra un promedio de día completo no significa nada.">Your cumulative volume compared against the typical cumulative at this exact minute of the session — because comparing 10:00 against a full-day average means nothing.</p>
         </div>
         <div class="fcell">
-          <h3>Inventario overnight</h3>
-          <p>Qué parte de la noche operó por encima o por debajo del settlement: quién llega cargado a la apertura. Una noche 100% de un solo bando es información que la primera hora pondrá a prueba.</p>
+          <h3 data-en="Overnight inventory" data-es="Inventario overnight">Overnight inventory</h3>
+          <p data-en="How much of the night traded above or below settlement: who arrives loaded at the open. A 100% one-sided night is information the first hour will put to the test."
+             data-es="Qué parte de la noche operó por encima o por debajo del settlement: quién llega cargado a la apertura. Una noche 100% de un solo bando es información que la primera hora pondrá a prueba.">How much of the night traded above or below settlement: who arrives loaded at the open. A 100% one-sided night is information the first hour will put to the test.</p>
         </div>
         <div class="fcell">
-          <h3>Delta exacto, no estimado</h3>
-          <p>El delta overnight y de sesión clasificado tick a tick contra el bid/ask grabado con cada operación — congelado el nocturno en la apertura, acumulado en vivo el del día.</p>
+          <h3 data-en="Exact delta, not estimated" data-es="Delta exacto, no estimado">Exact delta, not estimated</h3>
+          <p data-en="Overnight and session delta classified tick by tick against the bid/ask recorded with each trade — the overnight frozen at the open, the day's accumulated live."
+             data-es="El delta overnight y de sesión clasificado tick a tick contra el bid/ask grabado con cada operación — congelado el nocturno en la apertura, acumulado en vivo el del día.">Overnight and session delta classified tick by tick against the bid/ask recorded with each trade — the overnight frozen at the open, the day's accumulated live.</p>
         </div>
         <div class="fcell">
-          <h3>Calculadora de rotaciones</h3>
-          <p>Tres detectores en paralelo con umbrales que se adaptan a la volatilidad actual: la unidad natural de swing de tu instrumento, ahora mismo. Y el leg en curso medido contra la media — ¿rotación rutinaria o algo mayor?</p>
+          <h3 data-en="Rotation calculator" data-es="Calculadora de rotaciones">Rotation calculator</h3>
+          <p data-en="Three parallel detectors with thresholds that adapt to current volatility: your instrument's natural swing unit, right now. And the current leg measured against the average — routine rotation or something bigger?"
+             data-es="Tres detectores en paralelo con umbrales que se adaptan a la volatilidad actual: la unidad natural de swing de tu instrumento, ahora mismo. Y el leg en curso medido contra la media — ¿rotación rutinaria o algo mayor?">Three parallel detectors with thresholds that adapt to current volatility: your instrument's natural swing unit, right now. And the current leg measured against the average — routine rotation or something bigger?</p>
         </div>
         <div class="fcell">
-          <h3>Honestidad radical con los datos</h3>
-          <p>Cada valor es una medición real o un N/A explícito con su motivo — nunca un número degradado en silencio. Los promedios solo se alimentan con sesiones completas y cerradas.</p>
+          <h3 data-en="Radical honesty with data" data-es="Honestidad radical con los datos">Radical honesty with data</h3>
+          <p data-en="Every value is a real measurement or an explicit N/A with its reason — never a silently degraded number. Averages are fed only with complete, closed sessions."
+             data-es="Cada valor es una medición real o un N/A explícito con su motivo — nunca un número degradado en silencio. Los promedios solo se alimentan con sesiones completas y cerradas.">Every value is a real measurement or an explicit N/A with its reason — never a silently degraded number. Averages are fed only with complete, closed sessions.</p>
         </div>
       </div>
 
       <div class="fc-foot">
-        <span class="doc"><i></i>MANUAL COMPLETO EN ESPAÑOL E INGLÉS · INCLUIDO</span>
-        <a class="btn btn-orange" href="index.html#productos">Incluido en todos los planes</a>
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
       </div>
     </div>
   </div>
@@ -928,9 +1100,10 @@
 <section>
   <div class="wrap">
     <div class="cta-box">
-      <h2>Pruébalo todo, 7 días, gratis</h2>
-      <p>Acceso completo al pack, sin tarjeta. Así compras sabiendo exactamente lo que llevas.</p>
-      <a class="btn btn-orange" href="index.html#contacto">Solicitar demo</a>
+      <h2 data-en="Try everything, 7 days, free" data-es="Pruébalo todo, 7 días, gratis">Try everything, 7 days, free</h2>
+      <p data-en="Full access to the suite, no credit card. Buy knowing exactly what you're getting."
+         data-es="Acceso completo al pack, sin tarjeta. Así compras sabiendo exactamente lo que llevas.">Full access to the suite, no credit card. Buy knowing exactly what you're getting.</p>
+      <a class="btn btn-orange" href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial" data-es="Empezar demo gratis">Start free trial</a>
     </div>
   </div>
 </section>
@@ -940,10 +1113,45 @@
   <div class="wrap">
     <div class="foot">
       <span>© 2026 MATE · matetrading.com</span>
-      <span>NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.</span>
+      <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+            data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
     </div>
-    <p class="disclaimer">Aviso de riesgo: operar futuros y otros instrumentos apalancados conlleva un alto riesgo de pérdida y no es adecuado para todos los inversores. El rendimiento pasado no garantiza resultados futuros. Las herramientas MATE son ayudas de análisis y no constituyen asesoramiento financiero.</p>
+    <p class="disclaimer"
+       data-en="Risk disclosure: trading futures and other leveraged instruments involves a high risk of loss and is not suitable for all investors. Past performance does not guarantee future results. MATE tools are analysis aids and do not constitute financial advice."
+       data-es="Aviso de riesgo: operar futuros y otros instrumentos apalancados conlleva un alto riesgo de pérdida y no es adecuado para todos los inversores. El rendimiento pasado no garantiza resultados futuros. Las herramientas MATE son ayudas de análisis y no constituyen asesoramiento financiero.">Risk disclosure: trading futures and other leveraged instruments involves a high risk of loss and is not suitable for all investors. Past performance does not guarantee future results. MATE tools are analysis aids and do not constitute financial advice.</p>
   </div>
 </footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? 'Indicators — MATE · Order Flow Tools for NinjaTrader 8'
+                            : 'Indicadores — MATE · Order Flow Tools para NinjaTrader 8';
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
 </body>
 </html>
