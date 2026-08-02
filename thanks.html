@@ -103,7 +103,10 @@
 <script>
 const API = 'https://licencias-production-5de3.up.railway.app';
 let lang = 'en';
+try{ const sl=localStorage.getItem('mate_lang'); if(sl) lang=sl; }catch(e){}
+if(lang==='en'){ const nv=(navigator.language||'en').toLowerCase(); if(nv.startsWith('es')) lang='es'; }
 function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
   lang = l;
   document.getElementById('bEN').className = l==='en'?'on':'';
   document.getElementById('bES').className = l==='es'?'on':'';
@@ -129,6 +132,7 @@ async function fetchKey(){
   if(tries < 15){ show(tries>2?'pending':'loading'); setTimeout(fetchKey, 4000); }  // hasta ~1 min
   else show('error');
 }
+setLang(lang);
 fetchKey();
 </script>
 </body>
