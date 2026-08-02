@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About us — MATE · Order Flow Tools</title>
+<meta name="description" content="Why MATE exists: professional order flow tools for NinjaTrader 8, built by an engineer and trader who got tired of elite prices.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05070B;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  a{color:var(--blue)}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-orange{background:var(--orange);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+
+  .page{padding:76px 0 80px}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--blue);
+    letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:14px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(2rem,4.6vw,3rem);letter-spacing:-.03em;line-height:1.1;margin-bottom:34px;
+  }
+  h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.25rem;
+    letter-spacing:-.01em;margin:44px 0 12px;
+  }
+  p{color:#AEB8C6;font-size:1rem;margin-bottom:16px}
+  p b{color:var(--text);font-weight:600}
+  .pull{
+    border-left:3px solid var(--orange);border-radius:4px;
+    background:linear-gradient(90deg, rgba(255,165,0,.06), transparent 70%);
+    padding:18px 24px;margin:30px 0;
+  }
+  .pull p{margin:0;color:#D8DEE8;font-size:1.05rem;font-style:italic}
+  .sign{
+    margin-top:40px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:16px;
+  }
+  .sign .mark{
+    width:46px;height:46px;border-radius:12px;background:var(--panel);border:1px solid var(--line-2);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--blue);flex:none;
+  }
+  .sign .who b{display:block;color:var(--text);font-weight:600;font-size:.95rem}
+  .sign .who span{color:var(--muted);font-size:.82rem}
+  .cta-box{
+    margin-top:56px;border:1px solid rgba(94,159,216,.3);border-radius:20px;
+    padding:44px 34px;text-align:center;
+    background:radial-gradient(500px 200px at 50% -20%, rgba(70,130,180,.2), transparent 70%), var(--panel);
+  }
+  .cta-box h2{font-size:1.5rem;margin:0 0 10px}
+  .cta-box p{margin-bottom:24px}
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem;margin-top:40px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+  .foot a{color:inherit}
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header>
+  <nav class="top">
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="about.html" class="on" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+</header>
+
+<main class="page">
+<div class="wrap">
+  <span class="kicker" data-en="About us" data-es="Sobre nosotros">About us</span>
+  <h1 data-en='Built by a trader who asked <span class="grad">one question</span>'
+      data-es='Creado por un trader que se hizo <span class="grad">una pregunta</span>'>Built by a trader who asked <span class="grad">one question</span></h1>
+
+  <p data-en="When I started trading futures, I hit the same wall every retail trader knows: the tools that actually let you read the market — the footprint, the profiles, the order book — were locked behind subscriptions of $100, $200, even $300 a month. The message was clear: professional vision is for those who can pay professional prices."
+     data-es="Cuando empecé a operar futuros, me choqué con el mismo muro que conoce todo trader retail: las herramientas que de verdad te dejan leer el mercado — el footprint, los perfiles, el libro de órdenes — estaban encerradas tras suscripciones de $100, $200 y hasta $300 al mes. El mensaje era claro: la visión profesional es para quien puede pagar precios profesionales.">When I started trading futures, I hit the same wall every retail trader knows: the tools that actually let you read the market — the footprint, the profiles, the order book — were locked behind subscriptions of $100, $200, even $300 a month. The message was clear: professional vision is for those who can pay professional prices.</p>
+
+  <div class="pull">
+    <p data-en="And I kept asking myself the same question: why does software this important have to cost this much?"
+       data-es="Y yo no dejaba de hacerme la misma pregunta: ¿por qué un software tan importante tiene que costar tanto?">And I kept asking myself the same question: why does software this important have to cost this much?</p>
+  </div>
+
+  <p data-en="I had one advantage: I'm a software engineer. So instead of paying, I started building. First one tool for myself, then another, then another — each one tested candle by candle in the live market, rewritten until it was fast, honest and exact. What began as a personal toolbox slowly became something bigger: a complete professional suite."
+     data-es="Yo tenía una ventaja: soy ingeniero de software. Así que en vez de pagar, me puse a construir. Primero una herramienta para mí, luego otra, y otra — cada una testeada vela a vela en mercado real, reescrita hasta ser rápida, honesta y exacta. Lo que empezó como una caja de herramientas personal se fue convirtiendo en algo más grande: una suite profesional completa.">I had one advantage: I'm a software engineer. So instead of paying, I started building. First one tool for myself, then another, then another — each one tested candle by candle in the live market, rewritten until it was fast, honest and exact. What began as a personal toolbox slowly became something bigger: a complete professional suite.</p>
+
+  <h2 data-en="Why MATE exists" data-es="Por qué existe MATE">Why MATE exists</h2>
+  <p data-en="MATE exists to prove that <b>top-quality tools don't need elite prices</b>. The entire suite — all 20 indicators — costs less than what others charge for a single module. Not because it's worth less, but because I believe reading the market well shouldn't be a luxury. The playing field is already tilted against the retail trader; your tools shouldn't tilt it further."
+     data-es="MATE existe para demostrar que <b>las herramientas de máxima calidad no necesitan precios de élite</b>. La suite entera — los 20 indicadores — cuesta menos de lo que otros cobran por un solo módulo. No porque valga menos, sino porque creo que leer bien el mercado no debería ser un lujo. El terreno de juego ya está inclinado en contra del trader retail; tus herramientas no deberían inclinarlo más.">MATE exists to prove that <b>top-quality tools don't need elite prices</b>. The entire suite — all 20 indicators — costs less than what others charge for a single module. Not because it's worth less, but because I believe reading the market well shouldn't be a luxury. The playing field is already tilted against the retail trader; your tools shouldn't tilt it further.</p>
+
+  <h2 data-en="What I promise you" data-es="Lo que te prometo">What I promise you</h2>
+  <p data-en="Honest software. Nothing here repaints, nothing predicts, nothing promises magic. Every number you see comes from real trades, classified tick by tick. If a value can't be measured honestly, my tools show you an N/A with its reason — never a decorated guess. That philosophy is engraved in every line of code."
+     data-es="Software honesto. Aquí nada se repinta, nada predice, nada promete magia. Cada número que ves proviene de operaciones reales, clasificadas tick a tick. Si un valor no se puede medir con honestidad, mis herramientas te muestran un N/A con su motivo — nunca una suposición decorada. Esa filosofía está grabada en cada línea de código.">Honest software. Nothing here repaints, nothing predicts, nothing promises magic. Every number you see comes from real trades, classified tick by tick. If a value can't be measured honestly, my tools show you an N/A with its reason — never a decorated guess. That philosophy is engraved in every line of code.</p>
+
+  <p data-en="And a real person on the other side. When you write to support, you're not talking to a ticket system in a giant company — you're talking to the person who wrote the code. Your suggestions don't go into a corporate backlog: the best ideas from users become features in the next update, included in your plan, always."
+     data-es="Y una persona real al otro lado. Cuando escribes a soporte, no hablas con el sistema de tickets de una empresa gigante — hablas con quien escribió el código. Tus sugerencias no van a un cajón corporativo: las mejores ideas de los usuarios se convierten en funciones de la siguiente actualización, incluida en tu plan, siempre.">And a real person on the other side. When you write to support, you're not talking to a ticket system in a giant company — you're talking to the person who wrote the code. Your suggestions don't go into a corporate backlog: the best ideas from users become features in the next update, included in your plan, always.</p>
+
+  <div class="sign">
+    <div class="mark">D</div>
+    <div class="who">
+      <b data-en="Diego — Founder &amp; builder of MATE" data-es="Diego — Fundador y creador de MATE">Diego — Founder &amp; builder of MATE</b>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h2 data-en="Don't take my word for it" data-es="No te fíes de mi palabra">Don't take my word for it</h2>
+    <p data-en="Try the full suite free for 7 days — no credit card — and judge the tools on your own charts."
+       data-es="Prueba el pack completo gratis 7 días — sin tarjeta — y juzga las herramientas en tus propios charts.">Try the full suite free for 7 days — no credit card — and judge the tools on your own charts.</p>
+    <a class="btn btn-orange" href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial" data-es="Empezar demo gratis">Start free trial</a>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? 'About us — MATE · Order Flow Tools'
+                            : 'Sobre nosotros — MATE · Order Flow Tools';
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+</body>
+</html>
