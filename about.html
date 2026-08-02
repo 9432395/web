@@ -8,10 +8,10 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#05070B;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
     --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
     --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
   }
@@ -32,7 +32,7 @@
   }
   nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
   .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
-  .logo-word{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
   .logo-word::first-letter{color:var(--blue)}
   .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
   .nav-links{display:flex;gap:28px;list-style:none}
@@ -67,12 +67,12 @@
     letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:14px;
   }
   h1{
-    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-family:'Manrope',sans-serif;font-weight:800;
     font-size:clamp(2rem,4.6vw,3rem);letter-spacing:-.03em;line-height:1.1;margin-bottom:34px;
   }
   h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
   h2{
-    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.25rem;
+    font-family:'Manrope',sans-serif;font-weight:600;font-size:1.25rem;
     letter-spacing:-.01em;margin:44px 0 12px;
   }
   p{color:#AEB8C6;font-size:1rem;margin-bottom:16px}
@@ -90,7 +90,7 @@
   .sign .mark{
     width:46px;height:46px;border-radius:12px;background:var(--panel);border:1px solid var(--line-2);
     display:flex;align-items:center;justify-content:center;
-    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--blue);flex:none;
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;color:var(--blue);flex:none;
   }
   .sign .who b{display:block;color:var(--text);font-weight:600;font-size:.95rem}
   .sign .who span{color:var(--muted);font-size:.82rem}
@@ -107,7 +107,6 @@
 </style>
 </head>
 <body>
-<div class="bg-grid" aria-hidden="true"></div>
 
 <header>
   <nav class="top">
@@ -166,9 +165,10 @@
      data-es="Y una persona real al otro lado. Cuando escribes a soporte, no hablas con el sistema de tickets de una empresa gigante — hablas con quien escribió el código. Tus sugerencias no van a un cajón corporativo: las mejores ideas de los usuarios se convierten en funciones de la siguiente actualización, incluida en tu plan, siempre.">And a real person on the other side. When you write to support, you're not talking to a ticket system in a giant company — you're talking to the person who wrote the code. Your suggestions don't go into a corporate backlog: the best ideas from users become features in the next update, included in your plan, always.</p>
 
   <div class="sign">
-    <div class="mark">D</div>
+    <div class="mark">M</div>
     <div class="who">
-      <b data-en="Diego — Founder &amp; builder of MATE" data-es="Diego — Fundador y creador de MATE">Diego — Founder &amp; builder of MATE</b>
+      <b>Diego</b>
+      <span data-en="Founder &amp; Builder of MATE" data-es="Fundador y creador de MATE">Founder &amp; Builder of MATE</span>
     </div>
   </div>
 
