@@ -250,7 +250,7 @@
     border:1px solid rgba(94,159,216,.3);
     display:flex;align-items:center;justify-content:center;margin-bottom:16px;
   }
-  .bcell .ic svg{width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .bcell .ic svg{width:18px;height:18px;stroke:url(#icograd);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .bcell h3{font-family:'Manrope',sans-serif;font-size:1.02rem;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
   .bcell p{color:var(--muted);font-size:.88rem}
 
@@ -334,7 +334,7 @@
   footer{border-top:1px solid var(--line);padding:52px 0 36px;color:var(--muted);font-size:.85rem}
   .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:40px}
   @media(max-width:720px){.fgrid{grid-template-columns:1fr}}
-  .fbrand .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.3em;color:var(--text)}
+  .fbrand .logo-word{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.3em;color:var(--text)}
   .fbrand .logo-word::first-letter{color:var(--blue)}
   .fbrand .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);display:block;margin-top:5px}
   .fbrand p{margin-top:14px;font-size:.82rem;max-width:34ch;color:var(--muted)}
@@ -349,6 +349,9 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="icograd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5E9FD8"/><stop offset=".45" stop-color="#5E9FD8"/><stop offset="1" stop-color="#FFA500"/></linearGradient>
+</defs></svg>
 <div class="bg-glow" aria-hidden="true"></div>
 
 <header>

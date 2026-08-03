@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Welcome to MATE — Your license</title>
+<meta name="robots" content="noindex">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png">
 <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
@@ -12,49 +13,79 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+  :root{--bg:#030409;--panel:#0C111A;--panel-2:#05070B;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
         --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
         --orange-dim:rgba(255,165,0,.12);--radius:16px}
   *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;
-       display:flex;flex-direction:column;align-items:center;padding:40px 20px}
-  .logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em;text-decoration:none;color:var(--text)}
+       display:flex;flex-direction:column;align-items:center;padding:0 20px 60px}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+       background:radial-gradient(60% 40% at 50% -5%, rgba(70,130,180,.10), transparent 70%)}
+  .top{position:relative;z-index:1;width:100%;max-width:760px;display:flex;align-items:center;
+       justify-content:space-between;padding:30px 0 0}
+  .logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:.3em;text-decoration:none;color:var(--text)}
   .logo b{color:var(--blue);font-weight:700}
-  .lang{position:absolute;top:40px;right:28px}
+  .logo small{display:block;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:.5rem;
+       letter-spacing:.42em;color:var(--orange);margin-top:2px}
   .lang button{background:none;border:1px solid var(--line-2);color:var(--muted);padding:6px 12px;
        border-radius:8px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.75rem}
   .lang button.on{color:var(--orange);border-color:var(--orange)}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-        max-width:640px;width:100%;margin-top:48px;padding:44px 40px;text-align:center}
-  h1{font-family:'Manrope',sans-serif;font-size:1.9rem;margin-bottom:10px}
-  .sub{color:var(--muted);font-size:.98rem;margin-bottom:34px}
-  .keybox{background:#05070B;border:1px dashed var(--orange);border-radius:12px;padding:26px 18px;margin-bottom:12px}
-  .keylabel{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.3em;color:var(--muted);margin-bottom:12px}
-  #lickey{font-family:'JetBrains Mono',monospace;font-size:1.7rem;font-weight:600;color:var(--orange);letter-spacing:.08em;word-break:break-all}
-  .copy{margin-top:16px;background:var(--orange);color:#05070B;border:none;border-radius:10px;
-        padding:11px 26px;font-weight:600;font-size:.95rem;cursor:pointer;font-family:'Inter',sans-serif}
-  .copy:hover{filter:brightness(1.1)}
-  .note{color:var(--muted);font-size:.85rem;margin:10px 0 32px}
-  .dl{display:block;background:var(--blue-raw);color:#fff;text-decoration:none;border-radius:12px;
-      padding:16px;font-weight:600;margin-bottom:34px}
-  .dl:hover{filter:brightness(1.12)}
-  .steps{text-align:left;border-top:1px solid var(--line);padding-top:28px}
-  .steps h2{font-family:'Manrope',sans-serif;font-size:1.05rem;margin-bottom:16px}
-  .step{display:flex;gap:14px;margin-bottom:14px;color:var(--muted);font-size:.93rem;line-height:1.5}
-  .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--orange-dim);color:var(--orange);
-     display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem}
-  .steps b{color:var(--text);font-weight:600}
-  .help{margin-top:30px;color:var(--muted);font-size:.85rem}
-  .help a{color:var(--blue)}
+  .card{position:relative;z-index:1;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        max-width:760px;width:100%;margin-top:42px;padding:52px 56px;text-align:center;
+        box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(84,214,146,.35);
+        color:#54D692;border-radius:999px;padding:7px 16px;font-family:'JetBrains Mono',monospace;
+        font-size:.68rem;letter-spacing:.22em;margin-bottom:22px}
+  .chip i{width:7px;height:7px;border-radius:50%;background:#54D692;box-shadow:0 0 10px rgba(84,214,146,.8)}
+  h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:2.1rem;letter-spacing:-.01em;margin-bottom:10px}
+  h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:1rem;line-height:1.6;margin-bottom:36px}
+  .keybox{background:var(--panel-2);border:1px solid rgba(94,159,216,.45);border-radius:14px;
+        padding:28px 22px 24px;margin-bottom:10px;box-shadow:0 0 0 1px rgba(94,159,216,.07),0 14px 44px rgba(0,0,0,.45)}
+  .keylabel{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.34em;color:var(--muted);margin-bottom:14px}
+  #lickey{font-family:'JetBrains Mono',monospace;font-size:1.85rem;font-weight:600;color:var(--blue);
+        letter-spacing:.08em;word-break:break-all;text-shadow:0 0 26px rgba(94,159,216,.3)}
+  .copy{margin-top:18px;background:none;color:var(--orange);border:1px solid rgba(255,165,0,.5);border-radius:10px;
+        padding:10px 26px;font-weight:600;font-size:.9rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+  .copy:hover{background:var(--orange-dim)}
+  .mailnote{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);
+        font-size:.86rem;margin:14px 0 34px}
+  .mailnote svg{flex:none;opacity:.75}
+  .dl{display:block;background:var(--orange);color:#05070B;text-decoration:none;border-radius:12px;
+      padding:17px;font-weight:700;font-size:1.02rem;margin-bottom:10px;transition:.15s}
+  .dl:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .dlnote{color:var(--muted);font-size:.8rem;margin-bottom:38px}
+  .steps{text-align:left;border-top:1px solid var(--line);padding-top:32px}
+  .steps h2{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:20px}
+  .step{display:flex;gap:16px;margin-bottom:18px;color:var(--muted);font-size:.94rem;line-height:1.6}
+  .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--orange-dim);color:var(--orange);
+     display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+  .step b{color:var(--text);font-weight:600}
+  .step .kbd{font-family:'JetBrains Mono',monospace;font-size:.84rem;color:var(--text);
+     background:rgba(255,255,255,.05);border:1px solid var(--line-2);border-radius:6px;padding:1px 7px;white-space:nowrap}
+  .help{margin-top:34px;padding-top:26px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;line-height:1.7}
+  .help a{color:var(--blue);text-decoration:none}
+  .help a:hover{text-decoration:underline}
+  .foot{position:relative;z-index:1;margin-top:34px;color:var(--muted);font-size:.78rem}
+  .foot a{color:inherit}
   .spin{margin:30px auto;width:40px;height:40px;border:3px solid var(--line-2);border-top-color:var(--orange);
         border-radius:50%;animation:r 1s linear infinite}
   @keyframes r{to{transform:rotate(360deg)}}
   #pending,#error{display:none}
+  @media(max-width:640px){
+    .card{padding:38px 24px;margin-top:28px}
+    h1{font-size:1.6rem}
+    #lickey{font-size:1.3rem}
+    .top{padding-top:22px}
+  }
 </style>
 </head>
 <body>
-<a class="logo" href="index.html"><b>M</b>ATE</a>
-<div class="lang"><button id="bEN" class="on" onclick="setLang('en')">EN</button> <button id="bES" onclick="setLang('es')">ES</button></div>
+<div class="top">
+  <a class="logo" href="index.html"><span><b>M</b>ATE</span><small>ORDER FLOW TOOLS</small></a>
+  <div class="lang"><button id="bEN" class="on" onclick="setLang('en')">EN</button> <button id="bES" onclick="setLang('es')">ES</button></div>
+</div>
 
 <div class="card">
   <div id="loading">
@@ -64,29 +95,34 @@
   </div>
 
   <div id="ready" style="display:none">
-    <h1 data-en="Welcome to MATE" data-es="Bienvenido a MATE">Welcome to MATE</h1>
-    <div class="sub" data-en="Your subscription is active. This is your license key — it unlocks all 20 indicators."
-         data-es="Tu suscripción está activa. Esta es tu clave de licencia — desbloquea los 20 indicadores.">Your subscription is active. This is your license key — it unlocks all 20 indicators.</div>
+    <div class="chip"><i></i><span data-en="PAYMENT CONFIRMED" data-es="PAGO CONFIRMADO">PAYMENT CONFIRMED</span></div>
+    <h1 data-en='Welcome to <span class="grad">MATE</span>' data-es='Bienvenido a <span class="grad">MATE</span>'>Welcome to <span class="grad">MATE</span></h1>
+    <div class="sub" data-en="Your subscription is active. This key unlocks all 20 indicators on your machine."
+         data-es="Tu suscripción está activa. Esta clave desbloquea los 20 indicadores en tu máquina.">Your subscription is active. This key unlocks all 20 indicators on your machine.</div>
     <div class="keybox">
       <div class="keylabel" data-en="YOUR LICENSE KEY" data-es="TU CLAVE DE LICENCIA">YOUR LICENSE KEY</div>
       <div id="lickey">····-····-····-····</div>
       <button class="copy" onclick="copyKey()" data-en="Copy key" data-es="Copiar clave">Copy key</button>
     </div>
-    <div class="note" data-en="We also recommend saving it somewhere safe. It works on one computer."
-         data-es="Guárdala también en un lugar seguro. Funciona en un ordenador.">We also recommend saving it somewhere safe. It works on one computer.</div>
-    <a class="dl" href="downloads/MateSuite.zip" data-en="⬇ Download MATE Suite for NinjaTrader 8"
-       data-es="⬇ Descargar MATE Suite para NinjaTrader 8">⬇ Download MATE Suite for NinjaTrader 8</a>
+    <div class="mailnote">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7E8A9C" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      <span data-en="We also emailed it to you — keep it somewhere safe. One computer per license."
+            data-es="También te la enviamos por correo — guárdala en un lugar seguro. Una licencia por ordenador.">We also emailed it to you — keep it somewhere safe. One computer per license.</span>
+    </div>
+    <a class="dl" href="downloads/MateSuite.zip" data-en="Download MATE Suite for NinjaTrader 8"
+       data-es="Descargar MATE Suite para NinjaTrader 8">Download MATE Suite for NinjaTrader 8</a>
+    <div class="dlnote" data-en="ZIP file · installs in under a minute" data-es="Archivo ZIP · se instala en menos de un minuto">ZIP file · installs in under a minute</div>
     <div class="steps">
       <h2 data-en="Activate in 3 steps" data-es="Actívalo en 3 pasos">Activate in 3 steps</h2>
-      <div class="step"><div class="n">1</div><div data-en="In NinjaTrader 8: <b>Tools → Import → NinjaScript Add-On…</b> and select the downloaded ZIP."
-        data-es="En NinjaTrader 8: <b>Tools → Import → NinjaScript Add-On…</b> y selecciona el ZIP descargado.">In NinjaTrader 8: <b>Tools → Import → NinjaScript Add-On…</b> and select the downloaded ZIP.</div></div>
-      <div class="step"><div class="n">2</div><div data-en="Add any MATE indicator to a chart, open its settings and paste your key in the <b>License</b> section."
-        data-es="Añade cualquier indicador MATE a un chart, abre sus propiedades y pega tu clave en la sección <b>License</b>.">Add any MATE indicator to a chart, open its settings and paste your key in the <b>License</b> section.</div></div>
-      <div class="step"><div class="n">3</div><div data-en="Done — the key activates every MATE indicator on this machine. Happy trading!"
-        data-es="Listo — la clave activa todos los indicadores MATE en tu máquina. ¡Buen trading!">Done — the key activates every MATE indicator on this machine. Happy trading!</div></div>
+      <div class="step"><div class="n">1</div><div data-en='<b>Import the suite.</b> In NinjaTrader 8 open <span class="kbd">Tools → Import → NinjaScript Add-On…</span> and select the ZIP you just downloaded. Restart NinjaTrader if it asks.'
+        data-es='<b>Importa la suite.</b> En NinjaTrader 8 abre <span class="kbd">Tools → Import → NinjaScript Add-On…</span> y selecciona el ZIP que acabas de descargar. Reinicia NinjaTrader si te lo pide.'><b>Import the suite.</b> In NinjaTrader 8 open <span class="kbd">Tools → Import → NinjaScript Add-On…</span> and select the ZIP you just downloaded. Restart NinjaTrader if it asks.</div></div>
+      <div class="step"><div class="n">2</div><div data-en='<b>Paste your key.</b> Add any MATE indicator to a chart, open its settings and paste the key in the <b>License</b> section.'
+        data-es='<b>Pega tu clave.</b> Añade cualquier indicador MATE a un chart, abre sus propiedades y pega la clave en la sección <b>License</b>.'><b>Paste your key.</b> Add any MATE indicator to a chart, open its settings and paste the key in the <b>License</b> section.</div></div>
+      <div class="step"><div class="n">3</div><div data-en="<b>That's it.</b> One key activates every MATE indicator on this machine. Happy trading!"
+        data-es="<b>Y ya está.</b> Una sola clave activa todos los indicadores MATE en tu máquina. ¡Buen trading!"><b>That's it.</b> One key activates every MATE indicator on this machine. Happy trading!</div></div>
     </div>
-    <div class="help" data-en='Questions? Write to <a href="mailto:support@matetrading.com">support@matetrading.com</a>'
-         data-es='¿Dudas? Escríbenos a <a href="mailto:support@matetrading.com">support@matetrading.com</a>'>Questions? Write to <a href="mailto:support@matetrading.com">support@matetrading.com</a></div>
+    <div class="help" data-en='Anything unclear or not working? Write to <a href="mailto:support@matetrading.com">support@matetrading.com</a> — we reply within 24 hours.'
+         data-es='¿Algo no queda claro o no funciona? Escríbenos a <a href="mailto:support@matetrading.com">support@matetrading.com</a> — respondemos en menos de 24 horas.'>Anything unclear or not working? Write to <a href="mailto:support@matetrading.com">support@matetrading.com</a> — we reply within 24 hours.</div>
   </div>
 
   <div id="pending">
@@ -102,6 +138,8 @@
          data-es='Sin problema — tu compra está a salvo. Escribe a <a href="mailto:support@matetrading.com" style="color:#5E9FD8">support@matetrading.com</a> con el email con el que pagaste y te enviamos tu clave enseguida.'>No problem — your purchase is safe. Write to <a href="mailto:support@matetrading.com" style="color:#5E9FD8">support@matetrading.com</a> with the email you used to pay and we will send your key right away.</div>
   </div>
 </div>
+
+<div class="foot">© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></div>
 
 <script>
 const API = 'https://licencias-production-5de3.up.railway.app';
