@@ -181,65 +181,12 @@
   .trust i{width:15px;height:15px;border-radius:50%;background:var(--orange-dim);flex:none;position:relative}
   .trust i::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:9px;font-weight:700}
 
-  /* ---------- MONITOR ---------- */
-  .station{position:relative;display:flex;flex-direction:column;align-items:center}
-  .monitor{
-    width:100%;
-    background:#0A0D13;
-    border:1px solid var(--line-2);
-    border-radius:14px;
-    padding:10px;
-    box-shadow:
-      0 40px 90px rgba(0,0,0,.65),
-      0 0 0 1px rgba(70,130,180,.08),
-      0 -2px 50px rgba(70,130,180,.06);
-  }
-  .screen{
-    background:#070A10;border-radius:8px;overflow:hidden;
-    border:1px solid rgba(255,255,255,.05);
-  }
-  .scr-bar{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:9px 14px;border-bottom:1px solid var(--line);
-    font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);
-  }
-  .win-dots{display:flex;gap:6px}
-  .win-dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.1)}
-  .rec{display:flex;align-items:center;gap:6px;color:var(--muted);letter-spacing:.14em}
-  .rec i{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
-
-  .scr-foot{
-    border-top:1px solid var(--line);
-    display:flex;gap:16px;padding:8px 14px;
-    font-family:'JetBrains Mono',monospace;font-size:.64rem;color:var(--muted);
-  }
-  .scr-foot .lg{display:flex;align-items:center;gap:7px;letter-spacing:.12em}
-  .scr-foot .sq{width:8px;height:8px;border-radius:2px;display:inline-block}
-  .scr-foot .sq.b{background:var(--blue)}
-  .scr-foot .sq.a{background:var(--orange)}
-  .scr-foot .sq.i{background:rgba(255,255,255,.25)}
-  .stand{
-    width:110px;height:22px;
-    background:linear-gradient(180deg,#141924,#0B0F16);
-    border:1px solid var(--line);border-top:none;
-    border-radius:0 0 8px 8px;
-  }
-  .base{
-    width:190px;height:8px;margin-top:-1px;
-    background:linear-gradient(180deg,#161B27,#0A0E15);
-    border:1px solid var(--line);
-    border-radius:99px;
-  }
-  .station .reflect{
-    width:70%;height:26px;margin-top:10px;border-radius:50%;
-    background:radial-gradient(ellipse, rgba(70,130,180,.10), transparent 70%);
-    filter:blur(6px);
-  }
-
-  .scr-body{position:relative;height:360px}
-  #mateCanvas{display:block;width:100%;height:100%}
-  .scr-title{letter-spacing:.18em;color:var(--muted);font-size:.62rem}
-  .scr-foot .sq.p{background:transparent;outline:1px solid var(--orange)}
+  /* ---------- AMBIENT VIZ ---------- */
+  .viz{position:relative;height:450px}
+  .viz::before{content:"";position:absolute;inset:-40px;pointer-events:none;
+    background:radial-gradient(55% 45% at 55% 45%, rgba(70,130,180,.07), transparent 72%)}
+  #mateCanvas{position:relative;width:100%;height:100%;display:block}
+  @media(max-width:920px){.viz{height:380px}}
 
   /* ---------- MARQUEE (20 indicators) ---------- */
   .marquee{
@@ -384,9 +331,21 @@
   .cta-box p{color:var(--muted);margin-bottom:30px;max-width:50ch;margin-inline:auto}
   .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem}
-  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .disclaimer{margin-top:16px;font-size:.74rem;max-width:84ch;color:#5A6474}
+  footer{border-top:1px solid var(--line);padding:52px 0 36px;color:var(--muted);font-size:.85rem}
+  .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:40px}
+  @media(max-width:720px){.fgrid{grid-template-columns:1fr}}
+  .fbrand .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.3em;color:var(--text)}
+  .fbrand .logo-word::first-letter{color:var(--blue)}
+  .fbrand .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);display:block;margin-top:5px}
+  .fbrand p{margin-top:14px;font-size:.82rem;max-width:34ch;color:var(--muted)}
+  .fcol h4{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:#5A6474;text-transform:uppercase;margin-bottom:14px;font-weight:500}
+  .fcol ul{list-style:none}
+  .fcol li{margin-bottom:9px}
+  .fcol a{text-decoration:none;color:var(--muted);transition:color .2s}
+  .fcol a:hover{color:var(--text)}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    border-top:1px solid var(--line);padding-top:22px;font-size:.78rem}
+  .disclaimer{margin-top:14px;font-size:.72rem;max-width:90ch;color:#5A6474}
 </style>
 </head>
 <body>
@@ -450,28 +409,8 @@
       <span class="hero-note" data-en="Works with any broker and data feed" data-es="Compatible con cualquier broker y feed de datos">Works with any broker and data feed</span>
     </div>
 
-    <div class="station" aria-hidden="true">
-      <div class="monitor">
-        <div class="screen">
-          <div class="scr-bar">
-            <div class="win-dots"><span></span><span></span><span></span></div>
-            <span class="scr-title">MATE SUITE</span>
-            <span class="rec"><i></i>LIVE</span>
-          </div>
-          <div class="scr-body">
-            <canvas id="mateCanvas"></canvas>
-          </div>
-          <div class="scr-foot" id="legend">
-            <span class="lg"><i class="sq b"></i>BID</span>
-            <span class="lg"><i class="sq a"></i>ASK</span>
-            <span class="lg"><i class="sq p"></i>POC</span>
-            <span class="lg" style="margin-left:auto"><i class="sq i"></i>LIQUIDITY</span>
-          </div>
-        </div>
-      </div>
-      <div class="stand"></div>
-      <div class="base"></div>
-      <div class="reflect"></div>
+    <div class="viz" aria-hidden="true">
+      <canvas id="mateCanvas"></canvas>
     </div>
   </div>
 </div>
@@ -696,9 +635,33 @@
 </main>
 
 <footer>
-  <div class="wrap">
+  <div class="wrap" style="max-width:1160px">
+    <div class="fgrid">
+      <div class="fbrand">
+        <span class="logo-word">MATE</span>
+        <span class="logo-sub">ORDER FLOW TOOLS</span>
+      </div>
+      <div class="fcol">
+        <h4 data-en="Product" data-es="Producto">Product</h4>
+        <ul>
+          <li><a href="#features" data-en="Features" data-es="Capacidades">Features</a></li>
+          <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+          <li><a href="#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+          <li><a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Free trial" data-es="Demo gratuita">Free trial</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4 data-en="Company" data-es="Compañía">Company</h4>
+        <ul>
+          <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+          <li><a href="mailto:support@matetrading.com" data-en="Contact &amp; support" data-es="Contacto y soporte">Contact &amp; support</a></li>
+          <li><a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="foot">
-      <span>© 2026 MATE · matetrading.com · <a href="terms.html" style="color:inherit" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+      <span>© 2026 MATE · matetrading.com</span>
       <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
             data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
     </div>
@@ -761,146 +724,13 @@ document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', to
   document.querySelectorAll('.rv').forEach(e=>io.observe(e));
 })();
 
-/* ============ ANIMATED MONITOR — canvas engine v2 ============ */
+/* ============ AMBIENT ORDER FLOW — choreographed studies ============ */
 (function(){
   const canvas = document.getElementById('mateCanvas');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const C = {
-    bg:'#070A10',
-    up:'#5E9FD8', dn:'#FFA500',
-    text:'#7E8A9C'
-  };
-
-  /* ---- simulation (all rolling: safe for hours) ---- */
-  const NCANDLES = 30;
-  const TICKS_PER_CANDLE = 42;
-  let price = 5000, mom = 0, shownPrice = 5000;
-  let candles = [];        // {o,h,l,c,vol,delta,tpv,heat}
-  let cur = null, tickCount = 0;
-  const liq = new Map();
-  const vpQueue = [];
-  const vp = new Map();
-  const VP_WINDOW = 620;
-  let bubbles = [];
-  let viewLo = price-14, viewHi = price+14;
-
-  function rnd(a,b){ return a + Math.random()*(b-a); }
-  function ri(a,b){ return Math.floor(rnd(a,b)); }
-
-  function newCandle(){
-    cur = { o:price, h:price, l:price, c:price, vol:0, delta:0, tpv:0, heat:null };
-    candles.push(cur);
-    if(candles.length > NCANDLES+2) candles.shift();
-  }
-  newCandle();
-
-  function liqTick(){
-    for(const [k,v] of liq){
-      const nv = v*0.994 + (Math.random()<.004 ? rnd(.1,.3) : 0);
-      if(nv < .02) liq.delete(k); else liq.set(k, Math.min(1,nv));
-    }
-    if(Math.random()<.5){
-      const lvl = Math.round(price + ri(-13,14));
-      liq.set(lvl, Math.min(1,(liq.get(lvl)||0) + rnd(.02,.09)));
-    }
-    if(Math.random()<.012){
-      const lvl = Math.round(price + (Math.random()<.5?-1:1)*ri(4,12));
-      liq.set(lvl, Math.min(1, rnd(.75,1)));
-    }
-  }
-
-  function pocLevel(){
-    let best=null, bv=-1;
-    for(const [k,v] of vp){ if(v>bv){bv=v;best=k;} }
-    return best;
-  }
-
-  function valueArea(){
-    if(vp.size===0) return null;
-    let total=0; const arr=[];
-    for(const [k,v] of vp){ arr.push([k,v]); total+=v; }
-    arr.sort((a,b)=>b[1]-a[1]);
-    let acc=0, lo=1e9, hi=-1e9;
-    for(const [k,v] of arr){
-      acc+=v; lo=Math.min(lo,k); hi=Math.max(hi,k);
-      if(acc>=total*0.7) break;
-    }
-    return [lo,hi];
-  }
-
-  /* trending market: impulse -> pullback -> base -> continuation (higher highs) */
-  let regime = 'impulse';
-  let regimeCandles = 4;              // candles left in current regime
-  let legStart = price;
-  let swingHigh = price + 10;
-  let target = swingHigh;
-
-  function nextRegime(){
-    if(regime === 'impulse'){
-      regime = 'pullback';
-      regimeCandles = ri(2,4);                            // visible red leg
-      target = legStart + (swingHigh - legStart) * rnd(.42,.58);  // 40-60% retrace
-    } else if(regime === 'pullback'){
-      regime = 'base';
-      regimeCandles = ri(1,3);                            // accumulation pause
-      target = price;
-    } else {
-      regime = 'impulse';
-      regimeCandles = ri(3,6);
-      legStart = price;
-      swingHigh = swingHigh + rnd(5,8);                   // next higher high
-      target = swingHigh;
-    }
-  }
-
-  function simTick(){
-    let drift;
-    if(regime === 'impulse'){
-      drift = Math.min(0.30, Math.max(0.08, (target - price) * 0.016));
-      if(price >= target) { regimeCandles = 0; }
-    } else if(regime === 'pullback'){
-      drift = Math.max(-0.22, Math.min(-0.04, (target - price) * 0.022));
-      if(price <= target) { regimeCandles = 0; }
-    } else {
-      drift = (target - price) * 0.05;                     // hover around base
-    }
-    mom = mom*0.68 + drift + rnd(-.20,.20);
-    price += mom;
-
-    const heavy = regime === 'base';
-    const v = ri(1, heavy?14:8) * (Math.random() < (heavy?.12:.05) ? ri(3,7) : 1);
-    const buyP = regime==='impulse' ? .82 : (regime==='pullback' ? .34 : .56);
-    const side = Math.random() < buyP ? 1 : -1;
-    const lvl = Math.round(price);
-    cur.h = Math.max(cur.h, price); cur.l = Math.min(cur.l, price);
-    cur.c = price; cur.vol += v; cur.delta += side*v; cur.tpv += price*v;
-    vp.set(lvl, (vp.get(lvl)||0)+v);
-    vpQueue.push({lvl, v});
-    while(vpQueue.length > VP_WINDOW){
-      const old = vpQueue.shift();
-      const rem = (vp.get(old.lvl)||0) - old.v;
-      if(rem<=0) vp.delete(old.lvl); else vp.set(old.lvl, rem);
-    }
-    if(Math.random()<.012){
-      const bSide = Math.random() < (regime==='impulse' ? 0.82 : (regime==='base' ? 0.6 : 0.4)) ? 1 : -1;
-      bubbles.push({lvl:price, size:ri(80,420), age:0, side:bSide, x:candles.length-1});
-    }
-    bubbles.forEach(b=>b.age++);
-    bubbles = bubbles.filter(b=>b.age<160);
-    liqTick();
-    tickCount++;
-    if(tickCount % TICKS_PER_CANDLE === 0){
-      cur.heat = new Map(liq);
-      newCandle();
-      bubbles.forEach(b=>b.x--);
-      if(--regimeCandles <= 0) nextRegime();               // regimes switch on candle close
-    }
-  }
-
-  /* ---- rendering ---- */
   let W=0,H=0,dpr=1;
   function resize(){
     dpr = Math.min(2, window.devicePixelRatio||1);
@@ -911,226 +741,238 @@ document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', to
   resize();
   window.addEventListener('resize', resize);
 
-  const PROF_W = 78;      // volume profile zone
-  const AXIS_W = 46;      // price axis
-  const DELTA_H = 34;
-  const PAD_T = 10;
+  const BLUE='94,159,216', ORANGE='255,165,0', TXT='199,210,226';
+  const DUR=7600, FADE=1000, OUT=1000;
+  function rnd(a,b){ return a+Math.random()*(b-a); }
+  function ri(a,b){ return Math.floor(rnd(a,b)); }
+  const cl=t=>t<0?0:t>1?1:t;
+  const sm=t=>{t=cl(t);return t*t*(3-2*t)};                   /* smoothstep */
+  const eoc=t=>{t=cl(t);return 1-Math.pow(1-t,3)};            /* ease-out cubic */
+  const eob=t=>{t=cl(t);const c1=1.70158,c3=c1+1;             /* ease-out back (overshoot) */
+    return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)};
 
-  function y(p){ return PAD_T + (viewHi-p)/(viewHi-viewLo) * (H-PAD_T-DELTA_H-8); }
+  let data=null, curIdx=-1;
 
-  function draw(){
-    let lo=1e9, hi=-1e9;
-    candles.forEach(cd=>{ lo=Math.min(lo,cd.l); hi=Math.max(hi,cd.h); });
-    lo-=3; hi+=3;
-    viewLo += (lo-viewLo)*0.06; viewHi += (hi-viewHi)*0.06;
-    shownPrice += (price-shownPrice)*0.25;
-
-    ctx.clearRect(0,0,W,H);
-    /* bg with subtle vertical gradient */
-    const bg = ctx.createLinearGradient(0,0,0,H);
-    bg.addColorStop(0,'#080B12'); bg.addColorStop(1,'#060910');
-    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-
-    const plotW = W - PROF_W - AXIS_W;
-    const profX0 = plotW;             // profile starts here
-    const axisX0 = W - AXIS_W;        // axis starts here
-    const cw = plotW / NCANDLES;
-    const n = candles.length;
-    const poc = pocLevel();
-    const va = valueArea();
-
-    /* watermark */
-    ctx.save();
-    ctx.font = '700 54px "Manrope", sans-serif';
-    ctx.fillStyle = 'rgba(235,240,247,.028)';
-    ctx.textAlign='left'; ctx.textBaseline='alphabetic';
-    ctx.fillText('MATE', 22, H-DELTA_H-22);
-    ctx.restore();
-
-    /* horizontal grid + axis labels */
-    ctx.font = '9px "JetBrains Mono", monospace';
-    ctx.textBaseline='middle';
-    const step = Math.max(2, Math.round((viewHi-viewLo)/7));
-    const first = Math.ceil(viewLo/step)*step;
-    for(let p=first; p<viewHi; p+=step){
-      const yy = Math.round(y(p))+.5;
-      ctx.strokeStyle = 'rgba(255,255,255,.04)';
-      ctx.beginPath(); ctx.moveTo(0,yy); ctx.lineTo(axisX0,yy); ctx.stroke();
-      ctx.fillStyle = 'rgba(126,138,156,.6)';
-      ctx.textAlign='left';
-      ctx.fillText(p.toFixed(0), axisX0+8, yy);
+  function genVP(){
+    const rows=15, peak=ri(5,10), w=[];
+    for(let i=0;i<rows;i++){
+      const d=Math.abs(i-peak);
+      w.push(Math.max(.08, 1 - d*rnd(.13,.2) + rnd(-.05,.05)));
     }
-
-    /* value area band (across chart, very subtle) */
-    if(va){
-      const yh = y(va[1]), yl = y(va[0]);
-      ctx.fillStyle = 'rgba(94,159,216,.045)';
-      ctx.fillRect(0, yh, plotW, Math.max(2,yl-yh));
+    const sorted=[...w].sort((a,b)=>b-a);
+    const va = w.map(x=>x>=sorted[Math.floor(rows*0.45)]);
+    return {rows,peak,w,va};
+  }
+  function genTPO(){
+    const rows=11, letters='ABCDEFGHIJKLM', peak=ri(4,7), counts=[];
+    for(let i=0;i<rows;i++){
+      const d=Math.abs(i-peak);
+      counts.push(Math.max(1, Math.round(9 - d*rnd(1.6,2.4) + rnd(-1,1))));
     }
-
-    /* liquidity heat trail */
+    const total=counts.reduce((a,b)=>a+b,0);
+    const sorted=[...counts].sort((a,b)=>b-a);
+    const va = counts.map(c=>c>=sorted[Math.floor(rows*0.4)]);
+    return {rows,letters,peak,counts,total,va};
+  }
+  function genDELTA(){
+    const n=22, v=[]; let bias=rnd(.2,.5);
     for(let i=0;i<n;i++){
-      const cd = candles[i];
-      const hm = (i===n-1) ? liq : cd.heat;
-      if(!hm) continue;
-      const x = plotW - (n-i)*cw;
-      for(const [lvl,s] of hm){
-        if(lvl<viewLo||lvl>viewHi) continue;
-        const yy = y(lvl);
-        const a = s*.32;
-        ctx.fillStyle = s>.7 ? 'rgba(255,165,0,'+(a*.85)+')' : 'rgba(70,130,180,'+a+')';
-        ctx.fillRect(x, yy-2.4, cw-1, 4.8);
+      if(Math.random()<.18) bias=-bias*rnd(.4,.9);
+      v.push(Math.max(-1,Math.min(1, bias + rnd(-.5,.5))));
+    }
+    return {n,v};
+  }
+  function genFP(){
+    const cols=5, rows=8, cells=[];
+    for(let c=0;c<cols;c++){
+      const col=[], peak=ri(2,6);
+      for(let r=0;r<rows;r++){
+        const mag=Math.max(1, 6-Math.abs(r-peak)*1.8);
+        const bid=ri(8*mag,40*mag), ask=ri(8*mag,40*mag);
+        const ratio=bid/Math.max(1,ask);
+        col.push({bid,ask,imb: ratio>2.4?1:(ratio<.42?-1:0), poc:r===peak});
+      }
+      cells.push(col);
+    }
+    return {cols,rows,cells};
+  }
+  const GENS=[genVP,genTPO,genDELTA,genFP];
+
+  /* ---------- VOLUME PROFILE: elastic bars + glowing head + breathing POC ---------- */
+  function drawVP(d,b,xo,a,now){
+    const rowH=Math.min(24,(H-90)/d.rows), x0=W*0.14, maxW=W*0.66;
+    const y0=(H-40-d.rows*rowH)/2+10;
+    ctx.strokeStyle='rgba(255,255,255,'+(a*.10)+')';
+    ctx.beginPath(); ctx.moveTo(x0-10,y0-8); ctx.lineTo(x0-10,y0+d.rows*rowH+8); ctx.stroke();
+    for(let i=0;i<d.rows;i++){
+      const tIn=cl((b*1.25 - i/d.rows)*3);
+      if(tIn<=0) continue;
+      const tOut=cl((xo*1.4 - (d.rows-1-i)/d.rows)*3);     /* exit wave from bottom */
+      const grow=eob(tIn)*(1-eoc(tOut));
+      const w=d.w[i]*maxW*Math.max(0,grow), y=y0+i*rowH, bh=rowH-7;
+      if(w<=0) continue;
+      const rowA=a*(1-tOut*.85);
+      const isPoc=i===d.peak;
+      const g=ctx.createLinearGradient(x0,0,x0+w,0);
+      if(isPoc){ g.addColorStop(0,'rgba('+ORANGE+','+(rowA*.6)+')'); g.addColorStop(1,'rgba('+ORANGE+','+(rowA*.14)+')'); }
+      else{
+        const base=d.va[i]?.5:.3;
+        g.addColorStop(0,'rgba('+BLUE+','+(rowA*base)+')'); g.addColorStop(1,'rgba('+BLUE+','+(rowA*.06)+')');
+      }
+      ctx.fillStyle=g;
+      ctx.fillRect(x0, y, w, bh);
+      /* glowing head while growing */
+      if(tIn<1){
+        const hg=ctx.createLinearGradient(x0+w-26,0,x0+w,0);
+        const col=isPoc?ORANGE:BLUE;
+        hg.addColorStop(0,'rgba('+col+',0)');
+        hg.addColorStop(1,'rgba(255,255,255,'+(rowA*.55*(1-tIn))+')');
+        ctx.fillStyle=hg; ctx.fillRect(x0+Math.max(0,w-26), y, Math.min(26,w), bh);
+      }
+      /* POC: quiet label once settled */
+      if(isPoc && tIn>=1 && tOut<=0){
+        ctx.font='9px "JetBrains Mono", monospace';
+        ctx.fillStyle='rgba('+ORANGE+','+(a*.6)+')';
+        ctx.textAlign='left'; ctx.textBaseline='middle';
+        ctx.fillText('POC', x0+w+10, y+bh/2);
       }
     }
+  }
 
-    /* session VWAP line with soft glow */
-    let cumTpv=0, cumVol=0;
-    const vwapPts = [];
-    for(let i=0;i<n;i++){
-      const cd = candles[i];
-      cumTpv += cd.tpv; cumVol += cd.vol;
-      if(cumVol>0) vwapPts.push([plotW-(n-i)*cw+cw*0.5, y(cumTpv/cumVol)]);
-    }
-    if(vwapPts.length>1){
-      ctx.save();
-      ctx.lineJoin='round'; ctx.lineCap='round';
-      ctx.strokeStyle='rgba(235,240,247,.10)'; ctx.lineWidth=4;
-      ctx.beginPath(); vwapPts.forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1])); ctx.stroke();
-      ctx.strokeStyle='rgba(235,240,247,.55)'; ctx.lineWidth=1.2;
-      ctx.setLineDash([1,0]);
-      ctx.beginPath(); vwapPts.forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1])); ctx.stroke();
-      ctx.restore();
-      const lastPt = vwapPts[vwapPts.length-1];
-      ctx.fillStyle='rgba(235,240,247,.65)';
-      ctx.font='8px "JetBrains Mono", monospace';
-      ctx.textAlign='left';
-      ctx.fillText('VWAP', Math.min(lastPt[0]+8, plotW-34), lastPt[1]-7);
-    }
-
-    /* volume profile (right) with VA shading */
-    let maxV=0; for(const v of vp.values()) maxV=Math.max(maxV,v);
-    if(va){
-      const yh=y(va[1]), yl=y(va[0]);
-      ctx.fillStyle='rgba(94,159,216,.06)';
-      ctx.fillRect(profX0, yh, PROF_W, Math.max(2,yl-yh));
-    }
-    if(maxV>0){
-      for(const [lvl,v] of vp){
-        if(lvl<viewLo||lvl>viewHi) continue;
-        const yy = y(lvl);
-        const w = (v/maxV)*(PROF_W-12);
-        const isPoc = lvl===poc;
-        if(isPoc){
-          const g = ctx.createLinearGradient(axisX0-w-4,0,axisX0-4,0);
-          g.addColorStop(0,'rgba(255,165,0,.35)'); g.addColorStop(1,'rgba(255,165,0,.95)');
-          ctx.fillStyle = g;
-        } else {
-          const inVA = va && lvl>=va[0] && lvl<=va[1];
-          ctx.fillStyle = 'rgba(94,159,216,'+((inVA?0.30:0.16)+0.5*(v/maxV))+')';
+  /* ---------- TPO: letters drop in with a white flash, dissolve upward in a wave ---------- */
+  function drawTPO(d,b,xo,a,now){
+    const cell=Math.min(24,(H-90)/d.rows), x0=W*0.16;
+    const y0=(H-40-d.rows*cell)/2+10;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    let k=0;
+    const shownF=d.total*cl(b*1.15);
+    for(let i=0;i<d.rows;i++){
+      for(let j=0;j<d.counts[i];j++){
+        const tIn=cl(shownF-k);                 /* fractional: last letter animates in */
+        if(tIn<=0){k++;continue;}
+        const tOut=cl((xo*1.5 - (i+j*0.35)/d.rows)*2);
+        if(tOut>=1){k++;continue;}
+        const isPoc=i===d.peak;
+        const drop=(1-eob(tIn))*-16;            /* falls into place */
+        const rise=eoc(tOut)*-14;               /* floats away */
+        const lx=x0+j*cell+cell/2, ly=y0+i*cell+cell/2+drop+rise;
+        const lA=a*eoc(tIn)*(1-tOut);
+        const s=0.75+0.25*eob(tIn);
+        ctx.save();
+        ctx.translate(lx,ly); ctx.scale(s,s);
+        ctx.font=(cell*0.62)+'px "JetBrains Mono", monospace';
+        const col=isPoc?'rgba('+ORANGE+','+(lA*.9)+')':(d.va[i]?'rgba('+BLUE+','+(lA*.85)+')':'rgba('+TXT+','+(lA*.34)+')');
+        ctx.fillStyle=col;
+        ctx.fillText(d.letters[j],0,0);
+        if(tIn<1){                               /* landing flash */
+          ctx.fillStyle='rgba(255,255,255,'+(lA*.8*(1-tIn))+')';
+          ctx.fillText(d.letters[j],0,0);
         }
-        ctx.fillRect(axisX0 - w - 4, yy-2.6, w, 5.2);
+        ctx.restore();
+        k++;
       }
     }
-    /* separators */
-    ctx.strokeStyle = 'rgba(255,255,255,.07)';
-    ctx.beginPath(); ctx.moveTo(profX0+.5,PAD_T); ctx.lineTo(profX0+.5,H-DELTA_H); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(axisX0+.5,PAD_T); ctx.lineTo(axisX0+.5,H-DELTA_H); ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,'+(a*.10)+')';
+    ctx.beginPath(); ctx.moveTo(x0-14,y0-6); ctx.lineTo(x0-14,y0+d.rows*cell+6); ctx.stroke();
+  }
 
-    /* candles with body gradient */
-    for(let i=0;i<n;i++){
-      const cd = candles[i];
-      const x = plotW - (n-i)*cw + cw*0.5;
-      const up = cd.c>=cd.o;
-      const col = up?C.up:C.dn;
-      ctx.strokeStyle = up?'rgba(94,159,216,.9)':'rgba(255,165,0,.9)';
-      ctx.lineWidth = 1.1;
-      ctx.beginPath(); ctx.moveTo(x, y(cd.h)); ctx.lineTo(x, y(cd.l)); ctx.stroke();
-      const bw = Math.max(3,cw*0.54);
-      const yo=y(cd.o), yc=y(cd.c);
-      const top=Math.min(yo,yc), hh=Math.max(2,Math.abs(yc-yo));
-      const g = ctx.createLinearGradient(0,top,0,top+hh);
-      if(up){ g.addColorStop(0,'rgba(94,159,216,.55)'); g.addColorStop(1,'rgba(94,159,216,.14)'); }
-      else { g.addColorStop(0,'rgba(255,165,0,.50)'); g.addColorStop(1,'rgba(255,165,0,.12)'); }
-      ctx.fillStyle = g;
-      ctx.fillRect(x-bw/2, top, bw, hh);
-      ctx.strokeStyle = up?'rgba(94,159,216,.85)':'rgba(255,165,0,.85)';
-      ctx.strokeRect(x-bw/2+.5, top+.5, bw-1, hh-1);
-    }
-
-    /* last price: glow line + tag on axis */
-    const lp = y(shownPrice);
-    const lg = ctx.createLinearGradient(0,lp-10,0,lp+10);
-    lg.addColorStop(0,'rgba(255,165,0,0)'); lg.addColorStop(.5,'rgba(255,165,0,.10)'); lg.addColorStop(1,'rgba(255,165,0,0)');
-    ctx.fillStyle=lg; ctx.fillRect(0,lp-10,plotW,20);
-    ctx.strokeStyle = 'rgba(235,240,247,.4)'; ctx.setLineDash([3,4]);
-    ctx.beginPath(); ctx.moveTo(0,Math.round(lp)+.5); ctx.lineTo(axisX0,Math.round(lp)+.5); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#FFA500';
-    ctx.fillRect(axisX0, lp-9, AXIS_W, 18);
-    ctx.fillStyle = '#1A1000';
-    ctx.font = '600 9.5px "JetBrains Mono", monospace';
-    ctx.textAlign='center';
-    ctx.fillText(shownPrice.toFixed(2), axisX0+AXIS_W/2, lp+.5);
-
-    /* big trade bubbles */
-    bubbles.forEach(b=>{
-      const x = plotW - (n-1-b.x)*cw - cw*0.5;
-      if(x<0) return;
-      const yy = y(b.lvl);
-      const r = 6 + (b.size/420)*13;
-      const fade = b.age<20 ? b.age/20 : (1 - (b.age-20)/140);
-      const col = b.side>0 ? '94,159,216' : '255,165,0';
-      ctx.beginPath(); ctx.arc(x,yy,r,0,6.283);
-      ctx.fillStyle = 'rgba('+col+','+(0.13*fade)+')'; ctx.fill();
-      ctx.strokeStyle = 'rgba('+col+','+(0.85*fade)+')'; ctx.lineWidth=1.3; ctx.stroke();
-      if(r>10){
-        ctx.fillStyle = 'rgba(235,240,247,'+fade+')';
-        ctx.font = '8.5px "JetBrains Mono", monospace';
-        ctx.textAlign='center';
-        ctx.fillText(b.size, x, yy);
+  /* ---------- DELTA: bars spring from the baseline, sink back on exit ---------- */
+  function drawDELTA(d,b,xo,a,now){
+    const x0=W*0.10, span=W*0.8, bw=span/d.n;
+    const mid=H/2+6, amp=H*0.26;
+    ctx.strokeStyle='rgba(255,255,255,'+(a*.12)+')';
+    ctx.beginPath(); ctx.moveTo(x0,mid+.5); ctx.lineTo(x0+span,mid+.5); ctx.stroke();
+    const upto=cl(b*1.1)*d.n;
+    for(let i=0;i<d.n;i++){
+      const tIn=cl(upto-i);
+      if(tIn<=0) break;
+      const tOut=cl((xo*1.5 - i/d.n)*2.2);
+      const spring=eob(tIn)*(1-eoc(tOut));
+      const v=d.v[i], h=Math.abs(v)*amp*Math.max(0,spring), x=x0+i*bw+2;
+      if(h<=0) continue;
+      const bA=a*(1-tOut*.85);
+      const col=v>=0?BLUE:ORANGE;
+      const yTop=v>=0?mid-h:mid;
+      const g=ctx.createLinearGradient(0,mid,0,v>=0?mid-h:mid+h);
+      g.addColorStop(0,'rgba('+col+','+(bA*.35)+')');
+      g.addColorStop(1,'rgba('+col+','+(bA*.85)+')');
+      ctx.fillStyle=g;
+      ctx.fillRect(x, yTop, bw-5, h);
+      /* bright cap while springing */
+      if(tIn<1){
+        ctx.fillStyle='rgba(255,255,255,'+(bA*.6*(1-tIn))+')';
+        const capY=v>=0?mid-h:mid+h-2.5;
+        ctx.fillRect(x, capY, bw-5, 2.5);
       }
-    });
-
-    /* delta strip */
-    const dy0 = H - DELTA_H;
-    ctx.strokeStyle = 'rgba(255,255,255,.07)';
-    ctx.beginPath(); ctx.moveTo(0,dy0+.5); ctx.lineTo(W,dy0+.5); ctx.stroke();
-    let maxD=1; candles.forEach(cd=>maxD=Math.max(maxD,Math.abs(cd.delta)));
-    const mid = dy0 + DELTA_H/2 + 3;
-    for(let i=0;i<n;i++){
-      const cd = candles[i];
-      const x = plotW - (n-i)*cw;
-      const hgt = (Math.abs(cd.delta)/maxD)*(DELTA_H/2-6);
-      ctx.fillStyle = cd.delta>=0 ? 'rgba(94,159,216,.8)' : 'rgba(255,165,0,.8)';
-      if(cd.delta>=0) ctx.fillRect(x+1, mid-hgt, Math.max(2,cw-3), hgt);
-      else ctx.fillRect(x+1, mid, Math.max(2,cw-3), hgt);
     }
-    ctx.fillStyle = C.text;
-    ctx.font = '8px "JetBrains Mono", monospace';
-    ctx.textAlign='left';
-    ctx.fillText('DELTA', 6, dy0+9);
-    const sess = candles.reduce((s,cd)=>s+cd.delta,0);
-    ctx.fillStyle = sess>=0 ? C.up : C.dn;
-    ctx.font = '9px "JetBrains Mono", monospace';
-    ctx.textAlign='right';
-    ctx.fillText('CVD '+(sess>=0?'+':'')+sess, W-8, dy0+9);
   }
 
-  /* ---- loop (dt-clamped: safe after tab sleep) ---- */
-  let last = performance.now(), acc = 0;
-  const TICK_MS = 90;
-  function loop(now){
-    let dt = now - last; last = now;
-    if(dt > 400) dt = 400;
-    acc += dt;
-    let steps = 0;
-    while(acc >= TICK_MS && steps < 6){ simTick(); acc -= TICK_MS; steps++; }
-    if(steps===6) acc = 0;
-    draw();
-    requestAnimationFrame(loop);
+  /* ---------- FOOTPRINT: cells unfold in a diagonal wave, shimmer on imbalances ---------- */
+  function drawFP(d,b,xo,a,now){
+    const cw=Math.min(120,W*0.155), ch=Math.min(30,(H-100)/d.rows);
+    const x0=(W-d.cols*cw)/2+10, y0=(H-40-d.rows*ch)/2+10;
+    const total=d.cols+d.rows;
+    for(let c=0;c<d.cols;c++){
+      for(let r=0;r<d.rows;r++){
+        const diag=(c+r)/total;
+        const tIn=cl((b*1.35 - diag)*3.2);
+        if(tIn<=0) continue;
+        const tOut=cl((xo*1.5 - diag)*2.4);
+        if(tOut>=1) continue;
+        const cell=d.cells[c][r];
+        const cx=x0+c*cw+cw/2, cy=y0+r*ch+ch/2;
+        const sy=0.25+0.75*eob(tIn);
+        const cellA=a*eoc(tIn)*(1-tOut);
+        ctx.save();
+        ctx.translate(cx,cy); ctx.scale(1,Math.max(.05,sy*(1-eoc(tOut)*.5)));
+        if(cell.imb===1) { ctx.fillStyle='rgba('+BLUE+','+(cellA*.16)+')'; ctx.fillRect(-cw/2+2,-ch/2+2,cw-6,ch-6); }
+        if(cell.imb===-1){ ctx.fillStyle='rgba('+ORANGE+','+(cellA*.14)+')'; ctx.fillRect(-cw/2+2,-ch/2+2,cw-6,ch-6); }
+        if(cell.poc){ ctx.strokeStyle='rgba('+ORANGE+','+(cellA*.6)+')'; ctx.strokeRect(-cw/2+2.5,-ch/2+2.5,cw-7,ch-7); }
+        ctx.font='10.5px "JetBrains Mono", monospace';
+        ctx.textBaseline='middle';
+        ctx.fillStyle='rgba('+BLUE+','+(cellA*.9)+')';
+        ctx.textAlign='right'; ctx.fillText(cell.bid, -8, 0);
+        ctx.fillStyle='rgba('+TXT+','+(cellA*.4)+')';
+        ctx.textAlign='center'; ctx.fillText('×', 0, 0);
+        ctx.fillStyle='rgba('+ORANGE+','+(cellA*.9)+')';
+        ctx.textAlign='left'; ctx.fillText(cell.ask, 8, 0);
+        /* shimmer sweep across imbalance cells right after landing */
+        if(cell.imb!==0 && tIn>=1 && tOut<=0){
+          const sw=((now/900 + diag*2)%2);
+          if(sw<1){
+            const sx=-cw/2 + sw*cw;
+            const sg=ctx.createLinearGradient(sx-14,0,sx+14,0);
+            sg.addColorStop(0,'rgba(255,255,255,0)');
+            sg.addColorStop(.5,'rgba(255,255,255,'+(cellA*.10)+')');
+            sg.addColorStop(1,'rgba(255,255,255,0)');
+            ctx.fillStyle=sg;
+            ctx.fillRect(-cw/2+2,-ch/2+2,cw-6,ch-6);
+          }
+        }
+        ctx.restore();
+      }
+    }
   }
-  for(let i=0;i<TICKS_PER_CANDLE*NCANDLES*0.8;i++) simTick();
-  if(reduced){ draw(); } else { requestAnimationFrame(loop); }
+
+  const DRAWS=[drawVP,drawTPO,drawDELTA,drawFP];
+
+  function frame(now){
+    const idx=Math.floor(now/DUR)%DRAWS.length;
+    const local=now%DUR;
+    if(idx!==curIdx){ curIdx=idx; data=GENS[idx](); }
+    const a=Math.min(1, local/FADE, (DUR-local)/FADE);
+    const b=cl(local/(DUR-OUT));
+    const xo=local>DUR-OUT ? (local-(DUR-OUT))/OUT : 0;
+    ctx.clearRect(0,0,W,H);
+    DRAWS[idx](data, b, xo, sm(a), now);
+    requestAnimationFrame(frame);
+  }
+  if(reduced){
+    curIdx=0; data=GENS[0]();
+    ctx.clearRect(0,0,W,H); DRAWS[0](data,1,0,1,0);
+  } else {
+    requestAnimationFrame(frame);
+  }
 })();
 </script>
 </body>
