@@ -190,6 +190,36 @@
   }
   .badge.b1{color:var(--blue);border:1px solid rgba(94,159,216,.4);background:var(--blue-dim)}
   .badge.b2{color:var(--orange);border:1px solid rgba(255,165,0,.4);background:var(--orange-dim)}
+  .fc-shot{padding:26px 40px 0;position:relative}
+  @media(max-width:600px){.fc-shot{padding:20px 24px 0}}
+  .shots{
+    display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+    border-radius:12px;border:1px solid var(--line-2);
+    box-shadow:0 26px 70px rgba(0,0,0,.55);
+    scrollbar-width:none;
+  }
+  .shots::-webkit-scrollbar{display:none}
+  .shots img{flex:0 0 100%;width:100%;display:block;scroll-snap-align:center;cursor:zoom-in}
+  .snav{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:4;
+    width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);
+    background:rgba(10,14,21,.85);backdrop-filter:blur(8px);color:var(--text);
+    font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s, background .2s;
+  }
+  .snav:hover{border-color:var(--orange);color:var(--orange)}
+  .snav.prev{left:52px}
+  .snav.next{right:52px}
+  @media(max-width:600px){.snav.prev{left:32px}.snav.next{right:32px}}
+  .sdots{display:flex;gap:7px;justify-content:center;margin-top:14px}
+  .sdots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:background .25s}
+  .sdots i.on{background:var(--orange)}
+  .lightbox{
+    position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+    background:rgba(3,4,9,.92);backdrop-filter:blur(8px);cursor:zoom-out;padding:30px;
+  }
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:100%;border-radius:10px;border:1px solid var(--line-2)}
   .fc-promise{
     margin:0 40px;padding:22px 26px;margin-top:26px;
     border:1px solid rgba(255,165,0,.3);border-radius:12px;
@@ -336,6 +366,16 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-footprint">
+          <img src="img/footprint.webp" alt="MATE Footprint Order Flow on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/footprint-zoom.webp" alt="MATE Footprint close-up: bid×ask cells, POC and trapped traders zone" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-footprint',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-footprint',1)">›</button>
+        <div class="sdots" id="sh-footprint-dots"><i class="on"></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>What you see, happened.</b> Every number comes from individual trades classified tick by tick against the live bid/ask at the exact moment of each execution. Nothing interpolated, nothing smoothed, nothing repainted."
            data-es="<b>Lo que ves, ocurrió.</b> Cada número proviene de operaciones individuales clasificadas tick a tick contra el bid/ask vivo en el momento exacto de cada ejecución. Nada interpolado, nada suavizado, nada repintado."><b>What you see, happened.</b> Every number comes from individual trades classified tick by tick against the live bid/ask at the exact moment of each execution. Nothing interpolated, nothing smoothed, nothing repainted.</p>
@@ -410,6 +450,16 @@
           <span class="badge b1" data-en="REAL TIME" data-es="TIEMPO REAL">REAL TIME</span>
           <span class="badge b2" data-en="FACTS ONLY" data-es="SOLO HECHOS">FACTS ONLY</span>
         </div>
+      </div>
+
+      <div class="fc-shot">
+        <div class="shots" id="sh-heatmap">
+          <img src="img/heatmap.webp" alt="MATE Liquidity Heatmap on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/heatmap-zoom.webp" alt="MATE Liquidity Heatmap close-up: absorption and iceberg marks with a resting wall" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-heatmap',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-heatmap',1)">›</button>
+        <div class="sdots" id="sh-heatmap-dots"><i class="on"></i><i></i></div>
       </div>
 
       <div class="fc-promise">
@@ -488,6 +538,16 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-tpo">
+          <img src="img/tpo.webp" alt="MATE Session TPO and Volume Profile with naked levels on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/tpo-composite.webp" alt="MATE composite profile: six sessions merged with projected levels" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-tpo',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-tpo',1)">›</button>
+        <div class="sdots" id="sh-tpo-dots"><i class="on"></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>Two truths, face to face.</b> Where the market spent its time and where it committed its volume. When both agree, there's acceptance; when they diverge, there's information — and you see it before anyone else."
            data-es="<b>Dos verdades, cara a cara.</b> Dónde pasó su tiempo el mercado y dónde comprometió su volumen. Cuando ambas coinciden, hay aceptación; cuando divergen, hay información — y tú la ves antes que nadie."><b>Two truths, face to face.</b> Where the market spent its time and where it committed its volume. When both agree, there's acceptance; when they diverge, there's information — and you see it before anyone else.</p>
@@ -564,6 +624,16 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-bigtrades">
+          <img src="img/bigtrades.webp" alt="MATE Big Trades institutional execution detector on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/bigtrades-zoom.webp" alt="MATE Big Trades close-up: golden ring on the largest event and buy/sell bubbles" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-bigtrades',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-bigtrades',1)">›</button>
+        <div class="sdots" id="sh-bigtrades-dots"><i class="on"></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>The layer cheap detectors can't see.</b> When an institution sends 127 contracts, the exchange reports them as 70+57 in the same instant — and simple detectors see two “small” trades and stay silent. Big Trades reconstructs the original order and draws it at its true size."
            data-es="<b>La capa que los detectores baratos no ven.</b> Cuando una institución envía 127 contratos, el exchange los reporta como 70+57 en el mismo instante — y los detectores simples ven dos operaciones “pequeñas” y callan. Big Trades reconstruye la orden original y la dibuja con su tamaño verdadero."><b>The layer cheap detectors can't see.</b> When an institution sends 127 contracts, the exchange reports them as 70+57 in the same instant — and simple detectors see two “small” trades and stay silent. Big Trades reconstructs the original order and draws it at its true size.</p>
@@ -623,6 +693,16 @@
           <span class="badge b1" data-en="3 VIEWS IN 1" data-es="3 VISTAS EN 1">3 VIEWS IN 1</span>
           <span class="badge b2" data-en="NO REPAINTING" data-es="SIN REPINTADO">NO REPAINTING</span>
         </div>
+      </div>
+
+      <div class="fc-shot">
+        <div class="shots" id="sh-deltasuite">
+          <img src="img/deltasuite.webp" alt="MATE Delta Suite BarDelta view with excursion wicks on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/deltasuite-cvd.webp" alt="MATE Delta Suite CVD candles diverging from price" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-deltasuite',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-deltasuite',1)">›</button>
+        <div class="sdots" id="sh-deltasuite-dots"><i class="on"></i><i></i></div>
       </div>
 
       <div class="fc-promise">
@@ -686,6 +766,16 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-deltaprofile">
+          <img src="img/deltaprofile.webp" alt="MATE Delta Profile strip anchored to the chart edge with max-delta row outlined in gold on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/deltaprofile-zoom.webp" alt="MATE Delta Profile zoom with per-price delta values, freshness dots and golden max-delta row" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-deltaprofile',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-deltaprofile',1)">›</button>
+        <div class="sdots" id="sh-deltaprofile-dots"><i class="on"></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>Are you buying the push… or its echo?</b> Rolling mode always contains exactly the last N minutes, and its freshness dots mark where aggression is happening right now — not the residue of a battle that already expired."
            data-es="<b>¿Estás comprando el empuje… o su eco?</b> El modo Rolling contiene siempre exactamente los últimos N minutos, y sus puntos de frescura marcan dónde la agresión está ocurriendo ahora mismo — no el residuo de una batalla que ya expiró."><b>Are you buying the push… or its echo?</b> Rolling mode always contains exactly the last N minutes, and its freshness dots mark where aggression is happening right now — not the residue of a battle that already expired.</p>
@@ -745,6 +835,16 @@
           <span class="badge b1" data-en="DRAW WITH THE MOUSE" data-es="DIBUJA CON EL RATÓN">DRAW WITH THE MOUSE</span>
           <span class="badge b2" data-en="DELTA + VOLUME" data-es="DELTA + VOLUMEN">DELTA + VOLUME</span>
         </div>
+      </div>
+
+      <div class="fc-shot">
+        <div class="shots" id="sh-fixedrange">
+          <img src="img/fixedrange.webp" alt="MATE Fixed Range Volume Profile drawn over a selected range of candles on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/fixedrange-zoom.webp" alt="MATE Fixed Range Volume Profile zoom with per-row delta and volume back to back, value area and POC" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-fixedrange',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-fixedrange',1)">›</button>
+        <div class="sdots" id="sh-fixedrange-dots"><i class="on"></i><i></i></div>
       </div>
 
       <div class="fc-promise">
@@ -808,6 +908,16 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-anchored">
+          <img src="img/anchored.webp" alt="MATE Anchored Volume Profile histogram anchored to the panel with VAH, VPOC and VAL on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/anchored-week.webp" alt="MATE Anchored Volume Profile over a different time window with value area and VPOC at the current price zone" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-anchored',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-anchored',1)">›</button>
+        <div class="sdots" id="sh-anchored-dots"><i class="on"></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>Whatever context you want, instantly.</b> It only loads the window's own data — never the chart's full history — so it opens in seconds no matter how many days your chart holds. And if your connection drops and returns, it reloads itself: always exact."
            data-es="<b>El contexto que quieras, al instante.</b> Solo carga los datos de la propia ventana — nunca el histórico completo del gráfico — así que abre en segundos tenga los días que tenga tu gráfico. Y si tu conexión cae y vuelve, se recarga solo: siempre exacto."><b>Whatever context you want, instantly.</b> It only loads the window's own data — never the chart's full history — so it opens in seconds no matter how many days your chart holds. And if your connection drops and returns, it reloads itself: always exact.</p>
@@ -867,6 +977,17 @@
           <span class="badge b1" data-en="5 INDICATORS" data-es="5 INDICADORES">5 INDICATORS</span>
           <span class="badge b2" data-en="TICK-EXACT" data-es="EXACTO AL TICK">TICK-EXACT</span>
         </div>
+      </div>
+
+      <div class="fc-shot">
+        <div class="shots" id="sh-vwap">
+          <img src="img/vwap.webp" alt="MATE Daily RTH VWAP with deviation bands fanning out from the session open on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/vwap-weekly.webp" alt="MATE Weekly VWAP with deviation channels and previous-week value area levels PW DVAH, PW VWAP and PW DVAL" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/vwap-yearly.webp" alt="MATE Yearly VWAP with deviation channels framing a full year of price action" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-vwap',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-vwap',1)">›</button>
+        <div class="sdots" id="sh-vwap-dots"><i class="on"></i><i></i><i></i></div>
       </div>
 
       <div class="fc-promise">
@@ -930,6 +1051,17 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-mgi">
+          <img src="img/mgi.webp" alt="MATE MGI Daily map with overnight range, Initial Balance, RTH open and previous-session value area on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/mgi-weekly.webp" alt="MATE MGI Weekly levels: PWH, PW VAH, PW vPOC, PW Mid, PW VAL and PWL drawn automatically" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/mgi-yearly.webp" alt="MATE MGI Yearly levels framing a full rally: PYH, PY VAH, PYC, PY vPOC, PY VAL, PYO and PYL" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-mgi',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-mgi',1)">›</button>
+        <div class="sdots" id="sh-mgi-dots"><i class="on"></i><i></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>The day's map, ready before the open.</b> Overnight range, Initial Balance with extensions, previous-period levels, tick-exact value areas, Half Gap and session VWAPs — every level appears only once defined, frozen at its exact time, and never repaints."
            data-es="<b>El mapa del día, listo antes de la apertura.</b> Rango overnight, Initial Balance con extensiones, niveles del período anterior, value areas exactas al tick, Half Gap y VWAPs de sesión — cada nivel aparece solo cuando queda definido, congelado en su hora exacta, y jamás se repinta."><b>The day's map, ready before the open.</b> Overnight range, Initial Balance with extensions, previous-period levels, tick-exact value areas, Half Gap and session VWAPs — every level appears only once defined, frozen at its exact time, and never repaints.</p>
@@ -991,6 +1123,16 @@
         </div>
       </div>
 
+      <div class="fc-shot">
+        <div class="shots" id="sh-lagsentinel">
+          <img src="img/lagsentinel.webp" alt="MATE Lag Sentinel healthy state: discreet panel showing ES feed latency of +0.017 seconds" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/lagsentinel-alert.webp" alt="MATE Lag Sentinel alert state: red panel warning feed FROZEN — no quotes on the ES feed" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-lagsentinel',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-lagsentinel',1)">›</button>
+        <div class="sdots" id="sh-lagsentinel-dots"><i class="on"></i><i></i></div>
+      </div>
+
       <div class="fc-promise">
         <p data-en="<b>Is what you see on screen really the market, right now?</b> Lag Sentinel answers that question honestly: it stays silent while everything is healthy, and when a pipe degrades, one line names the culprit. When it heals, it disappears."
            data-es="<b>¿Lo que ves en pantalla es realmente el mercado, ahora mismo?</b> Lag Sentinel responde esa pregunta con honestidad: guarda silencio mientras todo está sano, y cuando una tubería se degrada, una línea nombra al culpable. Cuando sana, desaparece."><b>Is what you see on screen really the market, right now?</b> Lag Sentinel answers that question honestly: it stays silent while everything is healthy, and when a pipe degrades, one line names the culprit. When it heals, it disappears.</p>
@@ -1050,6 +1192,16 @@
           <span class="badge b1" data-en="CONTEXT IN ONE PANEL" data-es="EL CONTEXTO EN UN PANEL">CONTEXT IN ONE PANEL</span>
           <span class="badge b2" data-en="NO DEGRADED VALUES" data-es="SIN VALORES DEGRADADOS">NO DEGRADED VALUES</span>
         </div>
+      </div>
+
+      <div class="fc-shot">
+        <div class="shots" id="sh-auctioncontext">
+          <img src="img/auctioncontext.webp" alt="MATE Auction Context panel on ES: ranges vs typical, relative volume, weekly statistics, overnight inventory and rotations" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/auctioncontext-zoom.webp" alt="MATE Auction Context zoom: overnight inventory read as 100% NET LONG, live deltas, IB extensions and RTH rotations" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-auctioncontext',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-auctioncontext',1)">›</button>
+        <div class="sdots" id="sh-auctioncontext-dots"><i class="on"></i><i></i></div>
       </div>
 
       <div class="fc-promise">
@@ -1153,6 +1305,23 @@ function toggleMenu(){
   document.getElementById('mmenu').classList.toggle('open');
 }
 document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+<div class="lightbox" id="lb" onclick="this.classList.remove('open')"><img id="lbImg" src="" alt=""></div>
+<script>
+function openLb(s){ document.getElementById('lbImg').src=s; document.getElementById('lb').classList.add('open'); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.getElementById('lb').classList.remove('open'); });
+function shNav(id,dir){
+  const el=document.getElementById(id);
+  el.scrollBy({left:dir*el.clientWidth,behavior:'smooth'});
+}
+document.querySelectorAll('.shots').forEach(el=>{
+  const dots=document.getElementById(el.id+'-dots');
+  if(!dots) return;
+  el.addEventListener('scroll', ()=>{
+    const i=Math.round(el.scrollLeft/el.clientWidth);
+    dots.querySelectorAll('i').forEach((d,k)=>d.classList.toggle('on',k===i));
+  },{passive:true});
+});
 </script>
 </body>
 </html>
