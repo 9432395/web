@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVD (Cumulative Volume Delta) Explained: Trend and Divergences — MATE</title>
+<meta name="description" content="CVD explained: cumulative delta, confirmation vs suspicion, and the divergences that warn of exhausting aggression. Chapter 5 of a free order flow course.">
+<link rel="canonical" href="https://www.matetrading.com/learn-cvd.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon-144.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--blue)}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+
+  .hero-learn{max-width:760px;margin:0 auto;padding:76px 24px 26px}
+  .hero-learn .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.24em;color:var(--blue)}
+  .hero-learn h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.9rem,4.4vw,2.4rem);letter-spacing:-.01em;margin:14px 0 12px;line-height:1.15}
+  .hero-learn h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-learn p{color:var(--muted);font-size:1.02rem;line-height:1.65}
+  .cards{max-width:760px;margin:30px auto 80px;padding:0 24px;display:flex;flex-direction:column;gap:14px}
+  .acard{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 26px;transition:border-color .2s, transform .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .acard:hover{border-color:rgba(94,159,216,.45);transform:translateY(-2px)}
+  .acard .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--orange)}
+  .acard h3{font-family:'Manrope',sans-serif;color:var(--text);font-size:1.12rem;margin:8px 0 6px}
+  .acard p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
+
+  .art{max-width:720px;margin:0 auto;padding:64px 24px 80px}
+  .art .kicker{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.22em;color:var(--blue)}
+  .art h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,4.2vw,2.2rem);letter-spacing:-.01em;margin:14px 0 22px;line-height:1.2}
+  .art h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .art h2{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;margin:40px 0 12px;color:var(--text)}
+  .art p{color:#AEB8C6;font-size:1rem;line-height:1.75;margin-bottom:16px}
+  .art strong,.art b{color:var(--text)}
+  .art .box{background:var(--panel);border:1px solid rgba(255,165,0,.3);border-radius:12px;padding:20px 24px;margin:26px 0;color:#D8C9A8;font-size:.95rem;line-height:1.7}
+  .art .box b{color:#F0D9A8}
+  .art .next{margin-top:50px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .art .next a{color:var(--blue);text-decoration:none;font-weight:600;font-size:.95rem}
+  .artcta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:44px;text-align:center}
+  .artcta p{margin-bottom:16px}
+  .artcta a{display:inline-block;background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#05070B;text-decoration:none;
+    border-radius:11px;padding:13px 30px;font-weight:700}
+  .artcta a:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem;margin-top:20px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+  .foot a{color:inherit}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "CVD (Cumulative Volume Delta) Explained: Trend and Divergences",
+ "description": "CVD explained: cumulative delta, confirmation vs suspicion, and the divergences that warn of exhausting aggression. Chapter 5 of a free order flow course.",
+ "inLanguage": [
+  "en",
+  "es"
+ ],
+ "datePublished": "2026-08-07",
+ "dateModified": "2026-08-07",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-cvd.html",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "Read the Market — Learn Order Flow"
+ },
+ "author": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/",
+  "logo": {
+   "@type": "ImageObject",
+   "url": "https://www.matetrading.com/favicon-144.png"
+  }
+ },
+ "image": "https://www.matetrading.com/favicon-144.png",
+ "isAccessibleForFree": true
+}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<header>
+  <nav class="top">
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="learn.html" class="on" data-en="Learn" data-es="Aprende">Learn</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+</header>
+
+<main>
+<article class="art">
+  <span class="kicker" data-en="READ THE MARKET · CHAPTER 5 · CVD" data-es="LEER EL MERCADO · CAPÍTULO 5 · CVD">READ THE MARKET · CHAPTER 5 · CVD</span>
+  <h1 data-en='Delta resets every candle. <span class="grad">CVD never forgets.</span>' data-es='El delta se reinicia en cada vela. <span class="grad">El CVD no olvida.</span>'>Delta resets every candle. <span class="grad">CVD never forgets.</span></h1>
+
+  <p data-en="The delta scores one candle and then starts over. The <b>CVD</b> — Cumulative Volume Delta — is the running sum of every delta, candle by candle: the whole war drawn in a single line."
+     data-es="El delta puntúa una vela y luego empieza de cero. El <b>CVD</b> — Cumulative Volume Delta, el delta acumulado — es la suma de todos los deltas, vela a vela: la guerra completa dibujada en una sola línea.">The delta scores one candle and then starts over. The <b>CVD</b> — Cumulative Volume Delta — is the running sum of every delta, candle by candle: the whole war drawn in a single line.</p>
+
+  <h2 data-en="A sum that remembers everything" data-es="Una suma que lo recuerda todo">A sum that remembers everything</h2>
+  <p data-en="Each candle adds (or subtracts) its delta to the total. Five candles with deltas of +40, −10, +25, −5 and +30 build a CVD of +40, +30, +55, +50, +80. A <b>rising CVD</b> means buying aggression rules the session; a <b>falling CVD</b> means selling aggression does. One glance at the line tells you which side has been winning the whole war — not just the last battle."
+     data-es="Cada vela suma (o resta) su delta al total. Cinco velas con deltas de +40, −10, +25, −5 y +30 construyen un CVD de +40, +30, +55, +50, +80. Un <b>CVD subiendo</b> significa que la agresión compradora domina la sesión; un <b>CVD bajando</b>, que domina la vendedora. Un vistazo a la línea te dice qué bando lleva ganada la guerra entera — no solo la última batalla.">Each candle adds (or subtracts) its delta to the total. Five candles with deltas of +40, −10, +25, −5 and +30 build a CVD of +40, +30, +55, +50, +80. A <b>rising CVD</b> means buying aggression rules the session; a <b>falling CVD</b> means selling aggression does. One glance at the line tells you which side has been winning the whole war — not just the last battle.</p>
+
+  <h2 data-en="The healthy read: price and CVD together" data-es="La lectura sana: precio y CVD de la mano">The healthy read: price and CVD together</h2>
+  <p data-en="Like the delta, the CVD only makes sense next to price. <b>Confirmation:</b> price rises and the CVD rises — the move is backed by real buying aggression. <b>Suspicion:</b> price rises but the CVD does not follow — a move without aggression behind it, and you should ask yourself who is holding it up. A healthy trend usually advances with its CVD in favor; when they stop moving together, pay attention."
+     data-es="Igual que el delta, el CVD solo cobra sentido junto al precio. <b>Confirmación:</b> el precio sube y el CVD sube — la subida está respaldada por agresión compradora real. <b>Sospecha:</b> el precio sube pero el CVD no acompaña — una subida sin agresión detrás, y conviene preguntarse quién la sostiene. Una tendencia sana suele avanzar con su CVD a favor; cuando dejan de ir de la mano, presta atención.">Like the delta, the CVD only makes sense next to price. <b>Confirmation:</b> price rises and the CVD rises — the move is backed by real buying aggression. <b>Suspicion:</b> price rises but the CVD does not follow — a move without aggression behind it, and you should ask yourself who is holding it up. A healthy trend usually advances with its CVD in favor; when they stop moving together, pay attention.</p>
+
+  <h2 data-en="The divergence: the classic warning" data-es="La divergencia: el aviso clásico">The divergence: the classic warning</h2>
+  <p data-en="The classic warning looks like this: price prints a lower low — say from 7430 down to 7418 — but the CVD prints a <b>higher</b> low, from −800 up to −450. The market pushed lower, yet this time there was far less selling aggression behind the push. Sellers are pushing with less force on every attempt: the pressure is running out."
+     data-es="El aviso clásico se ve así: el precio marca un mínimo más bajo — digamos de 7430 a 7418 — pero el CVD marca un mínimo <b>más alto</b>, de −800 a −450. El mercado empujó más abajo, pero esta vez hubo mucha menos agresión vendedora detrás del empujón. Los vendedores empujan con menos fuerza en cada intento: la presión se está agotando.">The classic warning looks like this: price prints a lower low — say from 7430 down to 7418 — but the CVD prints a <b>higher</b> low, from −800 up to −450. The market pushed lower, yet this time there was far less selling aggression behind the push. Sellers are pushing with less force on every attempt: the pressure is running out.</p>
+
+  <div class="box" data-en="<b>The honest rule:</b> a divergence is a warning to look for confirmation — never a buy order. It tells you aggression is exhausting; it does not tell you the turn has arrived."
+       data-es="<b>La regla honesta:</b> una divergencia es un aviso para buscar confirmación — nunca una orden de compra. Te dice que la agresión se agota; no te dice que el giro ya llegó."><b>The honest rule:</b> a divergence is a warning to look for confirmation — never a buy order. It tells you aggression is exhausting; it does not tell you the turn has arrived.</div>
+
+  <p data-en="<b>CVD in 3 reads:</b> the direction tells you which side rules the session. Coherence with price tells you if the move has real backing. The divergence warns of exhausting aggression — a warning, never a guarantee. The CVD shows you the aggression; next you need to see where passivity waits. In chapter 6: the liquidity map."
+     data-es="<b>El CVD en 3 lecturas:</b> la dirección te dice qué bando domina la sesión. La coherencia con el precio te dice si el movimiento tiene respaldo real. La divergencia avisa de agresión agotándose — aviso, nunca garantía. El CVD te enseña la agresión; ahora falta ver dónde espera la pasividad. En el capítulo 6: el mapa de liquidez."><b>CVD in 3 reads:</b> the direction tells you which side rules the session. Coherence with price tells you if the move has real backing. The divergence warns of exhausting aggression — a warning, never a guarantee. The CVD shows you the aggression; next you need to see where passivity waits. In chapter 6: the liquidity map.</p>
+
+  <div class="artcta">
+    <p data-en="Want the CVD drawn live on your own charts? MATE's order flow indicators build it for you — tick by tick, on NinjaTrader 8." data-es="¿Quieres el CVD dibujado en vivo en tus propios gráficos? Los indicadores de order flow de MATE lo construyen por ti — tick a tick, en NinjaTrader 8.">Want the CVD drawn live on your own charts? MATE's order flow indicators build it for you — tick by tick, on NinjaTrader 8.</p>
+    <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
+  </div>
+  <div class="next">
+    <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
+    <a href="learn-liquidity-heatmap.html" data-en="Chapter 6: The Liquidity Map →" data-es="Capítulo 6: El Mapa de Liquidez →">Chapter 6: The Liquidity Map →</a>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? "CVD (Cumulative Volume Delta) Explained: Trend and Divergences — MATE" : "El CVD (delta acumulado) explicado: tendencia y divergencias — MATE";
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ae104bc1724a18a3884922ce60fd85"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

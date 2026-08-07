@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delta in Order Flow: Sign, Coherence and Excursion — MATE</title>
+<meta name="description" content="Delta explained for futures traders: aggressive buys minus aggressive sells, effort vs result, and the excursion the final number hides. Free chapter 4.">
+<link rel="canonical" href="https://www.matetrading.com/learn-delta.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon-144.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--blue)}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+
+  .hero-learn{max-width:760px;margin:0 auto;padding:76px 24px 26px}
+  .hero-learn .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.24em;color:var(--blue)}
+  .hero-learn h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.9rem,4.4vw,2.4rem);letter-spacing:-.01em;margin:14px 0 12px;line-height:1.15}
+  .hero-learn h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-learn p{color:var(--muted);font-size:1.02rem;line-height:1.65}
+  .cards{max-width:760px;margin:30px auto 80px;padding:0 24px;display:flex;flex-direction:column;gap:14px}
+  .acard{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 26px;transition:border-color .2s, transform .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .acard:hover{border-color:rgba(94,159,216,.45);transform:translateY(-2px)}
+  .acard .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--orange)}
+  .acard h3{font-family:'Manrope',sans-serif;color:var(--text);font-size:1.12rem;margin:8px 0 6px}
+  .acard p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
+
+  .art{max-width:720px;margin:0 auto;padding:64px 24px 80px}
+  .art .kicker{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.22em;color:var(--blue)}
+  .art h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,4.2vw,2.2rem);letter-spacing:-.01em;margin:14px 0 22px;line-height:1.2}
+  .art h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .art h2{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;margin:40px 0 12px;color:var(--text)}
+  .art p{color:#AEB8C6;font-size:1rem;line-height:1.75;margin-bottom:16px}
+  .art strong,.art b{color:var(--text)}
+  .art .box{background:var(--panel);border:1px solid rgba(255,165,0,.3);border-radius:12px;padding:20px 24px;margin:26px 0;color:#D8C9A8;font-size:.95rem;line-height:1.7}
+  .art .box b{color:#F0D9A8}
+  .art .next{margin-top:50px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .art .next a{color:var(--blue);text-decoration:none;font-weight:600;font-size:.95rem}
+  .artcta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:44px;text-align:center}
+  .artcta p{margin-bottom:16px}
+  .artcta a{display:inline-block;background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#05070B;text-decoration:none;
+    border-radius:11px;padding:13px 30px;font-weight:700}
+  .artcta a:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem;margin-top:20px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+  .foot a{color:inherit}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Delta in Order Flow: Sign, Coherence and Excursion",
+ "description": "Delta explained for futures traders: aggressive buys minus aggressive sells, effort vs result, and the excursion the final number hides. Free chapter 4.",
+ "inLanguage": [
+  "en",
+  "es"
+ ],
+ "datePublished": "2026-08-07",
+ "dateModified": "2026-08-07",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-delta.html",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "Read the Market — Learn Order Flow"
+ },
+ "author": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/",
+  "logo": {
+   "@type": "ImageObject",
+   "url": "https://www.matetrading.com/favicon-144.png"
+  }
+ },
+ "image": "https://www.matetrading.com/favicon-144.png",
+ "isAccessibleForFree": true
+}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<header>
+  <nav class="top">
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="learn.html" class="on" data-en="Learn" data-es="Aprende">Learn</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+</header>
+
+<main>
+<article class="art">
+  <span class="kicker" data-en="READ THE MARKET · CHAPTER 4 · DELTA" data-es="LEER EL MERCADO · CAPÍTULO 4 · DELTA">READ THE MARKET · CHAPTER 4 · DELTA</span>
+  <h1 data-en='Every candle hides a fight. <span class="grad">Delta is the scoreboard.</span>' data-es='Toda vela esconde una pelea. <span class="grad">El delta es el marcador.</span>'>Every candle hides a fight. <span class="grad">Delta is the scoreboard.</span></h1>
+
+  <p data-en="In chapter 3 you saw the fight inside the candle, cell by cell. The delta compresses that whole fight into a single number — the most useful subtraction in trading."
+     data-es="En el capítulo 3 viste la pelea dentro de la vela, celda a celda. El delta comprime toda esa pelea en un solo número — la resta más útil del trading.">In chapter 3 you saw the fight inside the candle, cell by cell. The delta compresses that whole fight into a single number — the most useful subtraction in trading.</p>
+
+  <h2 data-en="The most useful subtraction in trading" data-es="La resta más útil del trading">The most useful subtraction in trading</h2>
+  <p data-en="Delta = aggressive buys minus aggressive sells — the same footprint cells, summed up. If 290 contracts were bought aggressively and 212 were sold aggressively, the delta is <b>+78</b>. Positive delta: buyers in charge. Negative delta: sellers in charge. That simple — the scoreboard of the candle."
+     data-es="Delta = compras agresivas menos ventas agresivas — las mismas celdas del footprint, resumidas. Si se compraron 290 contratos con agresión y se vendieron 212 con agresión, el delta es <b>+78</b>. Delta positivo: mandan los compradores. Delta negativo: mandan los vendedores. Así de simple — el marcador de la vela.">Delta = aggressive buys minus aggressive sells — the same footprint cells, summed up. If 290 contracts were bought aggressively and 212 were sold aggressively, the delta is <b>+78</b>. Positive delta: buyers in charge. Negative delta: sellers in charge. That simple — the scoreboard of the candle.</p>
+
+  <h2 data-en="The key read: effort vs result" data-es="La lectura clave: esfuerzo vs resultado">The key read: effort vs result</h2>
+  <p data-en="The delta only makes sense next to price. Take two scenarios with the same positive delta. <b>Coherence:</b> delta is positive and price rises — aggression gets results, a healthy move. <b>Warning:</b> delta is positive but price does not rise — someone passive is absorbing every buy. Effort without result. As you saw in chapter 3 with absorption, aggression that cannot move price is the seed of reversals."
+     data-es="El delta solo cobra sentido junto al precio. Mira dos escenarios con el mismo delta positivo. <b>Coherencia:</b> el delta es positivo y el precio sube — la agresión obtiene resultado, movimiento sano. <b>Alerta:</b> el delta es positivo pero el precio no sube — alguien pasivo está absorbiendo cada compra. Esfuerzo sin resultado. Como viste en el capítulo 3 con la absorción, la agresión que no logra mover el precio es la semilla de los giros.">The delta only makes sense next to price. Take two scenarios with the same positive delta. <b>Coherence:</b> delta is positive and price rises — aggression gets results, a healthy move. <b>Warning:</b> delta is positive but price does not rise — someone passive is absorbing every buy. Effort without result. As you saw in chapter 3 with absorption, aggression that cannot move price is the seed of reversals.</p>
+
+  <h2 data-en="The final number lies: the excursion" data-es="El número final engaña: la excursión">The final number lies: the excursion</h2>
+  <p data-en="Two candles close with the same +50 delta. Same story? Not even close. One traveled a clean path: 0 → +20 → +50, buyers in charge from start to finish. The other traveled a dirty path: 0 → −300 → +50 — sellers got to dominate by −300 and lost the whole advantage before the close. The final delta hides the <b>excursion</b>: the path it traveled during the candle. And the path IS the story."
+     data-es="Dos velas cierran con el mismo delta +50. ¿Misma historia? Ni de cerca. Una recorrió un camino limpio: 0 → +20 → +50, compradores al mando de principio a fin. La otra recorrió un camino sucio: 0 → −300 → +50 — los vendedores llegaron a dominar por −300 y perdieron toda la ventaja antes del cierre. El delta final esconde la <b>excursión</b>: el camino que recorrió durante la vela. Y el camino ES la historia.">Two candles close with the same +50 delta. Same story? Not even close. One traveled a clean path: 0 → +20 → +50, buyers in charge from start to finish. The other traveled a dirty path: 0 → −300 → +50 — sellers got to dominate by −300 and lost the whole advantage before the close. The final delta hides the <b>excursion</b>: the path it traveled during the candle. And the path IS the story.</p>
+
+  <div class="box" data-en="<b>Delta in 3 reads:</b> the sign tells you who attacks (+ buyers, − sellers). Coherence with price tells you if that aggression works. The excursion tells the full fight the final number hides."
+       data-es="<b>El delta en 3 lecturas:</b> el signo te dice quién agrede (+ compradores, − vendedores). La coherencia con el precio te dice si esa agresión funciona. La excursión te cuenta la pelea completa que el número final esconde."><b>Delta in 3 reads:</b> the sign tells you who attacks (+ buyers, − sellers). Coherence with price tells you if that aggression works. The excursion tells the full fight the final number hides.</div>
+
+  <p data-en="The delta scores each battle. But battles accumulate into a war — and the war has its own chart. In chapter 5: the CVD, where the divergences that precede many reversals show up."
+     data-es="El delta mide cada batalla. Pero las batallas se acumulan en una guerra — y la guerra tiene su propio gráfico. En el capítulo 5: el CVD, donde asoman las divergencias que preceden a muchos giros.">The delta scores each battle. But battles accumulate into a war — and the war has its own chart. In chapter 5: the CVD, where the divergences that precede many reversals show up.</p>
+
+  <div class="artcta">
+    <p data-en="Want the delta of every candle measured live on your own charts? MATE's order flow indicators do it for you — tick by tick, on NinjaTrader 8." data-es="¿Quieres el delta de cada vela medido en vivo en tus propios gráficos? Los indicadores de order flow de MATE lo hacen por ti — tick a tick, en NinjaTrader 8.">Want the delta of every candle measured live on your own charts? MATE's order flow indicators do it for you — tick by tick, on NinjaTrader 8.</p>
+    <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
+  </div>
+  <div class="next">
+    <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
+    <a href="learn-cvd.html" data-en="Chapter 5: The CVD →" data-es="Capítulo 5: El CVD →">Chapter 5: The CVD →</a>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? "Delta in Order Flow: Sign, Coherence and Excursion — MATE" : "El Delta en order flow: signo, coherencia y excursión — MATE";
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ae104bc1724a18a3884922ce60fd85"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

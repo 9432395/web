@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Order Flow — Free 7-Part Course — MATE</title>
+<meta name="description" content="A free 7-part course on auction theory and order flow: value, TPO and Volume Profile, footprint, delta, CVD and liquidity — no magic signals.">
+<link rel="canonical" href="https://www.matetrading.com/learn.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon-144.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--blue)}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+
+  .hero-learn{max-width:760px;margin:0 auto;padding:76px 24px 26px}
+  .hero-learn .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.24em;color:var(--blue)}
+  .hero-learn h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.9rem,4.4vw,2.4rem);letter-spacing:-.01em;margin:14px 0 12px;line-height:1.15}
+  .hero-learn h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-learn p{color:var(--muted);font-size:1.02rem;line-height:1.65}
+  .cards{max-width:760px;margin:30px auto 80px;padding:0 24px;display:flex;flex-direction:column;gap:14px}
+  .acard{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 26px;transition:border-color .2s, transform .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .acard:hover{border-color:rgba(94,159,216,.45);transform:translateY(-2px)}
+  .acard .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--orange)}
+  .acard h3{font-family:'Manrope',sans-serif;color:var(--text);font-size:1.12rem;margin:8px 0 6px}
+  .acard p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
+
+  .art{max-width:720px;margin:0 auto;padding:64px 24px 80px}
+  .art .kicker{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.22em;color:var(--blue)}
+  .art h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,4.2vw,2.2rem);letter-spacing:-.01em;margin:14px 0 22px;line-height:1.2}
+  .art h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .art h2{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;margin:40px 0 12px;color:var(--text)}
+  .art p{color:#AEB8C6;font-size:1rem;line-height:1.75;margin-bottom:16px}
+  .art strong,.art b{color:var(--text)}
+  .art .box{background:var(--panel);border:1px solid rgba(255,165,0,.3);border-radius:12px;padding:20px 24px;margin:26px 0;color:#D8C9A8;font-size:.95rem;line-height:1.7}
+  .art .box b{color:#F0D9A8}
+  .art .next{margin-top:50px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .art .next a{color:var(--blue);text-decoration:none;font-weight:600;font-size:.95rem}
+  .artcta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:44px;text-align:center}
+  .artcta p{margin-bottom:16px}
+  .artcta a{display:inline-block;background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#05070B;text-decoration:none;
+    border-radius:11px;padding:13px 30px;font-weight:700}
+  .artcta a:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem;margin-top:20px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+  .foot a{color:inherit}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Learn Order Flow — Free 7-Part Course",
+ "description": "A free 7-part course on auction theory and order flow: value, TPO and Volume Profile, footprint, delta, CVD and liquidity — no magic signals.",
+ "url": "https://www.matetrading.com/learn.html",
+ "inLanguage": [
+  "en",
+  "es"
+ ],
+ "isAccessibleForFree": true,
+ "publisher": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/"
+ },
+ "mainEntity": {
+  "@type": "ItemList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Auction Theory: Price Doesn't Move, It Auctions",
+    "url": "https://www.matetrading.com/learn-auction.html"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "TPO & Volume Profile Explained: VAH, POC, VAL and Naked POC",
+    "url": "https://www.matetrading.com/learn-tpo-volume-profile.html"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Footprint Charts Explained: Bid×Ask, Imbalances and Absorption",
+    "url": "https://www.matetrading.com/learn-footprint.html"
+   },
+   {
+    "@type": "ListItem",
+    "position": 4,
+    "name": "Delta in Order Flow: Sign, Coherence and Excursion",
+    "url": "https://www.matetrading.com/learn-delta.html"
+   },
+   {
+    "@type": "ListItem",
+    "position": 5,
+    "name": "CVD (Cumulative Volume Delta) Explained: Trend and Divergences",
+    "url": "https://www.matetrading.com/learn-cvd.html"
+   },
+   {
+    "@type": "ListItem",
+    "position": 6,
+    "name": "Liquidity Maps and Heatmaps Explained: Order Book Walls",
+    "url": "https://www.matetrading.com/learn-liquidity-heatmap.html"
+   },
+   {
+    "@type": "ListItem",
+    "position": 7,
+    "name": "Reading a Full Session with Order Flow, Step by Step",
+    "url": "https://www.matetrading.com/learn-full-session.html"
+   }
+  ]
+ }
+}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<header>
+  <nav class="top">
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="learn.html" class="on" data-en="Learn" data-es="Aprende">Learn</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+</header>
+
+<main>
+<div class="hero-learn">
+  <span class="kicker" data-en="LEARN · READ THE MARKET" data-es="APRENDE · LEER EL MERCADO">LEARN · READ THE MARKET</span>
+  <h1 data-en='Learn to read the <span class="grad">order flow</span>' data-es='Aprende a leer el <span class="grad">order flow</span>'>Learn to read the <span class="grad">order flow</span></h1>
+  <p data-en="A free 7-part course on auction theory and order flow — no magic signals, just the mechanics of how markets really move. Written by the builder of MATE."
+     data-es="Un curso gratuito de 7 partes sobre teoría de subasta y order flow — sin señales mágicas, solo la mecánica de cómo se mueven los mercados de verdad. Escrito por el creador de MATE.">A free 7-part course on auction theory and order flow — no magic signals, just the mechanics of how markets really move. Written by the builder of MATE.</p>
+</div>
+<div class="cards">
+  <a class="acard" href="learn-auction.html">
+    <span class="num" data-en="CHAPTER 1" data-es="CAPÍTULO 1">CHAPTER 1</span>
+    <h3 data-en="Price doesn't move. It auctions." data-es="El precio no se mueve. Se subasta.">Price doesn't move. It auctions.</h3>
+    <p data-en="Auction theory: value, balance and imbalance — the foundation everything else is built on." data-es="Teoría de subasta: el valor, el balance y el desequilibrio — la base sobre la que se construye todo lo demás.">Auction theory: value, balance and imbalance — the foundation everything else is built on.</p>
+  </a>
+  <a class="acard" href="learn-tpo-volume-profile.html">
+    <span class="num" data-en="CHAPTER 2" data-es="CAPÍTULO 2">CHAPTER 2</span>
+    <h3 data-en="The auction can be seen: TPO &amp; Volume Profile" data-es="La subasta se puede ver: TPO y Volume Profile">The auction can be seen: TPO &amp; Volume Profile</h3>
+    <p data-en="Time and volume stacked by price: the value area, VAH, POC, VAL — and the naked POCs the market remembers." data-es="Tiempo y volumen apilados por precio: el área de valor, VAH, POC, VAL — y los naked POC que el mercado recuerda.">Time and volume stacked by price: the value area, VAH, POC, VAL — and the naked POCs the market remembers.</p>
+  </a>
+  <a class="acard" href="learn-footprint.html">
+    <span class="num" data-en="CHAPTER 3" data-es="CAPÍTULO 3">CHAPTER 3</span>
+    <h3 data-en="The footprint: the candle from the inside" data-es="El footprint: la vela por dentro">The footprint: the candle from the inside</h3>
+    <p data-en="Bid×ask cells, stacked imbalances, absorption and trapped traders — the fight, number by number." data-es="Celdas bid×ask, desequilibrios apilados, absorción y atrapados — la pelea, número a número.">Bid×ask cells, stacked imbalances, absorption and trapped traders — the fight, number by number.</p>
+  </a>
+  <a class="acard" href="learn-delta.html">
+    <span class="num" data-en="CHAPTER 4" data-es="CAPÍTULO 4">CHAPTER 4</span>
+    <h3 data-en="The delta: the scoreboard of every candle" data-es="El delta: el marcador de cada vela">The delta: the scoreboard of every candle</h3>
+    <p data-en="Aggressive buys minus aggressive sells: the sign, the coherence with price, and the excursion the final number hides." data-es="Compras agresivas menos ventas agresivas: el signo, la coherencia con el precio y la excursión que el número final esconde.">Aggressive buys minus aggressive sells: the sign, the coherence with price, and the excursion the final number hides.</p>
+  </a>
+  <a class="acard" href="learn-cvd.html">
+    <span class="num" data-en="CHAPTER 5" data-es="CAPÍTULO 5">CHAPTER 5</span>
+    <h3 data-en="The CVD: the delta that never forgets" data-es="El CVD: el delta que no olvida">The CVD: the delta that never forgets</h3>
+    <p data-en="Cumulative delta, session dominance, and the divergences that warn — never guarantee — of exhausting aggression." data-es="El delta acumulado, el dominio de la sesión y las divergencias que avisan — nunca garantizan — de agresión agotándose.">Cumulative delta, session dominance, and the divergences that warn — never guarantee — of exhausting aggression.</p>
+  </a>
+  <a class="acard" href="learn-liquidity-heatmap.html">
+    <span class="num" data-en="CHAPTER 6" data-es="CAPÍTULO 6">CHAPTER 6</span>
+    <h3 data-en="The liquidity map: where size waits" data-es="El mapa de liquidez: dónde espera el tamaño">The liquidity map: where size waits</h3>
+    <p data-en="The order book painted on your chart: walls, brakes and traps — and why a wall is a hypothesis, not a promise." data-es="El libro de órdenes pintado en tu gráfico: muros, frenos y trampas — y por qué un muro es una hipótesis, no una promesa.">The order book painted on your chart: walls, brakes and traps — and why a wall is a hypothesis, not a promise.</p>
+  </a>
+  <a class="acard" href="learn-full-session.html">
+    <span class="num" data-en="FINAL CHAPTER" data-es="CAPÍTULO FINAL">FINAL CHAPTER</span>
+    <h3 data-en="The full session: every piece, one game" data-es="La sesión completa: todas las piezas, una partida">The full session: every piece, one game</h3>
+    <p data-en="One session read step by step — context, liquidity, footprint, delta and CVD telling a single story." data-es="Una sesión leída paso a paso — contexto, liquidez, footprint, delta y CVD contando una sola historia.">One session read step by step — context, liquidity, footprint, delta and CVD telling a single story.</p>
+  </a>
+</div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? "Learn Order Flow — Free 7-Part Course — MATE" : "Aprende Order Flow — curso gratuito de 7 partes — MATE";
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ae104bc1724a18a3884922ce60fd85"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
