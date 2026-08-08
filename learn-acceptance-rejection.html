@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acceptance vs Rejection in Auction Market Theory — MATE</title>
+<meta name="description" content="Acceptance vs rejection explained: how time and volume turn new prices into value, and why quick returns leave thin zones. Season 2 of a free course.">
+<link rel="canonical" href="https://www.matetrading.com/learn-acceptance-rejection.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon-v2.png">
+<link rel="apple-touch-icon" href="favicon-v2-144.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--blue)}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+
+  .hero-learn{max-width:760px;margin:0 auto;padding:76px 24px 26px}
+  .hero-learn .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.24em;color:var(--blue)}
+  .hero-learn h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.9rem,4.4vw,2.4rem);letter-spacing:-.01em;margin:14px 0 12px;line-height:1.15}
+  .hero-learn h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-learn p{color:var(--muted);font-size:1.02rem;line-height:1.65}
+  .cards{max-width:760px;margin:30px auto 80px;padding:0 24px;display:flex;flex-direction:column;gap:14px}
+  .acard{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 26px;transition:border-color .2s, transform .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .acard:hover{border-color:rgba(94,159,216,.45);transform:translateY(-2px)}
+  .acard .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--orange)}
+  .acard h3{font-family:'Manrope',sans-serif;color:var(--text);font-size:1.12rem;margin:8px 0 6px}
+  .acard p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
+
+  .art{max-width:720px;margin:0 auto;padding:64px 24px 80px}
+  .art .kicker{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.22em;color:var(--blue)}
+  .art h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,4.2vw,2.2rem);letter-spacing:-.01em;margin:14px 0 22px;line-height:1.2}
+  .art h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .art h2{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;margin:40px 0 12px;color:var(--text)}
+  .art p{color:#AEB8C6;font-size:1rem;line-height:1.75;margin-bottom:16px}
+  .art strong,.art b{color:var(--text)}
+  .art .box{background:var(--panel);border:1px solid rgba(255,165,0,.3);border-radius:12px;padding:20px 24px;margin:26px 0;color:#D8C9A8;font-size:.95rem;line-height:1.7}
+  .art .fig{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px;margin:28px 0}
+  .art .fig svg{display:block;width:100%;height:auto;max-width:620px;margin:0 auto}
+  .art .figcap{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.06em;margin-top:12px;text-align:center;line-height:1.6}
+  .art .box b{color:#F0D9A8}
+  .art .next{margin-top:50px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .art .next a{color:var(--blue);text-decoration:none;font-weight:600;font-size:.95rem}
+  .artcta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:44px;text-align:center}
+  .artcta p{margin-bottom:16px}
+  .artcta a{display:inline-block;background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#05070B;text-decoration:none;
+    border-radius:11px;padding:13px 30px;font-weight:700}
+  .artcta a:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem;margin-top:20px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+  .foot a{color:inherit}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Acceptance vs Rejection in Auction Market Theory",
+ "description": "Acceptance vs rejection explained: how time and volume turn new prices into value, and why quick returns leave thin zones. Season 2 of a free course.",
+ "inLanguage": [
+  "en",
+  "es"
+ ],
+ "datePublished": "2026-08-08",
+ "dateModified": "2026-08-08",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-acceptance-rejection.html",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "Read the Market — Learn Order Flow"
+ },
+ "author": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/",
+  "logo": {
+   "@type": "ImageObject",
+   "url": "https://www.matetrading.com/favicon-v2-144.png"
+  }
+ },
+ "image": "https://www.matetrading.com/favicon-v2-144.png",
+ "isAccessibleForFree": true
+}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<header>
+  <nav class="top">
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="learn.html" class="on" data-en="Learn" data-es="Aprende">Learn</a></li>
+      <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+</header>
+
+<main>
+<article class="art">
+  <span class="kicker" data-en="READ THE MARKET · SEASON 2 · CHAPTER 1" data-es="LEER EL MERCADO · TEMPORADA 2 · CAPÍTULO 1">READ THE MARKET · SEASON 2 · CHAPTER 1</span>
+  <h1 data-en='Price proposes. <span class="grad">The market disposes.</span>' data-es='El precio propone. <span class="grad">El mercado dispone.</span>'>Price proposes. <span class="grad">The market disposes.</span></h1>
+
+  <p data-en="Every new price the market visits is a proposal. The auction then decides: accept it, or send it back. That single decision — acceptance vs rejection — is the mother concept of auction theory, and everything else in this season builds on it."
+     data-es="Cada precio nuevo que el mercado visita es una propuesta. La subasta entonces decide: aceptarlo, o devolverlo. Esa única decisión — aceptación vs rechazo — es el concepto madre de la teoría de subasta, y todo lo demás de esta temporada se construye sobre él.">Every new price the market visits is a proposal. The auction then decides: accept it, or send it back. That single decision — acceptance vs rejection — is the mother concept of auction theory, and everything else in this season builds on it.</p>
+
+  <figure class="fig">
+    <svg width="860" height="370" viewBox="0 0 860 370">
+    <defs>
+  <linearGradient id="pb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(94,159,216,.9)"/><stop offset="1" stop-color="rgba(94,159,216,.2)"/></linearGradient>
+  <linearGradient id="po" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,165,0,.95)"/><stop offset="1" stop-color="rgba(255,165,0,.25)"/></linearGradient>
+  <filter id="fb" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#5E9FD8" flood-opacity=".35"/></filter>
+  <filter id="fo" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#FFA500" flood-opacity=".45"/></filter>
+</defs>
+    <text x="205" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="21" letter-spacing="4" fill="#5E9FD8" data-en="ACCEPTED" data-es="SE ACEPTA">ACCEPTED</text>
+    <g transform="translate(30,120)" filter="url(#fb)"><path d="M 6,0 L 8.6,0.0 L 9.0,1.7 L 9.4,3.3 L 9.9,5.0 L 10.4,6.7 L 11.1,8.3 L 11.8,10.0 L 12.7,11.7 L 13.6,13.3 L 14.5,15.0 L 15.4,16.7 L 16.4,18.3 L 17.4,20.0 L 18.5,21.7 L 19.7,23.3 L 21.0,25.0 L 22.4,26.7 L 23.9,28.3 L 25.6,30.0 L 27.4,31.7 L 29.3,33.3 L 31.4,35.0 L 33.6,36.7 L 35.9,38.3 L 38.3,40.0 L 40.9,41.7 L 43.6,43.3 L 46.5,45.0 L 49.4,46.7 L 52.5,48.3 L 55.6,50.0 L 58.9,51.7 L 62.3,53.3 L 65.7,55.0 L 69.3,56.7 L 72.9,58.3 L 76.5,60.0 L 80.2,61.7 L 83.9,63.3 L 87.6,65.0 L 91.3,66.7 L 95.0,68.3 L 98.7,70.0 L 102.3,71.7 L 105.8,73.3 L 109.2,75.0 L 112.5,76.7 L 115.7,78.3 L 118.7,80.0 L 121.5,81.7 L 124.2,83.3 L 126.6,85.0 L 128.9,86.7 L 130.9,88.3 L 132.7,90.0 L 134.2,91.7 L 135.4,93.3 L 136.4,95.0 L 137.1,96.7 L 137.6,98.3 L 137.7,100.0 L 137.6,101.7 L 137.1,103.3 L 136.4,105.0 L 135.4,106.7 L 134.2,108.3 L 132.7,110.0 L 130.9,111.7 L 128.9,113.3 L 126.6,115.0 L 124.2,116.7 L 121.5,118.3 L 118.7,120.0 L 115.7,121.7 L 112.5,123.3 L 109.2,125.0 L 105.8,126.7 L 102.3,128.3 L 98.7,130.0 L 95.0,131.7 L 91.3,133.3 L 87.6,135.0 L 83.9,136.7 L 80.2,138.3 L 76.5,140.0 L 72.9,141.7 L 69.3,143.3 L 65.7,145.0 L 62.3,146.7 L 58.9,148.3 L 55.6,150.0 L 52.5,151.7 L 49.4,153.3 L 46.5,155.0 L 43.6,156.7 L 40.9,158.3 L 38.3,160.0 L 35.9,161.7 L 33.6,163.3 L 31.4,165.0 L 29.3,166.7 L 27.4,168.3 L 25.6,170.0 L 23.9,171.7 L 22.4,173.3 L 21.0,175.0 L 19.7,176.7 L 18.5,178.3 L 17.4,180.0 L 16.4,181.7 L 15.4,183.3 L 14.5,185.0 L 13.6,186.7 L 12.7,188.3 L 11.8,190.0 L 11.1,191.7 L 10.4,193.3 L 9.9,195.0 L 9.4,196.7 L 9.0,198.3 L 8.6,200.0 L 6,200 Z" fill="url(#pb)"/></g>
+    <line x1="30" y1="150" x2="352" y2="150" stroke="rgba(94,159,216,.75)" stroke-width="2.5" stroke-dasharray="9 8"/>
+    <text x="358" y="155" font-family="JetBrains Mono,monospace" font-size="17" fill="#5E9FD8">VAH</text>
+    <line x1="30" y1="290" x2="352" y2="290" stroke="rgba(94,159,216,.75)" stroke-width="2.5" stroke-dasharray="9 8"/>
+    <text x="358" y="295" font-family="JetBrains Mono,monospace" font-size="17" fill="#5E9FD8">VAL</text>
+    <polyline points="70,270 100,190 130,265 205,64 238,126 270,62 303,118 334,60"
+      fill="none" stroke="#EBF0F7" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="miter" opacity=".92"/>
+    <g transform="translate(346,38)" filter="url(#fo)"><path d="M 6,0 L 7.8,0.0 L 8.1,0.8 L 8.3,1.6 L 8.6,2.4 L 8.9,3.2 L 9.2,4.0 L 9.6,4.8 L 10.0,5.5 L 10.5,6.3 L 11.0,7.1 L 11.5,7.9 L 12.0,8.7 L 12.6,9.5 L 13.2,10.3 L 13.8,11.1 L 14.5,11.9 L 15.2,12.7 L 16.0,13.5 L 16.8,14.2 L 17.7,15.0 L 18.6,15.8 L 19.6,16.6 L 20.6,17.4 L 21.7,18.2 L 22.9,19.0 L 24.1,19.8 L 25.3,20.6 L 26.6,21.4 L 27.9,22.2 L 29.3,23.0 L 30.7,23.8 L 32.1,24.5 L 33.6,25.3 L 35.1,26.1 L 36.6,26.9 L 38.1,27.7 L 39.7,28.5 L 41.2,29.3 L 42.8,30.1 L 44.3,30.9 L 45.9,31.7 L 47.4,32.5 L 48.9,33.2 L 50.4,34.0 L 51.8,34.8 L 53.2,35.6 L 54.5,36.4 L 55.8,37.2 L 57.0,38.0 L 58.1,38.8 L 59.2,39.6 L 60.2,40.4 L 61.1,41.2 L 61.9,42.0 L 62.6,42.8 L 63.2,43.5 L 63.7,44.3 L 64.1,45.1 L 64.3,45.9 L 64.5,46.7 L 64.6,47.5 L 64.5,48.3 L 64.3,49.1 L 64.1,49.9 L 63.7,50.7 L 63.2,51.5 L 62.6,52.3 L 61.9,53.0 L 61.1,53.8 L 60.2,54.6 L 59.2,55.4 L 58.1,56.2 L 57.0,57.0 L 55.8,57.8 L 54.5,58.6 L 53.2,59.4 L 51.8,60.2 L 50.4,61.0 L 48.9,61.8 L 47.4,62.5 L 45.9,63.3 L 44.3,64.1 L 42.8,64.9 L 41.2,65.7 L 39.7,66.5 L 38.1,67.3 L 36.6,68.1 L 35.1,68.9 L 33.6,69.7 L 32.1,70.5 L 30.7,71.2 L 29.3,72.0 L 27.9,72.8 L 26.6,73.6 L 25.3,74.4 L 24.1,75.2 L 22.9,76.0 L 21.7,76.8 L 20.6,77.6 L 19.6,78.4 L 18.6,79.2 L 17.7,80.0 L 16.8,80.8 L 16.0,81.5 L 15.2,82.3 L 14.5,83.1 L 13.8,83.9 L 13.2,84.7 L 12.6,85.5 L 12.0,86.3 L 11.5,87.1 L 11.0,87.9 L 10.5,88.7 L 10.0,89.5 L 9.6,90.2 L 9.2,91.0 L 8.9,91.8 L 8.6,92.6 L 8.3,93.4 L 8.1,94.2 L 7.8,95.0 L 6,95 Z" fill="url(#po)"/></g>
+    <text x="205" y="358" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="18" fill="#7E8A9C" data-en="crosses the VAH… builds value above" data-es="cruza el VAH… y construye valor arriba">crosses the VAH… builds value above</text>
+
+    <line x1="432" y1="30" x2="432" y2="340" stroke="rgba(255,255,255,.08)"/>
+
+    <text x="635" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="21" letter-spacing="4" fill="#FFA500" data-en="REJECTED" data-es="SE RECHAZA">REJECTED</text>
+    <g transform="translate(470,120)" filter="url(#fb)"><path d="M 6,0 L 8.6,0.0 L 9.0,1.7 L 9.4,3.3 L 9.9,5.0 L 10.4,6.7 L 11.1,8.3 L 11.8,10.0 L 12.7,11.7 L 13.6,13.3 L 14.5,15.0 L 15.4,16.7 L 16.4,18.3 L 17.4,20.0 L 18.5,21.7 L 19.7,23.3 L 21.0,25.0 L 22.4,26.7 L 23.9,28.3 L 25.6,30.0 L 27.4,31.7 L 29.3,33.3 L 31.4,35.0 L 33.6,36.7 L 35.9,38.3 L 38.3,40.0 L 40.9,41.7 L 43.6,43.3 L 46.5,45.0 L 49.4,46.7 L 52.5,48.3 L 55.6,50.0 L 58.9,51.7 L 62.3,53.3 L 65.7,55.0 L 69.3,56.7 L 72.9,58.3 L 76.5,60.0 L 80.2,61.7 L 83.9,63.3 L 87.6,65.0 L 91.3,66.7 L 95.0,68.3 L 98.7,70.0 L 102.3,71.7 L 105.8,73.3 L 109.2,75.0 L 112.5,76.7 L 115.7,78.3 L 118.7,80.0 L 121.5,81.7 L 124.2,83.3 L 126.6,85.0 L 128.9,86.7 L 130.9,88.3 L 132.7,90.0 L 134.2,91.7 L 135.4,93.3 L 136.4,95.0 L 137.1,96.7 L 137.6,98.3 L 137.7,100.0 L 137.6,101.7 L 137.1,103.3 L 136.4,105.0 L 135.4,106.7 L 134.2,108.3 L 132.7,110.0 L 130.9,111.7 L 128.9,113.3 L 126.6,115.0 L 124.2,116.7 L 121.5,118.3 L 118.7,120.0 L 115.7,121.7 L 112.5,123.3 L 109.2,125.0 L 105.8,126.7 L 102.3,128.3 L 98.7,130.0 L 95.0,131.7 L 91.3,133.3 L 87.6,135.0 L 83.9,136.7 L 80.2,138.3 L 76.5,140.0 L 72.9,141.7 L 69.3,143.3 L 65.7,145.0 L 62.3,146.7 L 58.9,148.3 L 55.6,150.0 L 52.5,151.7 L 49.4,153.3 L 46.5,155.0 L 43.6,156.7 L 40.9,158.3 L 38.3,160.0 L 35.9,161.7 L 33.6,163.3 L 31.4,165.0 L 29.3,166.7 L 27.4,168.3 L 25.6,170.0 L 23.9,171.7 L 22.4,173.3 L 21.0,175.0 L 19.7,176.7 L 18.5,178.3 L 17.4,180.0 L 16.4,181.7 L 15.4,183.3 L 14.5,185.0 L 13.6,186.7 L 12.7,188.3 L 11.8,190.0 L 11.1,191.7 L 10.4,193.3 L 9.9,195.0 L 9.4,196.7 L 9.0,198.3 L 8.6,200.0 L 6,200 Z" fill="url(#pb)"/></g>
+    <line x1="470" y1="150" x2="792" y2="150" stroke="rgba(94,159,216,.75)" stroke-width="2.5" stroke-dasharray="9 8"/>
+    <text x="798" y="155" font-family="JetBrains Mono,monospace" font-size="17" fill="#5E9FD8">VAH</text>
+    <line x1="470" y1="290" x2="792" y2="290" stroke="rgba(94,159,216,.75)" stroke-width="2.5" stroke-dasharray="9 8"/>
+    <text x="798" y="295" font-family="JetBrains Mono,monospace" font-size="17" fill="#5E9FD8">VAL</text>
+    <polyline points="510,270 540,190 570,265 660,58 700,215"
+      fill="none" stroke="#EBF0F7" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="miter" opacity=".92"/>
+    <circle cx="660" cy="56" r="7" fill="#FFA500"/>
+    <path d="M 704 233 L 687 207 L 712 201 Z" fill="#FFA500"/>
+    <text x="635" y="358" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="18" fill="#7E8A9C" data-en="crosses the VAH… snaps right back" data-es="cruza el VAH… y vuelve recto adentro">crosses the VAH… snaps right back</text>
+  </svg>
+    <figcaption class="figcap" data-en="Same value area, two outcomes: the price leaves and builds value above — or gets sent straight back." data-es="La misma área de valor, dos desenlaces: el precio sale y construye valor arriba — o es devuelto de inmediato.">Same value area, two outcomes: the price leaves and builds value above — or gets sent straight back.</figcaption>
+  </figure>
+
+  <h2 data-en="Acceptance: staying to do business" data-es="Aceptar: quedarse a negociar">Acceptance: staying to do business</h2>
+  <p data-en="The market accepts a zone when it <b>stays there</b>: spending time and building volume. On the profile, an accepted zone gets fat. Acceptance turns a visited price into <b>new value</b> — and when new value appears, the map of the day changes."
+     data-es="El mercado acepta una zona cuando <b>se queda en ella</b>: pasa tiempo y construye volumen. En el perfil, una zona aceptada engorda. La aceptación convierte un precio visitado en <b>valor nuevo</b> — y cuando aparece valor nuevo, el mapa del día cambia.">The market accepts a zone when it <b>stays there</b>: spending time and building volume. On the profile, an accepted zone gets fat. Acceptance turns a visited price into <b>new value</b> — and when new value appears, the map of the day changes.</p>
+
+  <h2 data-en="Rejection: the quick return" data-es="Rechazar: la vuelta rápida">Rejection: the quick return</h2>
+  <p data-en="Rejection is the opposite, and you recognize it by <b>speed</b>: price visits, nobody wants to trade there, and it leaves the way it came. Little time, little volume, a fast return — the auction said no. That zone stays thin on the profile, forever."
+     data-es="El rechazo es lo contrario, y se reconoce por la <b>velocidad</b>: el precio visita, nadie quiere negociar ahí, y se va por donde vino. Poco tiempo, poco volumen, vuelta veloz — la subasta dijo no. Esa zona queda fina en el perfil, para siempre.">Rejection is the opposite, and you recognize it by <b>speed</b>: price visits, nobody wants to trade there, and it leaves the way it came. Little time, little volume, a fast return — the auction said no. That zone stays thin on the profile, forever.</p>
+
+  <h2 data-en="The profile files everything" data-es="El perfil lo archiva todo">The profile files everything</h2>
+  <p data-en="Weeks later, the profile still remembers which zones were accepted and which were rejected. Fat zones act like magnets and friction: price tends to slow down inside them. Thin zones act like slides or barriers: price tends to cross them fast — or stall at their edge. The profile is the market's memory of every acceptance and rejection."
+     data-es="Semanas después, el perfil todavía recuerda qué zonas fueron aceptadas y cuáles rechazadas. Las zonas gordas actúan como imanes y fricción: el precio tiende a frenarse dentro. Las finas actúan como toboganes o barreras: el precio tiende a cruzarlas rápido — o a frenar en su borde. El perfil es la memoria del mercado de cada aceptación y cada rechazo.">Weeks later, the profile still remembers which zones were accepted and which were rejected. Fat zones act like magnets and friction: price tends to slow down inside them. Thin zones act like slides or barriers: price tends to cross them fast — or stall at their edge. The profile is the market's memory of every acceptance and rejection.</p>
+
+  <div class="box" data-en="<b>The honest rule:</b> rejection is instant, but acceptance needs time to prove itself. Do not front-run it — a zone is only accepted once time and volume have actually accumulated."
+       data-es="<b>La regla honesta:</b> el rechazo es instantáneo, pero la aceptación necesita tiempo para demostrarse. No la anticipes — una zona solo está aceptada cuando el tiempo y el volumen se han acumulado de verdad."><b>The honest rule:</b> rejection is instant, but acceptance needs time to prove itself. Do not front-run it — a zone is only accepted once time and volume have actually accumulated.</div>
+
+  <p data-en="Accept or reject is half the story. The other half is who is acting, and where. That is the next chapter: initiative vs responsive activity."
+     data-es="Aceptar o rechazar es media historia. La otra media es quién actúa, y dónde. Ese es el siguiente capítulo: actividad de iniciativa vs respuesta.">Accept or reject is half the story. The other half is who is acting, and where. That is the next chapter: initiative vs responsive activity.</p>
+
+  <div class="artcta">
+    <p data-en="Want to see acceptance building live on your own charts? MATE's order flow indicators draw the profiles for you — tick by tick, on NinjaTrader 8." data-es="¿Quieres ver la aceptación construyéndose en vivo en tus propios gráficos? Los indicadores de order flow de MATE dibujan los perfiles por ti — tick a tick, en NinjaTrader 8.">Want to see acceptance building live on your own charts? MATE's order flow indicators draw the profiles for you — tick by tick, on NinjaTrader 8.</p>
+    <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
+  </div>
+  <div class="next">
+    <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
+    <a href="learn-initiative-responsive.html" data-en="S2 Chapter 2: Initiative vs Responsive →" data-es="T2 Capítulo 2: Iniciativa vs Respuesta →">S2 Chapter 2: Initiative vs Responsive →</a>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? "Acceptance vs Rejection in Auction Market Theory — MATE" : "Aceptación vs rechazo en la teoría de subasta — MATE";
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ae104bc1724a18a3884922ce60fd85"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

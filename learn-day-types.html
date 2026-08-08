@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Profile Day Types: D, P and b Shapes Explained — MATE</title>
+<meta name="description" content="Market Profile day types explained: range days (D-shape), trend days (P and b shapes) and double distributions (B-shape), with their early clues.">
+<link rel="canonical" href="https://www.matetrading.com/learn-day-types.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon-v2.png">
+<link rel="apple-touch-icon" href="favicon-v2-144.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030409;--panel:#0C111A;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--blue-raw:#4682B4;--orange:#FFA500;
+    --blue-dim:rgba(70,130,180,.16);--orange-dim:rgba(255,165,0,.12);--radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--blue)}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  nav.top{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+    font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+
+  .hero-learn{max-width:760px;margin:0 auto;padding:76px 24px 26px}
+  .hero-learn .kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.24em;color:var(--blue)}
+  .hero-learn h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.9rem,4.4vw,2.4rem);letter-spacing:-.01em;margin:14px 0 12px;line-height:1.15}
+  .hero-learn h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-learn p{color:var(--muted);font-size:1.02rem;line-height:1.65}
+  .cards{max-width:760px;margin:30px auto 80px;padding:0 24px;display:flex;flex-direction:column;gap:14px}
+  .acard{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 26px;transition:border-color .2s, transform .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .acard:hover{border-color:rgba(94,159,216,.45);transform:translateY(-2px)}
+  .acard .num{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--orange)}
+  .acard h3{font-family:'Manrope',sans-serif;color:var(--text);font-size:1.12rem;margin:8px 0 6px}
+  .acard p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
+
+  .art{max-width:720px;margin:0 auto;padding:64px 24px 80px}
+  .art .kicker{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.22em;color:var(--blue)}
+  .art h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,4.2vw,2.2rem);letter-spacing:-.01em;margin:14px 0 22px;line-height:1.2}
+  .art h1 .grad{background:linear-gradient(90deg,#5E9FD8,#FFA500);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .art h2{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.3rem;margin:40px 0 12px;color:var(--text)}
+  .art p{color:#AEB8C6;font-size:1rem;line-height:1.75;margin-bottom:16px}
+  .art strong,.art b{color:var(--text)}
+  .art .box{background:var(--panel);border:1px solid rgba(255,165,0,.3);border-radius:12px;padding:20px 24px;margin:26px 0;color:#D8C9A8;font-size:.95rem;line-height:1.7}
+  .art .fig{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px;margin:28px 0}
+  .art .fig svg{display:block;width:100%;height:auto;max-width:620px;margin:0 auto}
+  .art .figcap{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.06em;margin-top:12px;text-align:center;line-height:1.6}
+  .art .box b{color:#F0D9A8}
+  .art .next{margin-top:50px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .art .next a{color:var(--blue);text-decoration:none;font-weight:600;font-size:.95rem}
+  .artcta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:44px;text-align:center}
+  .artcta p{margin-bottom:16px}
+  .artcta a{display:inline-block;background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#05070B;text-decoration:none;
+    border-radius:11px;padding:13px 30px;font-weight:700}
+  .artcta a:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:.82rem;margin-top:20px}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+  .foot a{color:inherit}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Market Profile Day Types: D, P and b Shapes Explained",
+ "description": "Market Profile day types explained: range days (D-shape), trend days (P and b shapes) and double distributions (B-shape), with their early clues.",
+ "inLanguage": [
+  "en",
+  "es"
+ ],
+ "datePublished": "2026-08-08",
+ "dateModified": "2026-08-08",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-day-types.html",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "Read the Market — Learn Order Flow"
+ },
+ "author": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "MATE",
+  "url": "https://www.matetrading.com/",
+  "logo": {
+   "@type": "ImageObject",
+   "url": "https://www.matetrading.com/favicon-v2-144.png"
+  }
+ },
+ "image": "https://www.matetrading.com/favicon-v2-144.png",
+ "isAccessibleForFree": true
+}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<header>
+  <nav class="top">
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="learn.html" class="on" data-en="Learn" data-es="Aprende">Learn</a></li>
+      <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+</header>
+
+<main>
+<article class="art">
+  <span class="kicker" data-en="READ THE MARKET · SEASON 2 · CHAPTER 3" data-es="LEER EL MERCADO · TEMPORADA 2 · CAPÍTULO 3">READ THE MARKET · SEASON 2 · CHAPTER 3</span>
+  <h1 data-en='The market plays <span class="grad">3 different games.</span>' data-es='El mercado juega <span class="grad">3 partidas distintas.</span>'>The market plays <span class="grad">3 different games.</span></h1>
+
+  <p data-en="Range, trend, or double distribution. Each game rewards opposite plays — and identifying which one is on, early, changes everything about what makes sense to do. The classic literature describes more sub-types, but these three archetypes are the ones that matter for reading a session."
+     data-es="Rango, tendencia o doble distribución. Cada partida premia jugadas opuestas — e identificar cuál toca, temprano, cambia por completo qué tiene sentido hacer. La literatura clásica describe más subtipos, pero estos tres arquetipos son los que importan para leer una sesión.">Range, trend, or double distribution. Each game rewards opposite plays — and identifying which one is on, early, changes everything about what makes sense to do. The classic literature describes more sub-types, but these three archetypes are the ones that matter for reading a session.</p>
+
+  <figure class="fig">
+    <svg width="880" height="330" viewBox="0 0 880 330">
+    <defs>
+  <linearGradient id="pb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(94,159,216,.9)"/><stop offset="1" stop-color="rgba(94,159,216,.2)"/></linearGradient>
+  <linearGradient id="po" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,165,0,.95)"/><stop offset="1" stop-color="rgba(255,165,0,.25)"/></linearGradient>
+  <linearGradient id="pg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(235,240,247,.55)"/><stop offset="1" stop-color="rgba(235,240,247,.1)"/></linearGradient>
+  <filter id="fb" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#5E9FD8" flood-opacity=".35"/></filter>
+  <filter id="fo" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#FFA500" flood-opacity=".4"/></filter>
+  <filter id="fg" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#EBF0F7" flood-opacity=".18"/></filter>
+</defs>
+    <text x="140" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" letter-spacing="4" fill="#5E9FD8" data-en="RANGE · D" data-es="RANGO · D">RANGE · D</text>
+    <g transform="translate(30,50)" filter="url(#fb)"><path d="M 6,0 L 9.6,0.0 L 10.1,2.1 L 10.7,4.2 L 11.3,6.2 L 12.1,8.3 L 13.0,10.4 L 14.0,12.5 L 15.1,14.6 L 16.3,16.7 L 17.6,18.8 L 18.9,20.8 L 20.2,22.9 L 21.6,25.0 L 23.0,27.1 L 24.6,29.2 L 26.4,31.2 L 28.3,33.3 L 30.4,35.4 L 32.7,37.5 L 35.1,39.6 L 37.8,41.7 L 40.6,43.8 L 43.5,45.8 L 46.7,47.9 L 50.0,50.0 L 53.5,52.1 L 57.2,54.2 L 61.0,56.2 L 65.0,58.3 L 69.2,60.4 L 73.5,62.5 L 78.0,64.6 L 82.6,66.7 L 87.3,68.8 L 92.1,70.8 L 97.0,72.9 L 101.9,75.0 L 106.9,77.1 L 112.0,79.2 L 117.0,81.2 L 122.1,83.3 L 127.1,85.4 L 132.1,87.5 L 137.0,89.6 L 141.7,91.7 L 146.4,93.8 L 150.9,95.8 L 155.2,97.9 L 159.3,100.0 L 163.1,102.1 L 166.8,104.2 L 170.1,106.2 L 173.2,108.3 L 175.9,110.4 L 178.3,112.5 L 180.4,114.6 L 182.1,116.7 L 183.4,118.8 L 184.4,120.8 L 185.0,122.9 L 185.2,125.0 L 185.0,127.1 L 184.4,129.2 L 183.4,131.2 L 182.1,133.3 L 180.4,135.4 L 178.3,137.5 L 175.9,139.6 L 173.2,141.7 L 170.1,143.8 L 166.8,145.8 L 163.1,147.9 L 159.3,150.0 L 155.2,152.1 L 150.9,154.2 L 146.4,156.2 L 141.7,158.3 L 137.0,160.4 L 132.1,162.5 L 127.1,164.6 L 122.1,166.7 L 117.0,168.8 L 112.0,170.8 L 106.9,172.9 L 101.9,175.0 L 97.0,177.1 L 92.1,179.2 L 87.3,181.2 L 82.6,183.3 L 78.0,185.4 L 73.5,187.5 L 69.2,189.6 L 65.0,191.7 L 61.0,193.8 L 57.2,195.8 L 53.5,197.9 L 50.0,200.0 L 46.7,202.1 L 43.5,204.2 L 40.6,206.2 L 37.8,208.3 L 35.1,210.4 L 32.7,212.5 L 30.4,214.6 L 28.3,216.7 L 26.4,218.8 L 24.6,220.8 L 23.0,222.9 L 21.6,225.0 L 20.2,227.1 L 18.9,229.2 L 17.6,231.2 L 16.3,233.3 L 15.1,235.4 L 14.0,237.5 L 13.0,239.6 L 12.1,241.7 L 11.3,243.8 L 10.7,245.8 L 10.1,247.9 L 9.6,250.0 L 6,250 Z" fill="url(#pb)"/></g>
+    
+    <line x1="36" y1="135" x2="240" y2="135" stroke="rgba(94,159,216,.75)" stroke-width="2.5" stroke-dasharray="8 7"/>
+    <text x="246" y="140" font-family="JetBrains Mono,monospace" font-size="15" fill="#5E9FD8">VAH</text>
+    <line x1="36" y1="175" x2="240" y2="175" stroke="#FFA500" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <text x="246" y="180" font-family="JetBrains Mono,monospace" font-size="15" fill="#FFA500">POC</text>
+    <line x1="36" y1="215" x2="240" y2="215" stroke="rgba(94,159,216,.75)" stroke-width="2.5" stroke-dasharray="8 7"/>
+    <text x="246" y="220" font-family="JetBrains Mono,monospace" font-size="15" fill="#5E9FD8">VAL</text>
+    <text x="435" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" letter-spacing="4" fill="#FFA500" data-en="TREND · P" data-es="TENDENCIA · P">TREND · P</text>
+    <g transform="translate(330,50)" filter="url(#fo)"><path d="M 6,0 L 18.3,0.0 L 20.6,2.1 L 23.3,4.2 L 26.5,6.2 L 30.1,8.3 L 34.1,10.4 L 38.3,12.5 L 42.7,14.6 L 47.7,16.7 L 53.2,18.8 L 59.2,20.8 L 65.6,22.9 L 72.4,25.0 L 79.6,27.1 L 87.2,29.2 L 95.0,31.2 L 103.1,33.3 L 111.4,35.4 L 119.7,37.5 L 128.0,39.6 L 136.2,41.7 L 144.2,43.8 L 151.8,45.8 L 159.0,47.9 L 165.7,50.0 L 171.7,52.1 L 177.1,54.2 L 181.6,56.2 L 185.2,58.3 L 188.0,60.4 L 189.7,62.5 L 190.4,64.6 L 190.1,66.7 L 188.8,68.8 L 186.4,70.8 L 183.2,72.9 L 179.0,75.0 L 174.0,77.1 L 168.2,79.2 L 161.8,81.2 L 154.7,83.3 L 147.3,85.4 L 139.4,87.5 L 131.3,89.6 L 123.0,91.7 L 114.7,93.8 L 106.4,95.8 L 98.2,97.9 L 90.3,100.0 L 82.6,102.1 L 75.2,104.2 L 68.2,106.2 L 61.7,108.3 L 55.5,110.4 L 49.9,112.5 L 44.7,114.6 L 40.0,116.7 L 35.8,118.8 L 32.1,120.8 L 28.9,122.9 L 26.2,125.0 L 24.0,127.1 L 22.3,129.2 L 21.0,131.2 L 20.1,133.3 L 19.5,135.4 L 19.1,137.5 L 18.9,139.6 L 18.8,141.7 L 18.7,143.8 L 18.6,145.8 L 18.6,147.9 L 18.6,150.0 L 18.6,152.1 L 18.6,154.2 L 18.6,156.2 L 18.6,158.3 L 18.6,160.4 L 18.6,162.5 L 18.6,164.6 L 18.6,166.7 L 18.6,168.8 L 18.6,170.8 L 18.6,172.9 L 18.6,175.0 L 18.6,177.1 L 18.6,179.2 L 18.6,181.2 L 18.6,183.3 L 18.6,185.4 L 18.6,187.5 L 18.6,189.6 L 18.6,191.7 L 18.6,193.8 L 18.6,195.8 L 18.6,197.9 L 18.6,200.0 L 18.6,202.1 L 18.6,204.2 L 18.6,206.2 L 18.6,208.3 L 18.6,210.4 L 18.6,212.5 L 18.6,214.6 L 18.5,216.7 L 18.2,218.8 L 17.7,220.8 L 17.0,222.9 L 16.1,225.0 L 15.1,227.1 L 14.1,229.2 L 13.0,231.2 L 11.9,233.3 L 10.7,235.4 L 9.7,237.5 L 8.7,239.6 L 7.8,241.7 L 7.1,243.8 L 6.5,245.8 L 6.1,247.9 L 6.0,250.0 L 6,250 Z" fill="url(#po)"/></g>
+    <line x1="336" y1="110" x2="540" y2="110" stroke="#FFA500" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <text x="548" y="115" font-family="JetBrains Mono,monospace" font-size="15" fill="#FFA500">POC</text>
+    <path d="M 560 265 L 560 190" fill="none" stroke="#FFA500" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 546 208 L 560 180 L 574 208 Z" fill="#FFA500"/>
+    <text x="740" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" letter-spacing="4" fill="#EBF0F7" data-en="DOUBLE · B" data-es="DOBLE · B">DOUBLE · B</text>
+    <g transform="translate(630,50)" filter="url(#fg)"><path d="M 6,0 L 24.8,0.0 L 27.6,2.1 L 30.8,4.2 L 34.3,6.2 L 38.1,8.3 L 42.3,10.4 L 46.9,12.5 L 51.8,14.6 L 57.1,16.7 L 62.7,18.8 L 68.7,20.8 L 74.9,22.9 L 81.4,25.0 L 88.2,27.1 L 95.1,29.2 L 102.2,31.2 L 109.4,33.3 L 116.6,35.4 L 123.8,37.5 L 130.8,39.6 L 137.7,41.7 L 144.4,43.8 L 150.7,45.8 L 156.6,47.9 L 162.0,50.0 L 166.8,52.1 L 171.1,54.2 L 174.7,56.2 L 177.6,58.3 L 179.7,60.4 L 181.1,62.5 L 181.7,64.6 L 181.4,66.7 L 180.4,68.8 L 178.6,70.8 L 176.0,72.9 L 172.7,75.0 L 168.7,77.1 L 164.1,79.2 L 158.9,81.2 L 153.2,83.3 L 147.1,85.4 L 140.7,87.5 L 134.0,89.6 L 127.1,91.7 L 120.1,93.8 L 113.1,95.8 L 106.2,97.9 L 99.3,100.0 L 92.7,102.1 L 86.4,104.2 L 80.4,106.2 L 74.8,108.3 L 69.7,110.4 L 65.2,112.5 L 61.2,114.6 L 57.9,116.7 L 55.2,118.8 L 53.3,120.8 L 52.1,122.9 L 51.7,125.0 L 52.1,127.1 L 53.3,129.2 L 55.2,131.2 L 57.9,133.3 L 61.2,135.4 L 65.2,137.5 L 69.7,139.6 L 74.8,141.7 L 80.4,143.8 L 86.4,145.8 L 92.7,147.9 L 99.3,150.0 L 106.2,152.1 L 113.1,154.2 L 120.1,156.2 L 127.1,158.3 L 134.0,160.4 L 140.7,162.5 L 147.1,164.6 L 153.2,166.7 L 158.9,168.8 L 164.1,170.8 L 168.7,172.9 L 172.7,175.0 L 176.0,177.1 L 178.6,179.2 L 180.4,181.2 L 181.4,183.3 L 181.7,185.4 L 181.1,187.5 L 179.7,189.6 L 177.6,191.7 L 174.7,193.8 L 171.1,195.8 L 166.8,197.9 L 162.0,200.0 L 156.6,202.1 L 150.7,204.2 L 144.4,206.2 L 137.7,208.3 L 130.8,210.4 L 123.8,212.5 L 116.6,214.6 L 109.4,216.7 L 102.2,218.8 L 95.1,220.8 L 88.2,222.9 L 81.4,225.0 L 74.9,227.1 L 68.7,229.2 L 62.7,231.2 L 57.1,233.3 L 51.8,235.4 L 46.9,237.5 L 42.3,239.6 L 38.1,241.7 L 34.3,243.8 L 30.8,245.8 L 27.6,247.9 L 24.8,250.0 L 6,250 Z" fill="url(#pg)"/></g>
+    <line x1="636" y1="115" x2="830" y2="115" stroke="#FFA500" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <line x1="636" y1="235" x2="830" y2="235" stroke="#FFA500" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <text x="838" y="120" font-family="JetBrains Mono,monospace" font-size="15" fill="#FFA500">POC</text>
+    <text x="838" y="240" font-family="JetBrains Mono,monospace" font-size="15" fill="#FFA500">POC</text>
+    <line x1="298" y1="50" x2="298" y2="300" stroke="rgba(255,255,255,.07)"/>
+    <line x1="598" y1="50" x2="598" y2="300" stroke="rgba(255,255,255,.07)"/>
+  </svg>
+    <figcaption class="figcap" data-en="The three archetypes: the D of balance, the P of the uptrend day, the B of the double distribution." data-es="Los tres arquetipos: la D del balance, la P del día de tendencia alcista, la B de la doble distribución.">The three archetypes: the D of balance, the P of the uptrend day, the B of the double distribution.</figcaption>
+  </figure>
+
+  <h2 data-en="Game 1 · The range day (D-shape)" data-es="Partida 1 · El día de rango (forma D)">Game 1 · The range day (D-shape)</h2>
+  <p data-en="Buyers and sellers agree: price rotates between the value extremes, over and over, and the profile grows into a bell — the <b>D shape</b>. Responsive activity rules: buy the lows, sell the highs. The value extremes act as walls — until they stop."
+     data-es="Compradores y vendedores están de acuerdo: el precio rota entre los extremos del valor, una y otra vez, y el perfil crece en campana — la <b>forma D</b>. Manda la actividad responsiva: comprar abajo, vender arriba. Los extremos del valor actúan de muros — hasta que dejan de hacerlo.">Buyers and sellers agree: price rotates between the value extremes, over and over, and the profile grows into a bell — the <b>D shape</b>. Responsive activity rules: buy the lows, sell the highs. The value extremes act as walls — until they stop.</p>
+
+  <h2 data-en="Game 2 · The trend day (P and b shapes)" data-es="Partida 2 · El día de tendencia (formas P y b)">Game 2 · The trend day (P and b shapes)</h2>
+  <p data-en="One side wins early and never lets go: price opens near one extreme and migrates all session toward the other, with short pullbacks. A bullish trend day prints a <b>P-shaped</b> profile — belly on top, thin stem below. The bearish mirror is the <b>b shape</b>: belly at the bottom, thin stem above. Initiative that keeps earning acceptance is in charge."
+     data-es="Un bando gana desde temprano y no suelta el control: el precio abre cerca de un extremo y migra toda la sesión hacia el otro, con retrocesos cortos. Un día de tendencia alcista imprime un perfil en <b>forma P</b> — barriga arriba, mástil fino abajo. El espejo bajista es la <b>forma b</b>: barriga abajo, mástil arriba. Manda la iniciativa que va logrando aceptación.">One side wins early and never lets go: price opens near one extreme and migrates all session toward the other, with short pullbacks. A bullish trend day prints a <b>P-shaped</b> profile — belly on top, thin stem below. The bearish mirror is the <b>b shape</b>: belly at the bottom, thin stem above. Initiative that keeps earning acceptance is in charge.</p>
+
+  <h2 data-en="Game 3 · The double distribution (B-shape)" data-es="Partida 3 · La doble distribución (forma B)">Game 3 · The double distribution (B-shape)</h2>
+  <p data-en="The day changes its mind mid-game: it builds one value, abandons it suddenly, and builds a different one beyond — the <b>B shape</b>, two bellies joined by a thin neck. That neck is rejected ground (chapter 1) and tends to act as the day's border: while price stays beyond it, the second value rules."
+     data-es="El día cambia de opinión a mitad de partida: construye un valor, lo abandona de golpe, y construye otro distinto más allá — la <b>forma B</b>, dos panzas unidas por un cuello fino. Ese cuello es zona rechazada (capítulo 1) y suele actuar de frontera del día: mientras el precio no lo recupere, el segundo valor manda.">The day changes its mind mid-game: it builds one value, abandons it suddenly, and builds a different one beyond — the <b>B shape</b>, two bellies joined by a thin neck. That neck is rejected ground (chapter 1) and tends to act as the day's border: while price stays beyond it, the second value rules.</p>
+
+  <h2 data-en="Early clues — and the expensive trap" data-es="Las pistas tempranas — y la trampa cara">Early clues — and the expensive trap</h2>
+  <p data-en="Nobody knows the game at 9:31, but the auction drops clues: where the day opens versus yesterday's value, whether the edges reject quickly or accept beyond, and whether pullbacks are deep and overlapping (range) or short and one-directional (trend). They are clues, not certainties. And the most expensive intraday mistake is playing the wrong game: fading a trend day, or chasing breakouts on a range day."
+     data-es="Nadie conoce la partida a las 9:31, pero la subasta suelta pistas: dónde abre el día respecto al valor de ayer, si los bordes rechazan rápido o aceptan más allá, y si los retrocesos son profundos y solapados (rango) o cortos y en una dirección (tendencia). Son pistas, no certezas. Y el error más caro del intradía es jugar la partida equivocada: rotar contra un día de tendencia, o perseguir rupturas en un día de rango.">Nobody knows the game at 9:31, but the auction drops clues: where the day opens versus yesterday's value, whether the edges reject quickly or accept beyond, and whether pullbacks are deep and overlapping (range) or short and one-directional (trend). They are clues, not certainties. And the most expensive intraday mistake is playing the wrong game: fading a trend day, or chasing breakouts on a range day.</p>
+
+  <div class="box" data-en="<b>The honest rule:</b> first identify the game, then choose the play. In that order — never the reverse. The day type confirms itself as it builds."
+       data-es="<b>La regla honesta:</b> primero identifica la partida, después elige la jugada. En ese orden — nunca al revés. El tipo de día se confirma construyéndose."><b>The honest rule:</b> first identify the game, then choose the play. In that order — never the reverse. The day type confirms itself as it builds.</div>
+
+  <div class="artcta">
+    <p data-en="Want the profile shapes printing live on your own charts? MATE's TPO and Volume Profile tools draw them for you on NinjaTrader 8." data-es="¿Quieres las formas del perfil imprimiéndose en vivo en tus gráficos? Las herramientas de TPO y Volume Profile de MATE las dibujan por ti en NinjaTrader 8.">Want the profile shapes printing live on your own charts? MATE's TPO and Volume Profile tools draw them for you on NinjaTrader 8.</p>
+    <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
+  </div>
+  <div class="next">
+    <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
+    <a href="learn-market-open.html" data-en="S2 Chapter 4: The Open →" data-es="T2 Capítulo 4: La apertura →">S2 Chapter 4: The Open →</a>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com · <a href="terms.html" data-en="Terms &amp; Privacy" data-es="Términos y Privacidad">Terms &amp; Privacy</a></span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? "Market Profile Day Types: D, P and b Shapes Explained — MATE" : "Tipos de día del Market Profile: formas D, P y b — MATE";
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ae104bc1724a18a3884922ce60fd85"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

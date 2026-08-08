@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading a Full Session with Order Flow, Step by Step — MATE</title>
-<meta name="description" content="A full futures session read step by step: context, liquidity, footprint absorption and CVD divergence telling one single story. Final chapter, free course.">
-<link rel="canonical" href="https://www.matetrading.com/learn-full-session.html">
+<title>Initiative vs Responsive Activity in Market Profile — MATE</title>
+<meta name="description" content="Initiative vs responsive activity explained: the 2×2 matrix of buying and selling above or below value, and what each combination means. Free course.">
+<link rel="canonical" href="https://www.matetrading.com/learn-initiative-responsive.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
 <link rel="icon" type="image/png" sizes="128x128" href="favicon-v2.png">
@@ -105,15 +105,15 @@
 {
  "@context": "https://schema.org",
  "@type": "Article",
- "headline": "Reading a Full Session with Order Flow, Step by Step",
- "description": "A full futures session read step by step: context, liquidity, footprint absorption and CVD divergence telling one single story. Final chapter, free course.",
+ "headline": "Initiative vs Responsive Activity in Market Profile",
+ "description": "Initiative vs responsive activity explained: the 2×2 matrix of buying and selling above or below value, and what each combination means. Free course.",
  "inLanguage": [
   "en",
   "es"
  ],
- "datePublished": "2026-08-07",
- "dateModified": "2026-08-07",
- "mainEntityOfPage": "https://www.matetrading.com/learn-full-session.html",
+ "datePublished": "2026-08-08",
+ "dateModified": "2026-08-08",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-initiative-responsive.html",
  "isPartOf": {
   "@type": "CreativeWorkSeries",
   "name": "Read the Market — Learn Order Flow"
@@ -174,45 +174,74 @@
 
 <main>
 <article class="art">
-  <span class="kicker" data-en="READ THE MARKET · FINAL CHAPTER" data-es="LEER EL MERCADO · CAPÍTULO FINAL">READ THE MARKET · FINAL CHAPTER</span>
-  <h1 data-en='Every piece. <span class="grad">One single game.</span>' data-es='Todas las piezas. <span class="grad">Una sola partida.</span>'>Every piece. <span class="grad">One single game.</span></h1>
+  <span class="kicker" data-en="READ THE MARKET · SEASON 2 · CHAPTER 2" data-es="LEER EL MERCADO · TEMPORADA 2 · CAPÍTULO 2">READ THE MARKET · SEASON 2 · CHAPTER 2</span>
+  <h1 data-en='It&#39;s not just who buys. <span class="grad">Where matters.</span>' data-es='No importa solo quién compra. <span class="grad">Importa dónde.</span>'>It's not just who buys. <span class="grad">Where matters.</span></h1>
 
-  <p data-en="Six chapters, six tools. Now let's play the game: one session read step by step with everything you learned. No magic signals — just reading."
-     data-es="Seis capítulos, seis herramientas. Ahora juguemos la partida: una sesión leída paso a paso con todo lo aprendido. Sin señales mágicas — solo lectura.">Six chapters, six tools. Now let's play the game: one session read step by step with everything you learned. No magic signals — just reading.</p>
+  <p data-en="The same act — buying — can tell two opposite stories depending on where it happens. In the auction, location is the message. To read it you need one reference first: the value area, usually the prior session's."
+     data-es="El mismo acto — comprar — puede contar dos historias opuestas según dónde ocurre. En la subasta, la ubicación es el mensaje. Para leerla necesitas primero una referencia: el área de valor, normalmente la de la sesión anterior.">The same act — buying — can tell two opposite stories depending on where it happens. In the auction, location is the message. To read it you need one reference first: the value area, usually the prior session's.</p>
 
-  <h2 data-en="Step 1 · Context: where does the auction wake up?" data-es="Paso 1 · El contexto: ¿dónde despierta la subasta?">Step 1 · Context: where does the auction wake up?</h2>
-  <p data-en="The day opens <b>inside yesterday's value</b>. The auction's message: agreement, balance. The playbook for the day becomes rotation — buy cheap, sell expensive — until the market proves otherwise (chapters 1 and 2)."
-     data-es="El día abre <b>dentro del valor de ayer</b>. El mensaje de la subasta: acuerdo, balance. La guía del día pasa a ser la rotación — comprar barato, vender caro — hasta que el mercado demuestre otra cosa (capítulos 1 y 2).">The day opens <b>inside yesterday's value</b>. The auction's message: agreement, balance. The playbook for the day becomes rotation — buy cheap, sell expensive — until the market proves otherwise (chapters 1 and 2).</p>
+  <figure class="fig">
+    <svg width="760" height="360" viewBox="0 0 760 360">
+    <defs>
+  <linearGradient id="pb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(94,159,216,.9)"/><stop offset="1" stop-color="rgba(94,159,216,.2)"/></linearGradient>
+  <linearGradient id="po" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,165,0,.95)"/><stop offset="1" stop-color="rgba(255,165,0,.25)"/></linearGradient>
+  <linearGradient id="pg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(235,240,247,.55)"/><stop offset="1" stop-color="rgba(235,240,247,.1)"/></linearGradient>
+  <filter id="fb" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#5E9FD8" flood-opacity=".35"/></filter>
+  <filter id="fo" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#FFA500" flood-opacity=".4"/></filter>
+  <filter id="fg" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#EBF0F7" flood-opacity=".18"/></filter>
+</defs>
+    <linearGradient id="vb2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="rgba(94,159,216,.05)"/><stop offset=".5" stop-color="rgba(94,159,216,.42)"/><stop offset="1" stop-color="rgba(94,159,216,.05)"/>
+    </linearGradient>
+    <rect x="60" y="130" width="640" height="100" rx="14" fill="url(#vb2)"/>
+    <line x1="60" y1="130" x2="700" y2="130" stroke="rgba(94,159,216,.7)" stroke-width="2.5" stroke-dasharray="9 9"/>
+    <line x1="60" y1="230" x2="700" y2="230" stroke="rgba(94,159,216,.7)" stroke-width="2.5" stroke-dasharray="9 9"/>
+    <text x="380" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="21" letter-spacing="8" fill="#AEB8C6" data-en="VALUE" data-es="VALOR">VALUE</text>
 
-  <h2 data-en="Step 2 · Liquidity: price falls toward the value floor" data-es="Paso 2 · La liquidez: el precio cae hacia el suelo del valor">Step 2 · Liquidity: price falls toward the value floor</h2>
-  <p data-en="Rotation pushes price down toward the VAL. And right there, the liquidity map shows size waiting: a buy wall defending the floor of value. Passivity already voted — there is real interest in buying that zone. A hypothesis, not a promise (chapter 6)."
-     data-es="La rotación empuja el precio hacia el VAL. Y justo ahí, el mapa de liquidez muestra tamaño esperando: un muro comprador defendiendo el suelo del valor. La pasividad ya votó — hay interés real en comprar esa zona. Hipótesis, no promesa (capítulo 6).">Rotation pushes price down toward the VAL. And right there, the liquidity map shows size waiting: a buy wall defending the floor of value. Passivity already voted — there is real interest in buying that zone. A hypothesis, not a promise (chapter 6).</p>
+    <line x1="180" y1="120" x2="180" y2="34" stroke="#FFA500" stroke-width="7" stroke-linecap="round" filter="url(#fo)"/>
+    <path d="M 163 52 L 180 18 L 197 52 Z" fill="#FFA500"/>
+    <text x="123" y="82" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="19" letter-spacing="2" fill="#FFA500" data-en="INITIATES" data-es="INICIA">INITIATES</text>
 
-  <h2 data-en="Step 3 · The footprint: the fight at the low" data-es="Paso 3 · El footprint: la pelea en el mínimo">Step 3 · The footprint: the fight at the low</h2>
-  <p data-en="On top of the wall, sellers try with everything — and the footprint shows the result: heavy aggressive selling, and price stops falling. Absorption. The selling aggression crashes into the buying passivity and loses. The sellers of the low start getting trapped (chapters 3 and 4)."
-     data-es="Sobre el muro, los vendedores lo intentan con todo — y el footprint enseña el resultado: venta muy agresiva, y el precio deja de caer. Absorción. La agresión vendedora choca contra la pasividad compradora y pierde. Los vendedores del mínimo empiezan a quedar atrapados (capítulos 3 y 4).">On top of the wall, sellers try with everything — and the footprint shows the result: heavy aggressive selling, and price stops falling. Absorption. The selling aggression crashes into the buying passivity and loses. The sellers of the low start getting trapped (chapters 3 and 4).</p>
+    <line x1="560" y1="42" x2="560" y2="112" stroke="#5E9FD8" stroke-width="7" stroke-linecap="round" filter="url(#fb)"/>
+    <path d="M 543 96 L 560 130 L 577 96 Z" fill="#5E9FD8"/>
+    <text x="612" y="82" font-family="JetBrains Mono,monospace" font-size="19" letter-spacing="2" fill="#5E9FD8" data-en="RESPONDS" data-es="RESPONDE">RESPONDS</text>
 
-  <h2 data-en="Step 4 · Confirmation: the CVD reveals the exhaustion" data-es="Paso 4 · La confirmación: el CVD delata el agotamiento">Step 4 · Confirmation: the CVD reveals the exhaustion</h2>
-  <p data-en="One last push scratches a lower low in price — but the CVD prints a higher low. Divergence: sellers push with less force each time. The full story now points to a turn — and you know exactly why (chapter 5)."
-     data-es="Un último empujón araña un mínimo más bajo en el precio — pero el CVD marca un mínimo más alto. Divergencia: los vendedores empujan con menos fuerza cada vez. La historia completa ahora apunta a un giro — y sabes exactamente por qué (capítulo 5).">One last push scratches a lower low in price — but the CVD prints a higher low. Divergence: sellers push with less force each time. The full story now points to a turn — and you know exactly why (chapter 5).</p>
+    <line x1="180" y1="318" x2="180" y2="248" stroke="#5E9FD8" stroke-width="7" stroke-linecap="round" filter="url(#fb)"/>
+    <path d="M 163 264 L 180 230 L 197 264 Z" fill="#5E9FD8"/>
+    <text x="123" y="292" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="19" letter-spacing="2" fill="#5E9FD8" data-en="RESPONDS" data-es="RESPONDE">RESPONDS</text>
 
-  <h2 data-en="The game, seen whole" data-es="La partida, vista completa">The game, seen whole</h2>
-  <p data-en="Five reads, one story. The context said balance: rotation between the value extremes. The liquidity showed who defended the floor. The footprint displayed the absorption live. The delta measured the effort without result. And the CVD confirmed the seller exhaustion."
-     data-es="Cinco lecturas, una historia. El contexto dijo balance: rotación entre los extremos del valor. La liquidez mostró quién defendía el suelo. El footprint enseñó la absorción en vivo. El delta midió el esfuerzo sin resultado. Y el CVD confirmó el agotamiento vendedor.">Five reads, one story. The context said balance: rotation between the value extremes. The liquidity showed who defended the floor. The footprint displayed the absorption live. The delta measured the effort without result. And the CVD confirmed the seller exhaustion.</p>
+    <line x1="560" y1="240" x2="560" y2="326" stroke="#FFA500" stroke-width="7" stroke-linecap="round" filter="url(#fo)"/>
+    <path d="M 543 308 L 560 342 L 577 308 Z" fill="#FFA500"/>
+    <text x="612" y="292" font-family="JetBrains Mono,monospace" font-size="19" letter-spacing="2" fill="#FFA500" data-en="INITIATES" data-es="INICIA">INITIATES</text>
+  </svg>
+    <figcaption class="figcap" data-en="The four forces around value: responding into it, initiating away from it." data-es="Las cuatro fuerzas alrededor del valor: responder hacia dentro, iniciar hacia fuera.">The four forces around value: responding into it, initiating away from it.</figcaption>
+  </figure>
 
-  <div class="box" data-en="<b>The honest rule:</b> no piece decides alone. Together, they tell the story — and the story is what you trade. Any single tool taken in isolation is just noise with good marketing."
-       data-es="<b>La regla honesta:</b> ninguna pieza decide sola. Juntas, cuentan la historia — y la historia es lo que se opera. Cualquier herramienta aislada es solo ruido con buen marketing."><b>The honest rule:</b> no piece decides alone. Together, they tell the story — and the story is what you trade. Any single tool taken in isolation is just noise with good marketing.</div>
+  <h2 data-en="Responsive: buy cheap, sell expensive" data-es="Responder: comprar barato, vender caro">Responsive: buy cheap, sell expensive</h2>
+  <p data-en="Responsive activity bets that value holds. It buys when price dips below value (perceived cheap) and sells when price pokes above it (perceived expensive). It is the force that keeps balance, pushing price back toward agreement — range-day rotation lives on it."
+     data-es="La actividad responsiva apuesta a que el valor aguanta. Compra cuando el precio cae bajo el valor (percibido barato) y vende cuando asoma por encima (percibido caro). Es la fuerza que mantiene el balance, empujando el precio de vuelta al acuerdo — la rotación de los días de rango vive de ella.">Responsive activity bets that value holds. It buys when price dips below value (perceived cheap) and sells when price pokes above it (perceived expensive). It is the force that keeps balance, pushing price back toward agreement — range-day rotation lives on it.</p>
 
-  <p data-en="The auction will keep leaving footprints, session after session. Now you can read them. If this course helped you, share it with a trader who needs it — and if you want to go deeper, season 2 covers acceptance vs rejection, day types, and initiative vs responsive activity: pure auction theory."
-     data-es="La subasta seguirá dejando huellas, sesión tras sesión. Ahora sabes leerlas. Si este curso te ayudó, compártelo con un trader que lo necesite — y si quieres profundizar, la temporada 2 cubre aceptación vs rechazo, tipos de día e iniciativa vs respuesta: teoría de subasta pura.">The auction will keep leaving footprints, session after session. Now you can read them. If this course helped you, share it with a trader who needs it — and if you want to go deeper, season 2 covers acceptance vs rejection, day types, and initiative vs responsive activity: pure auction theory.</p>
+  <h2 data-en="Initiative: attacking outside value" data-es="Iniciar: atacar fuera del valor">Initiative: attacking outside value</h2>
+  <p data-en="Initiative activity bets against the status quo: it pays expensive prices above value, or hits cheap ones below, because it believes value itself is misplaced. It is the force that breaks balance — and if it also earns acceptance (chapter 1), new value is born, and with it the trend."
+     data-es="La actividad de iniciativa apuesta contra el statu quo: paga precios caros sobre el valor, o golpea precios baratos por debajo, porque cree que el propio valor está mal puesto. Es la fuerza que rompe el balance — y si además logra aceptación (capítulo 1), nace valor nuevo, y con él la tendencia.">Initiative activity bets against the status quo: it pays expensive prices above value, or hits cheap ones below, because it believes value itself is misplaced. It is the force that breaks balance — and if it also earns acceptance (chapter 1), new value is born, and with it the trend.</p>
+
+  <h2 data-en="The 2×2 matrix profile readers use" data-es="La matriz 2×2 de los lectores de perfil">The 2×2 matrix profile readers use</h2>
+  <p data-en="Two questions — who acts, and where — give four stories. Buying below value: responsive (a bet that value holds). Selling above value: responsive (the same bet, other side). Buying above value: initiative (value should sit higher). Selling below value: initiative (value should sit lower)."
+     data-es="Dos preguntas — quién actúa y dónde — dan cuatro historias. Compra bajo el valor: respuesta (apuesta a que el valor aguanta). Venta sobre el valor: respuesta (la misma apuesta, por el otro lado). Compra sobre el valor: iniciativa (el valor debe estar más arriba). Venta bajo el valor: iniciativa (el valor debe estar más abajo).">Two questions — who acts, and where — give four stories. Buying below value: responsive (a bet that value holds). Selling above value: responsive (the same bet, other side). Buying above value: initiative (value should sit higher). Selling below value: initiative (value should sit lower).</p>
+
+  <div class="box" data-en="<b>The honest rule:</b> the label is not a signal — it is context. It tells you what bet the actor is making. Responsive activity tends to sustain balance; sustained initiative is what builds trends."
+       data-es="<b>La regla honesta:</b> la etiqueta no es una señal — es contexto. Te dice qué apuesta está haciendo quien actúa. La respuesta suele sostener el balance; la iniciativa sostenida es la que construye tendencias."><b>The honest rule:</b> the label is not a signal — it is context. It tells you what bet the actor is making. Responsive activity tends to sustain balance; sustained initiative is what builds trends.</div>
+
+  <p data-en="Now you know who does what, and where. Next: which game is being played — the day types."
+     data-es="Ya sabes quién hace qué, y dónde. Siguiente: qué partida se está jugando — los tipos de día.">Now you know who does what, and where. Next: which game is being played — the day types.</p>
 
   <div class="artcta">
-    <p data-en="Want to read your own sessions like this, live? MATE's order flow indicators put every piece on your NinjaTrader 8 charts." data-es="¿Quieres leer así tus propias sesiones, en vivo? Los indicadores de order flow de MATE ponen todas las piezas en tus gráficos de NinjaTrader 8.">Want to read your own sessions like this, live? MATE's order flow indicators put every piece on your NinjaTrader 8 charts.</p>
+    <p data-en="Want the value areas drawn live so you can read initiative and response on your own charts? MATE builds them for you on NinjaTrader 8." data-es="¿Quieres las áreas de valor dibujadas en vivo para leer iniciativa y respuesta en tus propios gráficos? MATE las construye por ti en NinjaTrader 8.">Want the value areas drawn live so you can read initiative and response on your own charts? MATE builds them for you on NinjaTrader 8.</p>
     <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
   </div>
   <div class="next">
     <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
-    <a href="learn-acceptance-rejection.html" data-en="Season 2: Acceptance vs Rejection →" data-es="Temporada 2: Aceptación vs Rechazo →">Season 2: Acceptance vs Rejection →</a>
+    <a href="learn-day-types.html" data-en="S2 Chapter 3: Day Types →" data-es="T2 Capítulo 3: Tipos de día →">S2 Chapter 3: Day Types →</a>
   </div>
 </article>
 </main>
@@ -234,7 +263,7 @@ function applyLang(l){
     const v = el.getAttribute('data-'+l);
     if(v!==null) el.innerHTML = v;
   });
-  document.title = l==='en' ? "Reading a Full Session with Order Flow, Step by Step — MATE" : "Leer una sesión completa con order flow, paso a paso — MATE";
+  document.title = l==='en' ? "Initiative vs Responsive Activity in Market Profile — MATE" : "Iniciativa vs respuesta en el Market Profile — MATE";
 }
 function setLang(l){
   try{ localStorage.setItem('mate_lang', l); }catch(e){}

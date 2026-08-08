@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading a Full Session with Order Flow, Step by Step — MATE</title>
-<meta name="description" content="A full futures session read step by step: context, liquidity, footprint absorption and CVD divergence telling one single story. Final chapter, free course.">
-<link rel="canonical" href="https://www.matetrading.com/learn-full-session.html">
+<title>Rotations and One-Timeframing Explained — MATE</title>
+<meta name="description" content="Rotations explained: balanced rhythm, one-timeframing in trends, and why a broken rhythm is the earliest clue the game changed. Free order flow course.">
+<link rel="canonical" href="https://www.matetrading.com/learn-rotations.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
 <link rel="icon" type="image/png" sizes="128x128" href="favicon-v2.png">
@@ -105,15 +105,15 @@
 {
  "@context": "https://schema.org",
  "@type": "Article",
- "headline": "Reading a Full Session with Order Flow, Step by Step",
- "description": "A full futures session read step by step: context, liquidity, footprint absorption and CVD divergence telling one single story. Final chapter, free course.",
+ "headline": "Rotations and One-Timeframing Explained",
+ "description": "Rotations explained: balanced rhythm, one-timeframing in trends, and why a broken rhythm is the earliest clue the game changed. Free order flow course.",
  "inLanguage": [
   "en",
   "es"
  ],
- "datePublished": "2026-08-07",
- "dateModified": "2026-08-07",
- "mainEntityOfPage": "https://www.matetrading.com/learn-full-session.html",
+ "datePublished": "2026-08-08",
+ "dateModified": "2026-08-08",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-rotations.html",
  "isPartOf": {
   "@type": "CreativeWorkSeries",
   "name": "Read the Market — Learn Order Flow"
@@ -174,45 +174,53 @@
 
 <main>
 <article class="art">
-  <span class="kicker" data-en="READ THE MARKET · FINAL CHAPTER" data-es="LEER EL MERCADO · CAPÍTULO FINAL">READ THE MARKET · FINAL CHAPTER</span>
-  <h1 data-en='Every piece. <span class="grad">One single game.</span>' data-es='Todas las piezas. <span class="grad">Una sola partida.</span>'>Every piece. <span class="grad">One single game.</span></h1>
+  <span class="kicker" data-en="READ THE MARKET · SEASON 2 · CHAPTER 5" data-es="LEER EL MERCADO · TEMPORADA 2 · CAPÍTULO 5">READ THE MARKET · SEASON 2 · CHAPTER 5</span>
+  <h1 data-en='The market breathes. <span class="grad">Count its breaths.</span>' data-es='El mercado respira. <span class="grad">Cuéntale las respiraciones.</span>'>The market breathes. <span class="grad">Count its breaths.</span></h1>
 
-  <p data-en="Six chapters, six tools. Now let's play the game: one session read step by step with everything you learned. No magic signals — just reading."
-     data-es="Seis capítulos, seis herramientas. Ahora juguemos la partida: una sesión leída paso a paso con todo lo aprendido. Sin señales mágicas — solo lectura.">Six chapters, six tools. Now let's play the game: one session read step by step with everything you learned. No magic signals — just reading.</p>
+  <p data-en="The pushes up and down are the session's inner rhythm — and rhythm often warns before price does. A <b>rotation</b> is one full push in one direction: from the moment price turns until it turns again. Counting them sounds trivial, but their size and sequence tell you who is in charge before any candle shouts it."
+     data-es="Los empujes arriba y abajo son el ritmo interno de la sesión — y el ritmo suele avisar antes que el precio. Una <b>rotación</b> es un empuje completo en una dirección: desde que el precio gira hasta que vuelve a girar. Contarlas parece trivial, pero su tamaño y su secuencia te dicen quién manda antes de que lo grite ninguna vela.">The pushes up and down are the session's inner rhythm — and rhythm often warns before price does. A <b>rotation</b> is one full push in one direction: from the moment price turns until it turns again. Counting them sounds trivial, but their size and sequence tell you who is in charge before any candle shouts it.</p>
 
-  <h2 data-en="Step 1 · Context: where does the auction wake up?" data-es="Paso 1 · El contexto: ¿dónde despierta la subasta?">Step 1 · Context: where does the auction wake up?</h2>
-  <p data-en="The day opens <b>inside yesterday's value</b>. The auction's message: agreement, balance. The playbook for the day becomes rotation — buy cheap, sell expensive — until the market proves otherwise (chapters 1 and 2)."
-     data-es="El día abre <b>dentro del valor de ayer</b>. El mensaje de la subasta: acuerdo, balance. La guía del día pasa a ser la rotación — comprar barato, vender caro — hasta que el mercado demuestre otra cosa (capítulos 1 y 2).">The day opens <b>inside yesterday's value</b>. The auction's message: agreement, balance. The playbook for the day becomes rotation — buy cheap, sell expensive — until the market proves otherwise (chapters 1 and 2).</p>
+  <figure class="fig">
+    <svg width="720" height="220" viewBox="0 0 720 220">
+    <defs>
+  <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5E9FD8"/><stop offset="1" stop-color="#FFA500"/></linearGradient>
+  <filter id="fw" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#5E9FD8" flood-opacity=".35"/></filter>
+  <filter id="fo2" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#FFA500" flood-opacity=".45"/></filter>
+</defs>
+    <polyline points="20,120 110,58 200,150 290,50 380,160 470,62 560,140 700,40"
+      fill="none" stroke="url(#wave)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#fw)"/>
+    <circle cx="110" cy="58" r="8" fill="#5E9FD8"/><circle cx="200" cy="150" r="8" fill="#5E9FD8"/>
+    <circle cx="290" cy="50" r="8" fill="#5E9FD8"/><circle cx="380" cy="160" r="8" fill="#FFA500"/>
+    <circle cx="470" cy="62" r="8" fill="#FFA500"/><circle cx="560" cy="140" r="8" fill="#FFA500"/>
+  </svg>
+    <figcaption class="figcap" data-en="The session&#39;s breathing: every push from turn to turn is one rotation." data-es="La respiración de la sesión: cada empuje de giro a giro es una rotación.">The session&#39;s breathing: every push from turn to turn is one rotation.</figcaption>
+  </figure>
 
-  <h2 data-en="Step 2 · Liquidity: price falls toward the value floor" data-es="Paso 2 · La liquidez: el precio cae hacia el suelo del valor">Step 2 · Liquidity: price falls toward the value floor</h2>
-  <p data-en="Rotation pushes price down toward the VAL. And right there, the liquidity map shows size waiting: a buy wall defending the floor of value. Passivity already voted — there is real interest in buying that zone. A hypothesis, not a promise (chapter 6)."
-     data-es="La rotación empuja el precio hacia el VAL. Y justo ahí, el mapa de liquidez muestra tamaño esperando: un muro comprador defendiendo el suelo del valor. La pasividad ya votó — hay interés real en comprar esa zona. Hipótesis, no promesa (capítulo 6).">Rotation pushes price down toward the VAL. And right there, the liquidity map shows size waiting: a buy wall defending the floor of value. Passivity already voted — there is real interest in buying that zone. A hypothesis, not a promise (chapter 6).</p>
+  <h2 data-en="Balanced rhythm: how balance breathes" data-es="Ritmo equilibrado: la respiración del balance">Balanced rhythm: how balance breathes</h2>
+  <p data-en="In balance, up and down rotations are similar in size: nobody truly gains ground. It is the pulse of the range day — responsive activity pushing price back toward value, again and again."
+     data-es="En balance, las rotaciones alcistas y bajistas son de tamaño parecido: nadie gana terreno de verdad. Es el pulso del día de rango — la actividad responsiva devolviendo el precio hacia el valor, una y otra vez.">In balance, up and down rotations are similar in size: nobody truly gains ground. It is the pulse of the range day — responsive activity pushing price back toward value, again and again.</p>
 
-  <h2 data-en="Step 3 · The footprint: the fight at the low" data-es="Paso 3 · El footprint: la pelea en el mínimo">Step 3 · The footprint: the fight at the low</h2>
-  <p data-en="On top of the wall, sellers try with everything — and the footprint shows the result: heavy aggressive selling, and price stops falling. Absorption. The selling aggression crashes into the buying passivity and loses. The sellers of the low start getting trapped (chapters 3 and 4)."
-     data-es="Sobre el muro, los vendedores lo intentan con todo — y el footprint enseña el resultado: venta muy agresiva, y el precio deja de caer. Absorción. La agresión vendedora choca contra la pasividad compradora y pierde. Los vendedores del mínimo empiezan a quedar atrapados (capítulos 3 y 4).">On top of the wall, sellers try with everything — and the footprint shows the result: heavy aggressive selling, and price stops falling. Absorption. The selling aggression crashes into the buying passivity and loses. The sellers of the low start getting trapped (chapters 3 and 4).</p>
+  <h2 data-en="One-timeframing: the trend breathes short" data-es="One-timeframing: la tendencia respira corto">One-timeframing: the trend breathes short</h2>
+  <p data-en="In an uptrend the rhythm turns asymmetric: each pullback fails to break the prior leg's low. Higher and higher lows — short breathing. Profile readers call it <b>one-timeframing</b>. While that pattern holds, initiative is conducting: it is the typical heartbeat of a trend day."
+     data-es="En tendencia alcista el ritmo se vuelve asimétrico: cada retroceso no logra romper el mínimo del tramo anterior. Mínimos cada vez más altos — respiración corta. Los lectores de perfil lo llaman <b>one-timeframing</b>. Mientras ese patrón se mantiene, la iniciativa lleva la batuta: es el latido típico del día de tendencia.">In an uptrend the rhythm turns asymmetric: each pullback fails to break the prior leg's low. Higher and higher lows — short breathing. Profile readers call it <b>one-timeframing</b>. While that pattern holds, initiative is conducting: it is the typical heartbeat of a trend day.</p>
 
-  <h2 data-en="Step 4 · Confirmation: the CVD reveals the exhaustion" data-es="Paso 4 · La confirmación: el CVD delata el agotamiento">Step 4 · Confirmation: the CVD reveals the exhaustion</h2>
-  <p data-en="One last push scratches a lower low in price — but the CVD prints a higher low. Divergence: sellers push with less force each time. The full story now points to a turn — and you know exactly why (chapter 5)."
-     data-es="Un último empujón araña un mínimo más bajo en el precio — pero el CVD marca un mínimo más alto. Divergencia: los vendedores empujan con menos fuerza cada vez. La historia completa ahora apunta a un giro — y sabes exactamente por qué (capítulo 5).">One last push scratches a lower low in price — but the CVD prints a higher low. Divergence: sellers push with less force each time. The full story now points to a turn — and you know exactly why (chapter 5).</p>
+  <h2 data-en="The first clue: the rhythm breaks" data-es="La primera pista: el ritmo se rompe">The first clue: the rhythm breaks</h2>
+  <p data-en="The earliest warning that the game may be changing is not a candle pattern. It is a counter-rotation that, for the first time, breaks the low that was supposed to hold. That break is not a sell order — it is the cue to pay attention: the moment to re-read acceptance, value and day type."
+     data-es="El aviso más temprano de que la partida puede estar cambiando no es un patrón de velas. Es una rotación contraria que, por primera vez, rompe el mínimo que tocaba aguantar. Esa ruptura no es una orden de venta — es la señal de prestar atención: el momento de releer aceptación, valor y tipo de día.">The earliest warning that the game may be changing is not a candle pattern. It is a counter-rotation that, for the first time, breaks the low that was supposed to hold. That break is not a sell order — it is the cue to pay attention: the moment to re-read acceptance, value and day type.</p>
 
-  <h2 data-en="The game, seen whole" data-es="La partida, vista completa">The game, seen whole</h2>
-  <p data-en="Five reads, one story. The context said balance: rotation between the value extremes. The liquidity showed who defended the floor. The footprint displayed the absorption live. The delta measured the effort without result. And the CVD confirmed the seller exhaustion."
-     data-es="Cinco lecturas, una historia. El contexto dijo balance: rotación entre los extremos del valor. La liquidez mostró quién defendía el suelo. El footprint enseñó la absorción en vivo. El delta midió el esfuerzo sin resultado. Y el CVD confirmó el agotamiento vendedor.">Five reads, one story. The context said balance: rotation between the value extremes. The liquidity showed who defended the floor. The footprint displayed the absorption live. The delta measured the effort without result. And the CVD confirmed the seller exhaustion.</p>
+  <div class="box" data-en="<b>The honest rule:</b> a broken rhythm is a warning, never a guarantee. It earns your attention — the confirmation still has to come from acceptance and value."
+       data-es="<b>La regla honesta:</b> un ritmo roto es un aviso, nunca una garantía. Se gana tu atención — la confirmación sigue teniendo que llegar de la aceptación y el valor."><b>The honest rule:</b> a broken rhythm is a warning, never a guarantee. It earns your attention — the confirmation still has to come from acceptance and value.</div>
 
-  <div class="box" data-en="<b>The honest rule:</b> no piece decides alone. Together, they tell the story — and the story is what you trade. Any single tool taken in isolation is just noise with good marketing."
-       data-es="<b>La regla honesta:</b> ninguna pieza decide sola. Juntas, cuentan la historia — y la historia es lo que se opera. Cualquier herramienta aislada es solo ruido con buen marketing."><b>The honest rule:</b> no piece decides alone. Together, they tell the story — and the story is what you trade. Any single tool taken in isolation is just noise with good marketing.</div>
-
-  <p data-en="The auction will keep leaving footprints, session after session. Now you can read them. If this course helped you, share it with a trader who needs it — and if you want to go deeper, season 2 covers acceptance vs rejection, day types, and initiative vs responsive activity: pure auction theory."
-     data-es="La subasta seguirá dejando huellas, sesión tras sesión. Ahora sabes leerlas. Si este curso te ayudó, compártelo con un trader que lo necesite — y si quieres profundizar, la temporada 2 cubre aceptación vs rechazo, tipos de día e iniciativa vs respuesta: teoría de subasta pura.">The auction will keep leaving footprints, session after session. Now you can read them. If this course helped you, share it with a trader who needs it — and if you want to go deeper, season 2 covers acceptance vs rejection, day types, and initiative vs responsive activity: pure auction theory.</p>
+  <p data-en="Rhythm tells you who is conducting. The scars tell you where it broke — tails and excess are next."
+     data-es="El ritmo te dice quién lleva la batuta. Las cicatrices, dónde se rompió — colas y excesos son lo siguiente.">Rhythm tells you who is conducting. The scars tell you where it broke — tails and excess are next.</p>
 
   <div class="artcta">
-    <p data-en="Want to read your own sessions like this, live? MATE's order flow indicators put every piece on your NinjaTrader 8 charts." data-es="¿Quieres leer así tus propias sesiones, en vivo? Los indicadores de order flow de MATE ponen todas las piezas en tus gráficos de NinjaTrader 8.">Want to read your own sessions like this, live? MATE's order flow indicators put every piece on your NinjaTrader 8 charts.</p>
+    <p data-en="Want to track the session's rhythm with real order flow behind it? MATE's tools show the pushes tick by tick on NinjaTrader 8." data-es="¿Quieres seguir el ritmo de la sesión con order flow real detrás? Las herramientas de MATE enseñan los empujes tick a tick en NinjaTrader 8.">Want to track the session's rhythm with real order flow behind it? MATE's tools show the pushes tick by tick on NinjaTrader 8.</p>
     <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
   </div>
   <div class="next">
     <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
-    <a href="learn-acceptance-rejection.html" data-en="Season 2: Acceptance vs Rejection →" data-es="Temporada 2: Aceptación vs Rechazo →">Season 2: Acceptance vs Rejection →</a>
+    <a href="learn-tails-excess.html" data-en="S2 Chapter 6: Tails and Excess →" data-es="T2 Capítulo 6: Colas y excesos →">S2 Chapter 6: Tails and Excess →</a>
   </div>
 </article>
 </main>
@@ -234,7 +242,7 @@ function applyLang(l){
     const v = el.getAttribute('data-'+l);
     if(v!==null) el.innerHTML = v;
   });
-  document.title = l==='en' ? "Reading a Full Session with Order Flow, Step by Step — MATE" : "Leer una sesión completa con order flow, paso a paso — MATE";
+  document.title = l==='en' ? "Rotations and One-Timeframing Explained — MATE" : "Rotaciones y one-timeframing explicados — MATE";
 }
 function setLang(l){
   try{ localStorage.setItem('mate_lang', l); }catch(e){}

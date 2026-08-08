@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading a Full Session with Order Flow, Step by Step — MATE</title>
-<meta name="description" content="A full futures session read step by step: context, liquidity, footprint absorption and CVD divergence telling one single story. Final chapter, free course.">
-<link rel="canonical" href="https://www.matetrading.com/learn-full-session.html">
+<title>Reading the Market Open: Location, Gaps and Conviction — MATE</title>
+<meta name="description" content="How to read the market open: inside or outside yesterday's value, gap acceptance vs gap fill, and open-drive conviction. Season 2 of a free course.">
+<link rel="canonical" href="https://www.matetrading.com/learn-market-open.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
 <link rel="icon" type="image/png" sizes="128x128" href="favicon-v2.png">
@@ -105,15 +105,15 @@
 {
  "@context": "https://schema.org",
  "@type": "Article",
- "headline": "Reading a Full Session with Order Flow, Step by Step",
- "description": "A full futures session read step by step: context, liquidity, footprint absorption and CVD divergence telling one single story. Final chapter, free course.",
+ "headline": "Reading the Market Open: Location, Gaps and Conviction",
+ "description": "How to read the market open: inside or outside yesterday's value, gap acceptance vs gap fill, and open-drive conviction. Season 2 of a free course.",
  "inLanguage": [
   "en",
   "es"
  ],
- "datePublished": "2026-08-07",
- "dateModified": "2026-08-07",
- "mainEntityOfPage": "https://www.matetrading.com/learn-full-session.html",
+ "datePublished": "2026-08-08",
+ "dateModified": "2026-08-08",
+ "mainEntityOfPage": "https://www.matetrading.com/learn-market-open.html",
  "isPartOf": {
   "@type": "CreativeWorkSeries",
   "name": "Read the Market — Learn Order Flow"
@@ -174,45 +174,60 @@
 
 <main>
 <article class="art">
-  <span class="kicker" data-en="READ THE MARKET · FINAL CHAPTER" data-es="LEER EL MERCADO · CAPÍTULO FINAL">READ THE MARKET · FINAL CHAPTER</span>
-  <h1 data-en='Every piece. <span class="grad">One single game.</span>' data-es='Todas las piezas. <span class="grad">Una sola partida.</span>'>Every piece. <span class="grad">One single game.</span></h1>
+  <span class="kicker" data-en="READ THE MARKET · SEASON 2 · CHAPTER 4" data-es="LEER EL MERCADO · TEMPORADA 2 · CAPÍTULO 4">READ THE MARKET · SEASON 2 · CHAPTER 4</span>
+  <h1 data-en='The first minutes don&#39;t predict the day. <span class="grad">They portray it.</span>' data-es='Los primeros minutos no predicen el día. <span class="grad">Lo retratan.</span>'>The first minutes don't predict the day. <span class="grad">They portray it.</span></h1>
 
-  <p data-en="Six chapters, six tools. Now let's play the game: one session read step by step with everything you learned. No magic signals — just reading."
-     data-es="Seis capítulos, seis herramientas. Ahora juguemos la partida: una sesión leída paso a paso con todo lo aprendido. Sin señales mágicas — solo lectura.">Six chapters, six tools. Now let's play the game: one session read step by step with everything you learned. No magic signals — just reading.</p>
+  <p data-en="The open answers two questions: where does the session start relative to yesterday's value, and with how much conviction does it move after the bell. Together they paint a portrait of the day ahead — a portrait, not a prophecy."
+     data-es="La apertura responde dos preguntas: dónde arranca la sesión respecto al valor de ayer, y con cuánta convicción se mueve tras la campana. Juntas pintan un retrato del día que empieza — un retrato, no una profecía.">The open answers two questions: where does the session start relative to yesterday's value, and with how much conviction does it move after the bell. Together they paint a portrait of the day ahead — a portrait, not a prophecy.</p>
 
-  <h2 data-en="Step 1 · Context: where does the auction wake up?" data-es="Paso 1 · El contexto: ¿dónde despierta la subasta?">Step 1 · Context: where does the auction wake up?</h2>
-  <p data-en="The day opens <b>inside yesterday's value</b>. The auction's message: agreement, balance. The playbook for the day becomes rotation — buy cheap, sell expensive — until the market proves otherwise (chapters 1 and 2)."
-     data-es="El día abre <b>dentro del valor de ayer</b>. El mensaje de la subasta: acuerdo, balance. La guía del día pasa a ser la rotación — comprar barato, vender caro — hasta que el mercado demuestre otra cosa (capítulos 1 y 2).">The day opens <b>inside yesterday's value</b>. The auction's message: agreement, balance. The playbook for the day becomes rotation — buy cheap, sell expensive — until the market proves otherwise (chapters 1 and 2).</p>
+  <figure class="fig">
+    <div style="margin:46px 0 32px;width:700px">
+  <div style="display:flex;justify-content:center;margin-bottom:26px">
+    <div style="position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center">
+      <div style="position:absolute;inset:0;border:2px solid rgba(255,165,0,.25);border-radius:50%"></div>
+      <div style="position:absolute;inset:17px;border:2px solid rgba(255,165,0,.45);border-radius:50%"></div>
+      <div style="width:32px;height:32px;border-radius:50%;background:#FFA500;box-shadow:0 0 40px rgba(255,165,0,.7)"></div>
+      <span style="position:absolute;right:-86px;top:36px;font-family:'JetBrains Mono',monospace;font-size:20px;color:#FFA500;letter-spacing:.12em">open</span>
+    </div>
+  </div>
+  <svg width="700" height="110" viewBox="0 0 700 120" style="display:block;margin:0 auto">
+    <defs><linearGradient id="vb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="rgba(94,159,216,.06)"/><stop offset=".5" stop-color="rgba(94,159,216,.45)"/><stop offset="1" stop-color="rgba(94,159,216,.06)"/>
+    </linearGradient></defs>
+    <rect x="0" y="6" width="700" height="98" rx="14" fill="url(#vb)"/>
+    <line x1="0" y1="8" x2="700" y2="8" stroke="rgba(94,159,216,.65)" stroke-width="2" stroke-dasharray="8 8"/>
+    <line x1="0" y1="104" x2="700" y2="104" stroke="rgba(94,159,216,.65)" stroke-width="2" stroke-dasharray="8 8"/>
+    <text x="350" y="64" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" letter-spacing="4" fill="#AEB8C6" data-en="YESTERDAY&#39;S VALUE" data-es="EL VALOR DE AYER">YESTERDAY&#39;S VALUE</text>
+  </svg>
+</div>
+    <figcaption class="figcap" data-en="The first question of every session: where does the open sit relative to yesterday&#39;s value?" data-es="La primera pregunta de cada sesión: ¿dónde queda la apertura respecto al valor de ayer?">The first question of every session: where does the open sit relative to yesterday&#39;s value?</figcaption>
+  </figure>
 
-  <h2 data-en="Step 2 · Liquidity: price falls toward the value floor" data-es="Paso 2 · La liquidez: el precio cae hacia el suelo del valor">Step 2 · Liquidity: price falls toward the value floor</h2>
-  <p data-en="Rotation pushes price down toward the VAL. And right there, the liquidity map shows size waiting: a buy wall defending the floor of value. Passivity already voted — there is real interest in buying that zone. A hypothesis, not a promise (chapter 6)."
-     data-es="La rotación empuja el precio hacia el VAL. Y justo ahí, el mapa de liquidez muestra tamaño esperando: un muro comprador defendiendo el suelo del valor. La pasividad ya votó — hay interés real en comprar esa zona. Hipótesis, no promesa (capítulo 6).">Rotation pushes price down toward the VAL. And right there, the liquidity map shows size waiting: a buy wall defending the floor of value. Passivity already voted — there is real interest in buying that zone. A hypothesis, not a promise (chapter 6).</p>
+  <h2 data-en="Inside or outside yesterday's value?" data-es="¿Dentro o fuera del valor de ayer?">Inside or outside yesterday's value?</h2>
+  <p data-en="Opening inside value, the market wakes up in agreement: rotation is the likelier script, and yesterday's references still rule. Opening outside value, it wakes up out of balance — and chapter 1's question decides the day: will the new prices be accepted, or rejected back into the old value?"
+     data-es="Abriendo dentro del valor, el mercado amanece en acuerdo: la rotación es el guion más probable, y las referencias de ayer siguen mandando. Abriendo fuera del valor, amanece en desequilibrio — y la pregunta del capítulo 1 decide el día: ¿los precios nuevos se aceptan, o se rechazan de vuelta al valor viejo?">Opening inside value, the market wakes up in agreement: rotation is the likelier script, and yesterday's references still rule. Opening outside value, it wakes up out of balance — and chapter 1's question decides the day: will the new prices be accepted, or rejected back into the old value?</p>
 
-  <h2 data-en="Step 3 · The footprint: the fight at the low" data-es="Paso 3 · El footprint: la pelea en el mínimo">Step 3 · The footprint: the fight at the low</h2>
-  <p data-en="On top of the wall, sellers try with everything — and the footprint shows the result: heavy aggressive selling, and price stops falling. Absorption. The selling aggression crashes into the buying passivity and loses. The sellers of the low start getting trapped (chapters 3 and 4)."
-     data-es="Sobre el muro, los vendedores lo intentan con todo — y el footprint enseña el resultado: venta muy agresiva, y el precio deja de caer. Absorción. La agresión vendedora choca contra la pasividad compradora y pierde. Los vendedores del mínimo empiezan a quedar atrapados (capítulos 3 y 4).">On top of the wall, sellers try with everything — and the footprint shows the result: heavy aggressive selling, and price stops falling. Absorption. The selling aggression crashes into the buying passivity and loses. The sellers of the low start getting trapped (chapters 3 and 4).</p>
+  <h2 data-en="The gap: a bet made overnight" data-es="El gap: una apuesta hecha de noche">The gap: a bet made overnight</h2>
+  <p data-en="When the day opens far from the prior close, someone moved price without trading with you. The gap asks one question: do the new prices get accepted — value building at the new levels — or does the gap close, with price returning to yesterday's value? A gap that holds and builds business tends to be a message of strength; one that closes fast, a rejection of the overnight bet."
+     data-es="Cuando el día abre lejos del cierre anterior, alguien movió el precio sin negociar contigo. El gap plantea una sola pregunta: ¿los precios nuevos se aceptan — construyéndose valor en los niveles nuevos — o el gap se cierra y el precio vuelve al valor de ayer? Un gap que aguanta y construye negocio suele ser mensaje de fuerza; uno que se cierra rápido, un rechazo de la apuesta nocturna.">When the day opens far from the prior close, someone moved price without trading with you. The gap asks one question: do the new prices get accepted — value building at the new levels — or does the gap close, with price returning to yesterday's value? A gap that holds and builds business tends to be a message of strength; one that closes fast, a rejection of the overnight bet.</p>
 
-  <h2 data-en="Step 4 · Confirmation: the CVD reveals the exhaustion" data-es="Paso 4 · La confirmación: el CVD delata el agotamiento">Step 4 · Confirmation: the CVD reveals the exhaustion</h2>
-  <p data-en="One last push scratches a lower low in price — but the CVD prints a higher low. Divergence: sellers push with less force each time. The full story now points to a turn — and you know exactly why (chapter 5)."
-     data-es="Un último empujón araña un mínimo más bajo en el precio — pero el CVD marca un mínimo más alto. Divergencia: los vendedores empujan con menos fuerza cada vez. La historia completa ahora apunta a un giro — y sabes exactamente por qué (capítulo 5).">One last push scratches a lower low in price — but the CVD prints a higher low. Divergence: sellers push with less force each time. The full story now points to a turn — and you know exactly why (chapter 5).</p>
+  <h2 data-en="Conviction after the bell" data-es="La convicción tras la campana">Conviction after the bell</h2>
+  <p data-en="Sustained direction off the open — the classic <b>open-drive</b>, leaving without ever looking back — says someone came with orders from home, and tends to anticipate a directional day. Rotation around the opening print, testing both sides without choosing, says conviction is low and tends to announce balance. The open's conviction portrays who came to play; it does not dictate how the day ends."
+     data-es="La dirección sostenida desde la apertura — el clásico <b>open-drive</b>, salir sin volver a mirar atrás — dice que alguien vino con órdenes de casa, y suele anticipar un día con dirección. La rotación alrededor del precio de apertura, probando ambos lados sin decidirse, dice que la convicción es baja y suele anunciar balance. La convicción de la apertura retrata quién vino a jugar; no dicta cómo termina el día.">Sustained direction off the open — the classic <b>open-drive</b>, leaving without ever looking back — says someone came with orders from home, and tends to anticipate a directional day. Rotation around the opening print, testing both sides without choosing, says conviction is low and tends to announce balance. The open's conviction portrays who came to play; it does not dictate how the day ends.</p>
 
-  <h2 data-en="The game, seen whole" data-es="La partida, vista completa">The game, seen whole</h2>
-  <p data-en="Five reads, one story. The context said balance: rotation between the value extremes. The liquidity showed who defended the floor. The footprint displayed the absorption live. The delta measured the effort without result. And the CVD confirmed the seller exhaustion."
-     data-es="Cinco lecturas, una historia. El contexto dijo balance: rotación entre los extremos del valor. La liquidez mostró quién defendía el suelo. El footprint enseñó la absorción en vivo. El delta midió el esfuerzo sin resultado. Y el CVD confirmó el agotamiento vendedor.">Five reads, one story. The context said balance: rotation between the value extremes. The liquidity showed who defended the floor. The footprint displayed the absorption live. The delta measured the effort without result. And the CVD confirmed the seller exhaustion.</p>
+  <div class="box" data-en="<b>The honest rule:</b> location, gap, conviction — three reads that portray the day. A portrait, never a prophecy: the session still has to prove it with acceptance."
+       data-es="<b>La regla honesta:</b> ubicación, gap, convicción — tres lecturas que retratan el día. Retrato, nunca profecía: la sesión aún tiene que demostrarlo con aceptación."><b>The honest rule:</b> location, gap, conviction — three reads that portray the day. A portrait, never a prophecy: the session still has to prove it with acceptance.</div>
 
-  <div class="box" data-en="<b>The honest rule:</b> no piece decides alone. Together, they tell the story — and the story is what you trade. Any single tool taken in isolation is just noise with good marketing."
-       data-es="<b>La regla honesta:</b> ninguna pieza decide sola. Juntas, cuentan la historia — y la historia es lo que se opera. Cualquier herramienta aislada es solo ruido con buen marketing."><b>The honest rule:</b> no piece decides alone. Together, they tell the story — and the story is what you trade. Any single tool taken in isolation is just noise with good marketing.</div>
-
-  <p data-en="The auction will keep leaving footprints, session after session. Now you can read them. If this course helped you, share it with a trader who needs it — and if you want to go deeper, season 2 covers acceptance vs rejection, day types, and initiative vs responsive activity: pure auction theory."
-     data-es="La subasta seguirá dejando huellas, sesión tras sesión. Ahora sabes leerlas. Si este curso te ayudó, compártelo con un trader que lo necesite — y si quieres profundizar, la temporada 2 cubre aceptación vs rechazo, tipos de día e iniciativa vs respuesta: teoría de subasta pura.">The auction will keep leaving footprints, session after session. Now you can read them. If this course helped you, share it with a trader who needs it — and if you want to go deeper, season 2 covers acceptance vs rejection, day types, and initiative vs responsive activity: pure auction theory.</p>
+  <p data-en="The open gives you the portrait. Rotations give you the pulse — that is the next chapter."
+     data-es="La apertura te da el retrato. Las rotaciones te dan el pulso — ese es el siguiente capítulo.">The open gives you the portrait. Rotations give you the pulse — that is the next chapter.</p>
 
   <div class="artcta">
-    <p data-en="Want to read your own sessions like this, live? MATE's order flow indicators put every piece on your NinjaTrader 8 charts." data-es="¿Quieres leer así tus propias sesiones, en vivo? Los indicadores de order flow de MATE ponen todas las piezas en tus gráficos de NinjaTrader 8.">Want to read your own sessions like this, live? MATE's order flow indicators put every piece on your NinjaTrader 8 charts.</p>
+    <p data-en="Want yesterday's value drawn automatically at every open? MATE's profile tools put the map on your NinjaTrader 8 charts." data-es="¿Quieres el valor de ayer dibujado automáticamente en cada apertura? Las herramientas de perfil de MATE ponen el mapa en tus gráficos de NinjaTrader 8.">Want yesterday's value drawn automatically at every open? MATE's profile tools put the map on your NinjaTrader 8 charts.</p>
     <a href="https://buy.stripe.com/eVq5kC8jzbCP1ooes5fQI07" data-en="Start free trial · 7 days" data-es="Prueba gratis · 7 días">Start free trial · 7 days</a>
   </div>
   <div class="next">
     <a href="learn.html" data-en="← All chapters" data-es="← Todos los capítulos">← All chapters</a>
-    <a href="learn-acceptance-rejection.html" data-en="Season 2: Acceptance vs Rejection →" data-es="Temporada 2: Aceptación vs Rechazo →">Season 2: Acceptance vs Rejection →</a>
+    <a href="learn-rotations.html" data-en="S2 Chapter 5: Rotations →" data-es="T2 Capítulo 5: Rotaciones →">S2 Chapter 5: Rotations →</a>
   </div>
 </article>
 </main>
@@ -234,7 +249,7 @@ function applyLang(l){
     const v = el.getAttribute('data-'+l);
     if(v!==null) el.innerHTML = v;
   });
-  document.title = l==='en' ? "Reading a Full Session with Order Flow, Step by Step — MATE" : "Leer una sesión completa con order flow, paso a paso — MATE";
+  document.title = l==='en' ? "Reading the Market Open: Location, Gaps and Conviction — MATE" : "Leer la apertura: ubicación, gaps y convicción — MATE";
 }
 function setLang(l){
   try{ localStorage.setItem('mate_lang', l); }catch(e){}
