@@ -28,7 +28,7 @@
     position:sticky;top:0;z-index:50;background:rgba(5,7,11,.78);
     backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
   }
-  nav{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1160px;margin:0 auto;padding:0 24px}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px;max-width:1160px;margin:0 auto;padding:0 24px}
   .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
   .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
   .logo-word::first-letter{color:var(--blue)}
@@ -36,6 +36,24 @@
   .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
   .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
   .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover,.nav-links a.on{color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;transition:transform .15s, box-shadow .15s}
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .burger{display:none;background:none;border:1px solid var(--line-2);border-radius:9px;width:38px;height:38px;cursor:pointer;position:relative;flex:none}
+  .burger span{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s, opacity .25s, top .25s}
+  .burger span:nth-child(1){top:12px}.burger span:nth-child(2){top:18px}.burger span:nth-child(3){top:24px}
+  .burger.open span:nth-child(1){top:18px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:18px;transform:rotate(-45deg)}
+  .m-menu{display:none;flex-direction:column;gap:2px;padding:10px 24px 18px;border-bottom:1px solid var(--line);background:rgba(5,7,11,.97)}
+  .m-menu a{text-decoration:none;color:var(--muted);font-size:.95rem;font-weight:500;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .m-menu a:last-child{border-bottom:none}
+  .m-menu.open{display:flex}
+  @media(max-width:840px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
   .page{padding:64px 0 80px}
   h1{font-family:'Manrope',sans-serif;font-weight:700;font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:-.02em;margin-bottom:8px}
   .updated{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.08em;margin-bottom:40px;display:block}
@@ -53,11 +71,33 @@
 <header>
   <nav>
     <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
-    <div class="lang-sw" role="group" aria-label="Language">
-      <button id="langEN" class="on" onclick="setLang('en')">EN</button>
-      <button id="langES" onclick="setLang('es')">ES</button>
+    <ul class="nav-links">
+      <li><a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a></li>
+      <li><a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a></li>
+      <li><a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a></li>
+      <li><a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a></li>
+      <li><a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <a class="btn btn-orange nav-cta" href="index.html#productos" data-en="Get started" data-es="Empezar">Get started</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
   </nav>
+  <div class="m-menu" id="mmenu">
+    <a href="index.html#features" data-en="Features" data-es="Capacidades">Features</a>
+    <a href="indicadores.html" data-en="Indicators" data-es="Indicadores">Indicators</a>
+    <a href="index.html#productos" data-en="Pricing" data-es="Precios">Pricing</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="learn.html" data-en="Learn" data-es="Aprende">Learn</a>
+    <a href="about.html" data-en="About us" data-es="Sobre nosotros">About us</a>
+    <a href="index.html#contacto" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
 </header>
 
 <main class="page">
@@ -80,7 +120,7 @@
       <a href="#updates" data-en="6. Updates" data-es="6. Actualizaciones">6. Updates</a>
       <a href="#risk" data-en="7. Risk" data-es="7. Riesgo">7. Risk</a>
       <a href="#liability" data-en="8. Liability" data-es="8. Responsabilidad">8. Liability</a>
-      <a href="#privacy" data-en="9. Privacy" data-es="9. Privacidad">9. Privacy</a>
+      <a href="#privacy" data-en="9. Privacy &amp; cookies" data-es="9. Privacidad y cookies">9. Privacy &amp; cookies</a>
       <a href="#ip" data-en="10. IP" data-es="10. Prop. intelectual">10. IP</a>
       <a href="#law" data-en="11. Law" data-es="11. Ley">11. Law</a>
     </p>
@@ -118,9 +158,9 @@
   <p data-en="The Software is provided &quot;as is&quot;. To the maximum extent permitted by law, we are not liable for trading losses, loss of profits, or indirect damages arising from the use — or unavailability — of the Software, including interruptions caused by NinjaTrader, data feeds or third-party services. In any case, our total liability is limited to the amount you paid for your current subscription period. Nothing in these terms limits rights that consumer law grants you mandatorily."
      data-es="El Software se proporciona &quot;tal cual&quot;. En la máxima medida permitida por la ley, no respondemos de pérdidas de trading, lucro cesante ni daños indirectos derivados del uso — o indisponibilidad — del Software, incluidas interrupciones causadas por NinjaTrader, los feeds de datos o servicios de terceros. En todo caso, nuestra responsabilidad total se limita al importe pagado por tu período de suscripción en curso. Nada en estos términos limita los derechos que la normativa de consumo te reconoce imperativamente.">The Software is provided "as is". To the maximum extent permitted by law, we are not liable for trading losses, loss of profits, or indirect damages arising from the use — or unavailability — of the Software, including interruptions caused by NinjaTrader, data feeds or third-party services. In any case, our total liability is limited to the amount you paid for your current subscription period. Nothing in these terms limits rights that consumer law grants you mandatorily.</p>
 
-  <h2 id="privacy" data-en="9. Privacy" data-es="9. Privacidad">9. Privacy</h2>
-  <p data-en="We collect the minimum needed to serve you: your email address (to deliver your license and provide support), your license key and a machine identifier (to enforce the one-machine license), and technical validation logs. Payments and card data are handled entirely by Stripe (stripe.com/privacy). We do not sell your data or use it for advertising, and we do not use tracking cookies — the site only stores your language preference in your own browser. You can request access to or deletion of your data at any time by writing to support@matetrading.com; deleting license data means the license stops working."
-     data-es="Recogemos lo mínimo necesario para darte servicio: tu correo electrónico (para entregarte la licencia y darte soporte), tu clave de licencia y un identificador de tu máquina (para aplicar la licencia de un ordenador), y registros técnicos de validación. Los pagos y datos de tarjeta los gestiona íntegramente Stripe (stripe.com/privacy). No vendemos tus datos ni los usamos para publicidad, y no usamos cookies de rastreo — el sitio solo guarda tu preferencia de idioma en tu propio navegador. Puedes solicitar acceso o eliminación de tus datos cuando quieras escribiendo a support@matetrading.com; eliminar los datos de licencia implica que la licencia deja de funcionar.">We collect the minimum needed to serve you: your email address (to deliver your license and provide support), your license key and a machine identifier (to enforce the one-machine license), and technical validation logs. Payments and card data are handled entirely by Stripe (stripe.com/privacy). We do not sell your data or use it for advertising, and we do not use tracking cookies — the site only stores your language preference in your own browser. You can request access to or deletion of your data at any time by writing to support@matetrading.com; deleting license data means the license stops working.</p>
+  <h2 id="privacy" data-en="9. Privacy &amp; cookies" data-es="9. Privacidad y cookies">9. Privacy &amp; cookies</h2>
+  <p data-en="We collect the minimum needed to serve you: your email address (to deliver your license and provide support), your license key and a machine identifier (to enforce the one-machine license), and technical validation logs. Payments and card data are handled entirely by Stripe (stripe.com/privacy). We do not sell your data or use it for advertising, and we do not use tracking cookies — the site only stores your language preference in your own browser. You can request access to or deletion of your data at any time by writing to support@matetrading.com; deleting license data means the license stops working. For anonymous, aggregate traffic statistics we use Cloudflare Web Analytics, a privacy-first measurement tool that sets no cookies, does not fingerprint devices and does not follow you across sites — which is why this site needs no cookie banner."
+     data-es="Recogemos lo mínimo necesario para darte servicio: tu correo electrónico (para entregarte la licencia y darte soporte), tu clave de licencia y un identificador de tu máquina (para aplicar la licencia de un ordenador), y registros técnicos de validación. Los pagos y datos de tarjeta los gestiona íntegramente Stripe (stripe.com/privacy). No vendemos tus datos ni los usamos para publicidad, y no usamos cookies de rastreo — el sitio solo guarda tu preferencia de idioma en tu propio navegador. Puedes solicitar acceso o eliminación de tus datos cuando quieras escribiendo a support@matetrading.com; eliminar los datos de licencia implica que la licencia deja de funcionar. Para estadísticas de tráfico anónimas y agregadas usamos Cloudflare Web Analytics, una herramienta de medición respetuosa con la privacidad que no instala cookies, no genera huella digital del dispositivo y no te sigue por otros sitios — por eso este sitio no necesita banner de cookies.">We collect the minimum needed to serve you: your email address (to deliver your license and provide support), your license key and a machine identifier (to enforce the one-machine license), and technical validation logs. Payments and card data are handled entirely by Stripe (stripe.com/privacy). We do not sell your data or use it for advertising, and we do not use tracking cookies — the site only stores your language preference in your own browser. You can request access to or deletion of your data at any time by writing to support@matetrading.com; deleting license data means the license stops working. For anonymous, aggregate traffic statistics we use Cloudflare Web Analytics, a privacy-first measurement tool that sets no cookies, does not fingerprint devices and does not follow you across sites — which is why this site needs no cookie banner.</p>
 
   <h2 id="ip" data-en="10. Intellectual property" data-es="10. Propiedad intelectual">10. Intellectual property</h2>
   <p data-en="The Software, its code, design, documentation and the MATE brand are our exclusive property. Your subscription grants you a right of use — never ownership. NinjaTrader® is a registered trademark of NinjaTrader Group, LLC; this site is not affiliated with or endorsed by NinjaTrader."
@@ -128,7 +168,7 @@
 
   <h2 id="law" data-en="11. Changes and governing law" data-es="11. Cambios y ley aplicable">11. Changes and governing law</h2>
   <p data-en="We may update these terms; the current version is always published on this page with its date. Material changes will be notified by email to active subscribers. These terms are governed by Spanish law. Disputes will be submitted to the courts of the consumer's domicile when consumer law so provides. EU residents may also use the European Online Dispute Resolution platform (ec.europa.eu/consumers/odr)."
-     data-es="Podemos actualizar estos términos; la versión vigente estará siempre publicada en esta página con su fecha. Los cambios sustanciales se notificarán por correo a los suscriptores activos. Estos términos se rigen por la ley española. Las disputas se someterán a los tribunales del domicilio del consumidor cuando la normativa de consumo así lo disponga. Los residentes en la UE pueden además usar la plataforma europea de resolución de litigios en línea (ec.europa.eu/consumers/odr)."'>We may update these terms; the current version is always published on this page with its date. Material changes will be notified by email to active subscribers. These terms are governed by Spanish law. Disputes will be submitted to the courts of the consumer's domicile when consumer law so provides. EU residents may also use the European Online Dispute Resolution platform (ec.europa.eu/consumers/odr).</p>
+     data-es="Podemos actualizar estos términos; la versión vigente estará siempre publicada en esta página con su fecha. Los cambios sustanciales se notificarán por correo a los suscriptores activos. Estos términos se rigen por la ley española. Las disputas se someterán a los tribunales del domicilio del consumidor cuando la normativa de consumo así lo disponga. Los residentes en la UE pueden además usar la plataforma europea de resolución de litigios en línea (ec.europa.eu/consumers/odr).">We may update these terms; the current version is always published on this page with its date. Material changes will be notified by email to active subscribers. These terms are governed by Spanish law. Disputes will be submitted to the courts of the consumer's domicile when consumer law so provides. EU residents may also use the European Online Dispute Resolution platform (ec.europa.eu/consumers/odr).</p>
 
   <h2 data-en="Contact" data-es="Contacto">Contact</h2>
   <p data-en='Questions about these terms? Write to <a href="mailto:support@matetrading.com">support@matetrading.com</a> — we reply within 24 hours.'
@@ -145,6 +185,13 @@
 </footer>
 
 <script>
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mmenu').classList.toggle('open');
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click', toggleMenu));
+});
 function applyLang(l){
   document.documentElement.lang = l;
   document.getElementById('langEN').className = l==='en' ? 'on' : '';
