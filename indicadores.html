@@ -275,11 +275,14 @@
   .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .disclaimer{margin-top:16px;font-size:.74rem;max-width:84ch;color:#5A6474}
 
-  .setup{border:1px dashed var(--line-2);border-radius:12px;padding:18px 22px;margin-top:26px;
-    font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);line-height:1.75}
-  .setup .st{display:block;color:var(--orange);letter-spacing:.24em;font-size:.66rem;margin-bottom:8px}
-  .setup p{margin:0 0 6px;font-size:.78rem;color:var(--muted)}
-  .setup b{color:var(--blue);font-weight:600}
+  .setup{border-top:1px solid var(--line);padding:26px 40px 30px}
+  .setup .st{display:block;font-family:'JetBrains Mono',monospace;color:var(--orange);letter-spacing:.24em;font-size:.66rem;margin-bottom:4px}
+  .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  .scell{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .scell.wide{grid-column:1/-1}
+  .scell .sl{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;margin-bottom:8px}
+  .scell p{color:var(--muted);font-size:.88rem;line-height:1.68;margin:0}
+  @media(max-width:840px){.setup-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -443,6 +446,33 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell wide">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Historical tick data from your provider. No Tick Replay needed: it loads its own tick series and classifies against the recorded bid/ask (exact by default; Tick Replay available as an optional mode)." data-es="Datos de ticks históricos de tu proveedor. No necesita Tick Replay: carga su propia serie de ticks y clasifica contra el bid/ask grabado (exacto por defecto; Tick Replay disponible como modo opcional).">Historical tick data from your provider. No Tick Replay needed: it loads its own tick series and classifies against the recorded bid/ask (exact by default; Tick Replay available as an optional mode).</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Ticks Per Row, Display Mode (candle + footprint or footprint only), imbalance ratio &amp; filter, alerts." data-es="Ticks Per Row, Display Mode (vela + footprint o footprint solo), ratio y filtro de imbalances, alertas.">Ticks Per Row, Display Mode (candle + footprint or footprint only), imbalance ratio &amp; filter, alerts.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the cells" data-es="Cómo leer las celdas">Reading the cells</span>
+          <p data-en="Every row is one price. On the delta side, the left number is selling into the bid and the right number is buying into the ask. Imbalances compare diagonally — buys at one price vs sells one tick below, because that is how the ladder actually fights — and the dominant cell lights up. Three or more stacked imbalances become a zone that extends forward as support/resistance; when it breaks, it flips into a trapped-traders zone: fuel for the other side. A dot on a cell marks a single print at or above your Big Print threshold." data-es="Cada fila es un precio. En el lado delta, el número izquierdo son ventas contra el bid y el derecho compras contra el ask. Los imbalances se comparan en diagonal — compras a un precio contra ventas un tick más abajo, porque así pelea realmente el ladder — y la celda dominante se ilumina. Tres o más imbalances apilados forman una zona que se extiende hacia delante como soporte/resistencia; cuando se rompe, se convierte en zona de atrapados: combustible para el otro lado. Un punto sobre una celda marca un print individual igual o mayor que tu umbral de Big Print.">Every row is one price. On the delta side, the left number is selling into the bid and the right number is buying into the ask. Imbalances compare diagonally — buys at one price vs sells one tick below, because that is how the ladder actually fights — and the dominant cell lights up. Three or more stacked imbalances become a zone that extends forward as support/resistance; when it breaks, it flips into a trapped-traders zone: fuel for the other side. A dot on a cell marks a single print at or above your Big Print threshold.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Chart setup" data-es="Gráfico">Chart setup</span>
+          <p data-en="In Data Series, keep your candles small — 1 or 2 (minute, range or volume) — so the footprint stays readable. There is no universal Ticks Per Row: it depends on your instrument AND your candle size — the bigger the candle, the more rows it stacks, so raise Ticks Per Row until the cells read comfortably." data-es="En Data Series usa velas pequeñas — 1 o 2 (de minutos, rango o volumen) — para que el footprint se lea bien. No hay un Ticks Per Row universal: depende de tu instrumento Y del tamaño de tu vela — cuanto más grande la vela, más filas acumula, así que sube Ticks Per Row hasta que las celdas se lean cómodas.">In Data Series, keep your candles small — 1 or 2 (minute, range or volume) — so the footprint stays readable. There is no universal Ticks Per Row: it depends on your instrument AND your candle size — the bigger the candle, the more rows it stacks, so raise Ticks Per Row until the cells read comfortably.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If you see nothing" data-es="Si no ves datos">If you see nothing</span>
+          <p data-en="Give the tick series a few seconds to load; on very long charts, reduce the days loaded." data-es="Dale unos segundos a la serie de ticks; en gráficos muy largos, reduce los días cargados.">Give the tick series a few seconds to load; on very long charts, reduce the days loaded.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -450,14 +480,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> historical tick data from your provider. No Tick Replay needed: it loads its own tick series and classifies against the recorded bid/ask (exact by default; Tick Replay available as an optional mode)." data-es="<b>Requiere:</b> datos de ticks históricos de tu proveedor. No necesita Tick Replay: carga su propia serie de ticks y clasifica contra el bid/ask grabado (exacto por defecto; Tick Replay disponible como modo opcional)."><b>Requires:</b> historical tick data from your provider. No Tick Replay needed: it loads its own tick series and classifies against the recorded bid/ask (exact by default; Tick Replay available as an optional mode).</p>
-    <p data-en="<b>Key settings:</b> Ticks Per Row, Display Mode (candle + footprint or footprint only), imbalance ratio &amp; filter, alerts." data-es="<b>Ajustes clave:</b> Ticks Per Row, Display Mode (vela + footprint o footprint solo), ratio y filtro de imbalances, alertas."><b>Key settings:</b> Ticks Per Row, Display Mode (candle + footprint or footprint only), imbalance ratio &amp; filter, alerts.</p>
-    <p data-en="<b>Reading the cells:</b> every row is one price. On the delta side, the left number is selling into the bid and the right number is buying into the ask. Imbalances compare diagonally — buys at one price vs sells one tick below, because that is how the ladder actually fights — and the dominant cell lights up. Three or more stacked imbalances become a zone that extends forward as support/resistance; when it breaks, it flips into a trapped-traders zone: fuel for the other side. A dot on a cell marks a single print at or above your Big Print threshold." data-es="<b>Cómo leer las celdas:</b> cada fila es un precio. En el lado delta, el número izquierdo son ventas contra el bid y el derecho compras contra el ask. Los imbalances se comparan en diagonal — compras a un precio contra ventas un tick más abajo, porque así pelea realmente el ladder — y la celda dominante se ilumina. Tres o más imbalances apilados forman una zona que se extiende hacia delante como soporte/resistencia; cuando se rompe, se convierte en zona de atrapados: combustible para el otro lado. Un punto sobre una celda marca un print individual igual o mayor que tu umbral de Big Print."><b>Reading the cells:</b> every row is one price. On the delta side, the left number is selling into the bid and the right number is buying into the ask. Imbalances compare diagonally — buys at one price vs sells one tick below, because that is how the ladder actually fights — and the dominant cell lights up. Three or more stacked imbalances become a zone that extends forward as support/resistance; when it breaks, it flips into a trapped-traders zone: fuel for the other side. A dot on a cell marks a single print at or above your Big Print threshold.</p>
-    <p data-en="<b>Chart setup:</b> in Data Series, keep your candles small — 1 or 2 (minute, range or volume) — so the footprint stays readable. There is no universal Ticks Per Row: it depends on your instrument AND your candle size — the bigger the candle, the more rows it stacks, so raise Ticks Per Row until the cells read comfortably." data-es="<b>Gráfico:</b> en Data Series usa velas pequeñas — 1 o 2 (de minutos, rango o volumen) — para que el footprint se lea bien. No hay un Ticks Per Row universal: depende de tu instrumento Y del tamaño de tu vela — cuanto más grande la vela, más filas acumula, así que sube Ticks Per Row hasta que las celdas se lean cómodas."><b>Chart setup:</b> in Data Series, keep your candles small — 1 or 2 (minute, range or volume) — so the footprint stays readable. There is no universal Ticks Per Row: it depends on your instrument AND your candle size — the bigger the candle, the more rows it stacks, so raise Ticks Per Row until the cells read comfortably.</p>
-    <p data-en="<b>If you see nothing:</b> give the tick series a few seconds to load; on very long charts, reduce the days loaded." data-es="<b>Si no ves datos:</b> dale unos segundos a la serie de ticks; en gráficos muy largos, reduce los días cargados."><b>If you see nothing:</b> give the tick series a few seconds to load; on very long charts, reduce the days loaded.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -538,6 +560,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="A data feed with market depth (Level 2). The map builds in real time from the moment you connect; the past is restored from your own saved sessions (auto-saved every minute)." data-es="Un feed con profundidad de mercado (Level 2). El mapa se construye en tiempo real desde que conectas; el pasado se restaura desde tus propias sesiones guardadas (auto-guardado cada minuto).">A data feed with market depth (Level 2). The map builds in real time from the moment you connect; the past is restored from your own saved sessions (auto-saved every minute).</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Heatmap Max Reference (contracts = hottest color), Min Liquidity Threshold, Bookmap Mode, Max History (minutes)." data-es="Heatmap Max Reference (contratos = color más caliente), Min Liquidity Threshold, Bookmap Mode, Max History (minutos).">Heatmap Max Reference (contracts = hottest color), Min Liquidity Threshold, Bookmap Mode, Max History (minutes).</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the marks" data-es="Cómo leer las marcas">Reading the marks</span>
+          <p data-en="Filled chip = absorption (the number inside = contracts it swallowed) · hollow chip = pulled wall (the size that vanished) · border color = side (blue defended from below, red from above) · green border = iceberg · a mark that fades = that level was later broken." data-es="Chip relleno = absorción (el número dentro = contratos que se tragó) · chip vacío = muro retirado (el tamaño que desapareció) · color del borde = lado (azul defendió desde abajo, rojo desde arriba) · borde verde = iceberg · una marca que se apaga = ese nivel luego se rompió.">Filled chip = absorption (the number inside = contracts it swallowed) · hollow chip = pulled wall (the size that vanished) · border color = side (blue defended from below, red from above) · green border = iceberg · a mark that fades = that level was later broken.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If you see nothing" data-es="Si no ves nada">If you see nothing</span>
+          <p data-en="Check that your data subscription includes Level 2 — and remember the map starts painting from now, not from the past." data-es="Comprueba que tu suscripción de datos incluye Level 2 — y recuerda que el mapa empieza a pintarse desde ahora, no desde el pasado.">Check that your data subscription includes Level 2 — and remember the map starts painting from now, not from the past.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="REQUIRES LEVEL II DATA · UPDATES &amp; SUPPORT INCLUDED" data-es="REQUIERE DATOS LEVEL II · ACTUALIZACIONES Y SOPORTE INCLUIDOS">REQUIRES LEVEL II DATA · UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -545,13 +590,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> a data feed with market depth (Level 2). The map builds in real time from the moment you connect; the past is restored from your own saved sessions (auto-saved every minute)." data-es="<b>Requiere:</b> un feed con profundidad de mercado (Level 2). El mapa se construye en tiempo real desde que conectas; el pasado se restaura desde tus propias sesiones guardadas (auto-guardado cada minuto)."><b>Requires:</b> a data feed with market depth (Level 2). The map builds in real time from the moment you connect; the past is restored from your own saved sessions (auto-saved every minute).</p>
-    <p data-en="<b>Key settings:</b> Heatmap Max Reference (contracts = hottest color), Min Liquidity Threshold, Bookmap Mode, Max History (minutes)." data-es="<b>Ajustes clave:</b> Heatmap Max Reference (contratos = color más caliente), Min Liquidity Threshold, Bookmap Mode, Max History (minutos)."><b>Key settings:</b> Heatmap Max Reference (contracts = hottest color), Min Liquidity Threshold, Bookmap Mode, Max History (minutes).</p>
-    <p data-en="<b>Reading the marks:</b> filled chip = absorption (the number inside = contracts it swallowed) · hollow chip = pulled wall (the size that vanished) · border color = side (blue defended from below, red from above) · green border = iceberg · a mark that fades = that level was later broken." data-es="<b>Cómo leer las marcas:</b> chip relleno = absorción (el número dentro = contratos que se tragó) · chip vacío = muro retirado (el tamaño que desapareció) · color del borde = lado (azul defendió desde abajo, rojo desde arriba) · borde verde = iceberg · una marca que se apaga = ese nivel luego se rompió."><b>Reading the marks:</b> filled chip = absorption (the number inside = contracts it swallowed) · hollow chip = pulled wall (the size that vanished) · border color = side (blue defended from below, red from above) · green border = iceberg · a mark that fades = that level was later broken.</p>
-    <p data-en="<b>If you see nothing:</b> check that your data subscription includes Level 2 — and remember the map starts painting from now, not from the past." data-es="<b>Si no ves nada:</b> comprueba que tu suscripción de datos incluye Level 2 — y recuerda que el mapa empieza a pintarse desde ahora, no desde el pasado."><b>If you see nothing:</b> check that your data subscription includes Level 2 — and remember the map starts painting from now, not from the past.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -632,6 +670,33 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Minute history (loads in seconds) or tick history (exact reconstruction) — you choose in the settings. Live is always tick-by-tick." data-es="Histórico de minuto (carga en segundos) o de ticks (reconstrucción exacta) — lo eliges en los ajustes. En vivo siempre es tick a tick.">Minute history (loads in seconds) or tick history (exact reconstruction) — you choose in the settings. Live is always tick-by-tick.</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Session (RTH / overnight / custom hours + time zone), TPO Chars, VP row resolution, historical profiles on/off." data-es="Sesión (RTH / overnight / horas propias + zona horaria), TPO Chars, resolución de filas del VP, perfiles históricos on/off.">Session (RTH / overnight / custom hours + time zone), TPO Chars, VP row resolution, historical profiles on/off.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the letters" data-es="Cómo leer las letras">Reading the letters</span>
+          <p data-en="Each letter is one time bracket that visited that price (A the first, B the next…), so a long row means the market spent time there — acceptance. Singles — rows printed by a single bracket — mark where price crossed fast, without acceptance. A poor high/low, an extreme where two or more brackets stopped at the same row, is unfinished business that tends to get revisited. Naked POC/VPOC lines extend from past sessions until price finally touches them." data-es="Cada letra es un periodo de tiempo que visitó ese precio (A el primero, B el siguiente…), así que una fila larga significa que el mercado pasó tiempo ahí — aceptación. Los singles — filas impresas por un solo periodo — marcan dónde el precio cruzó rápido, sin aceptación. Un poor high/low, un extremo donde dos o más periodos se detuvieron en la misma fila, es negocio inacabado que suele revisitarse. Las líneas naked POC/VPOC se extienden desde sesiones pasadas hasta que el precio por fin las toca.">Each letter is one time bracket that visited that price (A the first, B the next…), so a long row means the market spent time there — acceptance. Singles — rows printed by a single bracket — mark where price crossed fast, without acceptance. A poor high/low, an extreme where two or more brackets stopped at the same row, is unfinished business that tends to get revisited. Naked POC/VPOC lines extend from past sessions until price finally touches them.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Right-click on a profile" data-es="Clic derecho sobre un perfil">Right-click on a profile</span>
+          <p data-en="Merge Session Right (build composites), Remove Merging, Split Session At Letter (cuts exactly at the letter under your cursor), Unsplit Session, and Split/Unsplit Letters. Your merges and splits persist — they survive reloads and restarts." data-es="Merge Session Right (construye compuestos), Remove Merging, Split Session At Letter (corta exactamente en la letra bajo tu cursor), Unsplit Session y Split/Unsplit Letters. Tus fusiones y divisiones persisten — sobreviven recargas y reinicios.">Merge Session Right (build composites), Remove Merging, Split Session At Letter (cuts exactly at the letter under your cursor), Unsplit Session, and Split/Unsplit Letters. Your merges and splits persist — they survive reloads and restarts.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If profiles look off" data-es="Si los perfiles no cuadran">If profiles look off</span>
+          <p data-en="Make sure the configured session matches your instrument's trading hours." data-es="Revisa que la sesión configurada coincida con las horas de tu instrumento.">Make sure the configured session matches your instrument's trading hours.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -639,14 +704,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> minute history (loads in seconds) or tick history (exact reconstruction) — you choose in the settings. Live is always tick-by-tick." data-es="<b>Requiere:</b> histórico de minuto (carga en segundos) o de ticks (reconstrucción exacta) — lo eliges en los ajustes. En vivo siempre es tick a tick."><b>Requires:</b> minute history (loads in seconds) or tick history (exact reconstruction) — you choose in the settings. Live is always tick-by-tick.</p>
-    <p data-en="<b>Key settings:</b> session (RTH / overnight / custom hours + time zone), TPO Chars, VP row resolution, historical profiles on/off." data-es="<b>Ajustes clave:</b> sesión (RTH / overnight / horas propias + zona horaria), TPO Chars, resolución de filas del VP, perfiles históricos on/off."><b>Key settings:</b> session (RTH / overnight / custom hours + time zone), TPO Chars, VP row resolution, historical profiles on/off.</p>
-    <p data-en="<b>Reading the letters:</b> each letter is one time bracket that visited that price (A the first, B the next…), so a long row means the market spent time there — acceptance. Singles — rows printed by a single bracket — mark where price crossed fast, without acceptance. A poor high/low, an extreme where two or more brackets stopped at the same row, is unfinished business that tends to get revisited. Naked POC/VPOC lines extend from past sessions until price finally touches them." data-es="<b>Cómo leer las letras:</b> cada letra es un periodo de tiempo que visitó ese precio (A el primero, B el siguiente…), así que una fila larga significa que el mercado pasó tiempo ahí — aceptación. Los singles — filas impresas por un solo periodo — marcan dónde el precio cruzó rápido, sin aceptación. Un poor high/low, un extremo donde dos o más periodos se detuvieron en la misma fila, es negocio inacabado que suele revisitarse. Las líneas naked POC/VPOC se extienden desde sesiones pasadas hasta que el precio por fin las toca."><b>Reading the letters:</b> each letter is one time bracket that visited that price (A the first, B the next…), so a long row means the market spent time there — acceptance. Singles — rows printed by a single bracket — mark where price crossed fast, without acceptance. A poor high/low, an extreme where two or more brackets stopped at the same row, is unfinished business that tends to get revisited. Naked POC/VPOC lines extend from past sessions until price finally touches them.</p>
-    <p data-en="<b>Right-click on a profile:</b> Merge Session Right (build composites), Remove Merging, Split Session At Letter (cuts exactly at the letter under your cursor), Unsplit Session, and Split/Unsplit Letters. Your merges and splits persist — they survive reloads and restarts." data-es="<b>Clic derecho sobre un perfil:</b> Merge Session Right (construye compuestos), Remove Merging, Split Session At Letter (corta exactamente en la letra bajo tu cursor), Unsplit Session y Split/Unsplit Letters. Tus fusiones y divisiones persisten — sobreviven recargas y reinicios."><b>Right-click on a profile:</b> Merge Session Right (build composites), Remove Merging, Split Session At Letter (cuts exactly at the letter under your cursor), Unsplit Session, and Split/Unsplit Letters. Your merges and splits persist — they survive reloads and restarts.</p>
-    <p data-en="<b>If profiles look off:</b> make sure the configured session matches your instrument's trading hours." data-es="<b>Si los perfiles no cuadran:</b> revisa que la sesión configurada coincida con las horas de tu instrumento."><b>If profiles look off:</b> make sure the configured session matches your instrument's trading hours.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -712,6 +769,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Tick data (own series; exact history from the recorded bid/ask — no Tick Replay needed)." data-es="Datos de ticks (serie propia; histórico exacto con el bid/ask grabado — sin necesidad de Tick Replay).">Tick data (own series; exact history from the recorded bid/ask — no Tick Replay needed).</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Print Threshold and tiers 2/3 — size them to YOUR instrument (big in ES is not big in NQ); Detect Sweeps and Sweep Window (ms)." data-es="Print Threshold y niveles 2/3 — dimensiónalos a TU instrumento (lo grande en ES no lo es en NQ); Detect Sweeps y Sweep Window (ms).">Print Threshold and tiers 2/3 — size them to YOUR instrument (big in ES is not big in NQ); Detect Sweeps and Sweep Window (ms).</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the bubbles" data-es="Cómo leer las burbujas">Reading the bubbles</span>
+          <p data-en="One bubble is one institutional execution at its true size — area proportional to volume, the exact number inside, color by aggressor side, and a golden ring on the largest event in sight. When big prints keep stacking at one price they build an accumulation level: its badge (“708 S54%”) reads 708 contracts, 54% of them sold — not just where size worked, but which side was doing it." data-es="Una burbuja es una ejecución institucional a su tamaño real — área proporcional al volumen, el número exacto dentro, color según el lado agresor, y un anillo dorado sobre el evento más grande a la vista. Cuando los prints grandes se acumulan en un precio construyen un nivel de acumulación: su etiqueta (“708 S54%”) se lee 708 contratos, 54% vendidos — no solo dónde trabajó el tamaño, sino qué lado lo hacía.">One bubble is one institutional execution at its true size — area proportional to volume, the exact number inside, color by aggressor side, and a golden ring on the largest event in sight. When big prints keep stacking at one price they build an accumulation level: its badge (“708 S54%”) reads 708 contracts, 54% of them sold — not just where size worked, but which side was doing it.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Too many / too few bubbles" data-es="¿Demasiadas o muy pocas burbujas?">Too many / too few bubbles</span>
+          <p data-en="Raise or lower the threshold — it's always the first knob." data-es="Sube o baja el umbral — siempre es la primera perilla.">Raise or lower the threshold — it's always the first knob.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -719,13 +799,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> tick data (own series; exact history from the recorded bid/ask — no Tick Replay needed)." data-es="<b>Requiere:</b> datos de ticks (serie propia; histórico exacto con el bid/ask grabado — sin necesidad de Tick Replay)."><b>Requires:</b> tick data (own series; exact history from the recorded bid/ask — no Tick Replay needed).</p>
-    <p data-en="<b>Key settings:</b> Print Threshold and tiers 2/3 — size them to YOUR instrument (big in ES is not big in NQ); Detect Sweeps and Sweep Window (ms)." data-es="<b>Ajustes clave:</b> Print Threshold y niveles 2/3 — dimensiónalos a TU instrumento (lo grande en ES no lo es en NQ); Detect Sweeps y Sweep Window (ms)."><b>Key settings:</b> Print Threshold and tiers 2/3 — size them to YOUR instrument (big in ES is not big in NQ); Detect Sweeps and Sweep Window (ms).</p>
-    <p data-en="<b>Reading the bubbles:</b> one bubble is one institutional execution at its true size — area proportional to volume, the exact number inside, color by aggressor side, and a golden ring on the largest event in sight. When big prints keep stacking at one price they build an accumulation level: its badge (“708 S54%”) reads 708 contracts, 54% of them sold — not just where size worked, but which side was doing it." data-es="<b>Cómo leer las burbujas:</b> una burbuja es una ejecución institucional a su tamaño real — área proporcional al volumen, el número exacto dentro, color según el lado agresor, y un anillo dorado sobre el evento más grande a la vista. Cuando los prints grandes se acumulan en un precio construyen un nivel de acumulación: su etiqueta (“708 S54%”) se lee 708 contratos, 54% vendidos — no solo dónde trabajó el tamaño, sino qué lado lo hacía."><b>Reading the bubbles:</b> one bubble is one institutional execution at its true size — area proportional to volume, the exact number inside, color by aggressor side, and a golden ring on the largest event in sight. When big prints keep stacking at one price they build an accumulation level: its badge (“708 S54%”) reads 708 contracts, 54% of them sold — not just where size worked, but which side was doing it.</p>
-    <p data-en="<b>Too many / too few bubbles:</b> raise or lower the threshold — it's always the first knob." data-es="<b>¿Demasiadas o muy pocas burbujas?</b> Sube o baja el umbral — siempre es la primera perilla."><b>Too many / too few bubbles:</b> raise or lower the threshold — it's always the first knob.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -791,6 +864,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Tick data. Add it as its own lower panel (not over price). Exact history by default (recorded bid/ask); Tick Replay optional." data-es="Datos de ticks. Añádelo como panel inferior propio (no sobre el precio). Histórico exacto por defecto (bid/ask grabado); Tick Replay opcional.">Tick data. Add it as its own lower panel (not over price). Exact history by default (recorded bid/ask); Tick Replay optional.</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Mode (BarDelta / DeltaPct / CVD), Source (all volume or institutional only), Session (RTH/ETH), CVD style." data-es="Mode (BarDelta / DeltaPct / CVD), Source (todo el volumen o solo institucional), Session (RTH/ETH), estilo del CVD.">Mode (BarDelta / DeltaPct / CVD), Source (all volume or institutional only), Session (RTH/ETH), CVD style.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the panel" data-es="Cómo leer el panel">Reading the panel</span>
+          <p data-en="Each histogram bar is the net aggression of that candle — positive, market buys dominated; Delta % normalizes it by volume so a quiet candle can still show conviction. The CVD is the running total: the trend of aggression. When price makes a new extreme and the CVD refuses to follow, that move carried less aggression than it appears — the classic divergence (optional marks included)." data-es="Cada barra del histograma es la agresión neta de esa vela — positiva, dominaron las compras a mercado; Delta % la normaliza por volumen para que una vela tranquila también muestre convicción. El CVD es el total acumulado: la tendencia de la agresión. Cuando el precio hace un nuevo extremo y el CVD se niega a seguirlo, ese movimiento llevó menos agresión de la que aparenta — la divergencia clásica (marcas opcionales incluidas).">Each histogram bar is the net aggression of that candle — positive, market buys dominated; Delta % normalizes it by volume so a quiet candle can still show conviction. The CVD is the running total: the trend of aggression. When price makes a new extreme and the CVD refuses to follow, that move carried less aggression than it appears — the classic divergence (optional marks included).</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Trust check" data-es="Comprobación de confianza">Trust check</span>
+          <p data-en="The per-candle total matches NinjaTrader's native volume — compare them anytime." data-es="El total por vela cuadra con el volumen nativo de NinjaTrader — compáralos cuando quieras.">The per-candle total matches NinjaTrader's native volume — compare them anytime.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -798,13 +894,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> tick data. Add it as its own lower panel (not over price). Exact history by default (recorded bid/ask); Tick Replay optional." data-es="<b>Requiere:</b> datos de ticks. Añádelo como panel inferior propio (no sobre el precio). Histórico exacto por defecto (bid/ask grabado); Tick Replay opcional."><b>Requires:</b> tick data. Add it as its own lower panel (not over price). Exact history by default (recorded bid/ask); Tick Replay optional.</p>
-    <p data-en="<b>Key settings:</b> Mode (BarDelta / DeltaPct / CVD), Source (all volume or institutional only), Session (RTH/ETH), CVD style." data-es="<b>Ajustes clave:</b> Mode (BarDelta / DeltaPct / CVD), Source (todo el volumen o solo institucional), Session (RTH/ETH), estilo del CVD."><b>Key settings:</b> Mode (BarDelta / DeltaPct / CVD), Source (all volume or institutional only), Session (RTH/ETH), CVD style.</p>
-    <p data-en="<b>Reading the panel:</b> each histogram bar is the net aggression of that candle — positive, market buys dominated; Delta % normalizes it by volume so a quiet candle can still show conviction. The CVD is the running total: the trend of aggression. When price makes a new extreme and the CVD refuses to follow, that move carried less aggression than it appears — the classic divergence (optional marks included)." data-es="<b>Cómo leer el panel:</b> cada barra del histograma es la agresión neta de esa vela — positiva, dominaron las compras a mercado; Delta % la normaliza por volumen para que una vela tranquila también muestre convicción. El CVD es el total acumulado: la tendencia de la agresión. Cuando el precio hace un nuevo extremo y el CVD se niega a seguirlo, ese movimiento llevó menos agresión de la que aparenta — la divergencia clásica (marcas opcionales incluidas)."><b>Reading the panel:</b> each histogram bar is the net aggression of that candle — positive, market buys dominated; Delta % normalizes it by volume so a quiet candle can still show conviction. The CVD is the running total: the trend of aggression. When price makes a new extreme and the CVD refuses to follow, that move carried less aggression than it appears — the classic divergence (optional marks included).</p>
-    <p data-en="<b>Trust check:</b> the per-candle total matches NinjaTrader's native volume — compare them anytime." data-es="<b>Comprobación de confianza:</b> el total por vela cuadra con el volumen nativo de NinjaTrader — compáralos cuando quieras."><b>Trust check:</b> the per-candle total matches NinjaTrader's native volume — compare them anytime.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -870,6 +959,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Tick data (own series)." data-es="Datos de ticks (serie propia).">Tick data (own series).</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Anchor Mode (Session / Rolling / Reset), Rolling Minutes (your “now”: 30-60 min is typical), RTH/ETH hours, Placement (left or right edge)." data-es="Anchor Mode (Session / Rolling / Reset), Rolling Minutes (tu “ahora”: 30-60 min es típico), horas RTH/ETH, Placement (borde izquierdo o derecho).">Anchor Mode (Session / Rolling / Reset), Rolling Minutes (your “now”: 30-60 min is typical), RTH/ETH hours, Placement (left or right edge).</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the strip" data-es="Cómo leer la tira">Reading the strip</span>
+          <p data-en="One horizontal bar per price at the chart&#39;s edge — blue, net buying won at that price; dark red, net selling won; the longer the bar, the bigger the net fight. It answers who is winning at each price inside the window you anchored — which is why Anchor Mode matters: Session is today&#39;s whole story, Rolling only your last N minutes." data-es="Una barra horizontal por precio en el borde del gráfico — azul, ganó la compra neta a ese precio; rojo oscuro, ganó la venta neta; cuanto más larga la barra, mayor la pelea neta. Responde quién va ganando en cada precio dentro de la ventana que anclaste — por eso importa el Anchor Mode: Session es toda la historia de hoy, Rolling solo tus últimos N minutos.">One horizontal bar per price at the chart&#39;s edge — blue, net buying won at that price; dark red, net selling won; the longer the bar, the bigger the net fight. It answers who is winning at each price inside the window you anchored — which is why Anchor Mode matters: Session is today&#39;s whole story, Rolling only your last N minutes.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If the strip starts empty" data-es="Si la tira empieza vacía">If the strip starts empty</span>
+          <p data-en="Rolling mode needs its first window minutes to fill." data-es="El modo Rolling necesita sus primeros minutos de ventana para llenarse.">Rolling mode needs its first window minutes to fill.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -877,13 +989,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> tick data (own series)." data-es="<b>Requiere:</b> datos de ticks (serie propia)."><b>Requires:</b> tick data (own series).</p>
-    <p data-en="<b>Key settings:</b> Anchor Mode (Session / Rolling / Reset), Rolling Minutes (your “now”: 30-60 min is typical), RTH/ETH hours, Placement (left or right edge)." data-es="<b>Ajustes clave:</b> Anchor Mode (Session / Rolling / Reset), Rolling Minutes (tu “ahora”: 30-60 min es típico), horas RTH/ETH, Placement (borde izquierdo o derecho)."><b>Key settings:</b> Anchor Mode (Session / Rolling / Reset), Rolling Minutes (your “now”: 30-60 min is typical), RTH/ETH hours, Placement (left or right edge).</p>
-    <p data-en="<b>Reading the strip:</b> one horizontal bar per price at the chart&#39;s edge — blue, net buying won at that price; dark red, net selling won; the longer the bar, the bigger the net fight. It answers who is winning at each price inside the window you anchored — which is why Anchor Mode matters: Session is today&#39;s whole story, Rolling only your last N minutes." data-es="<b>Cómo leer la tira:</b> una barra horizontal por precio en el borde del gráfico — azul, ganó la compra neta a ese precio; rojo oscuro, ganó la venta neta; cuanto más larga la barra, mayor la pelea neta. Responde quién va ganando en cada precio dentro de la ventana que anclaste — por eso importa el Anchor Mode: Session es toda la historia de hoy, Rolling solo tus últimos N minutos."><b>Reading the strip:</b> one horizontal bar per price at the chart&#39;s edge — blue, net buying won at that price; dark red, net selling won; the longer the bar, the bigger the net fight. It answers who is winning at each price inside the window you anchored — which is why Anchor Mode matters: Session is today&#39;s whole story, Rolling only your last N minutes.</p>
-    <p data-en="<b>If the strip starts empty:</b> Rolling mode needs its first window minutes to fill." data-es="<b>Si la tira empieza vacía:</b> el modo Rolling necesita sus primeros minutos de ventana para llenarse."><b>If the strip starts empty:</b> Rolling mode needs its first window minutes to fill.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -949,6 +1054,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell wide">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Tick data." data-es="Datos de ticks.">Tick data.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Everything lives in the right-click menu — “Add Fixed Range Profile Here”, “Remove This Profile”, “Remove All Fixed Range Profiles”; drag the edges to move or stretch; Delta Placement and projected levels." data-es="Todo vive en el menú de clic derecho — “Add Fixed Range Profile Here”, “Remove This Profile”, “Remove All Fixed Range Profiles”; arrastra los bordes para mover o estirar; Delta Placement y niveles proyectados.">Everything lives in the right-click menu — “Add Fixed Range Profile Here”, “Remove This Profile”, “Remove All Fixed Range Profiles”; drag the edges to move or stretch; Delta Placement and projected levels.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the profile" data-es="Cómo leer el perfil">Reading the profile</span>
+          <p data-en="The profile is the auction of only the bars you framed. Its POC is where that episode did most of its business (the fight&#39;s center of gravity), the value area is where it was accepted, and the delta side shows who was paying at each row. Frame an impulse or a battle zone and the shape tends to answer who won it." data-es="El perfil es la subasta de solo las velas que enmarcaste. Su POC es donde ese episodio hizo la mayor parte de su negocio (el centro de gravedad de la pelea), el área de valor es donde fue aceptado, y el lado delta muestra quién pagaba en cada fila. Enmarca un impulso o una zona de batalla y la forma suele responder quién la ganó.">The profile is the auction of only the bars you framed. Its POC is where that episode did most of its business (the fight&#39;s center of gravity), the value area is where it was accepted, and the delta side shows who was paying at each row. Frame an impulse or a battle zone and the shape tends to answer who won it.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Good to know" data-es="Bueno saberlo">Good to know</span>
+          <p data-en="Your ranges auto-save per instrument — they survive reloads and restarts." data-es="Tus rangos se guardan solos por instrumento — sobreviven recargas y reinicios.">Your ranges auto-save per instrument — they survive reloads and restarts.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -956,13 +1084,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> tick data." data-es="<b>Requiere:</b> datos de ticks."><b>Requires:</b> tick data.</p>
-    <p data-en="<b>Key settings:</b> everything lives in the right-click menu — “Add Fixed Range Profile Here”, “Remove This Profile”, “Remove All Fixed Range Profiles”; drag the edges to move or stretch; Delta Placement and projected levels." data-es="<b>Ajustes clave:</b> todo vive en el menú de clic derecho — “Add Fixed Range Profile Here”, “Remove This Profile”, “Remove All Fixed Range Profiles”; arrastra los bordes para mover o estirar; Delta Placement y niveles proyectados."><b>Key settings:</b> everything lives in the right-click menu — “Add Fixed Range Profile Here”, “Remove This Profile”, “Remove All Fixed Range Profiles”; drag the edges to move or stretch; Delta Placement and projected levels.</p>
-    <p data-en="<b>Reading the profile:</b> the profile is the auction of only the bars you framed. Its POC is where that episode did most of its business (the fight&#39;s center of gravity), the value area is where it was accepted, and the delta side shows who was paying at each row. Frame an impulse or a battle zone and the shape tends to answer who won it." data-es="<b>Cómo leer el perfil:</b> el perfil es la subasta de solo las velas que enmarcaste. Su POC es donde ese episodio hizo la mayor parte de su negocio (el centro de gravedad de la pelea), el área de valor es donde fue aceptado, y el lado delta muestra quién pagaba en cada fila. Enmarca un impulso o una zona de batalla y la forma suele responder quién la ganó."><b>Reading the profile:</b> the profile is the auction of only the bars you framed. Its POC is where that episode did most of its business (the fight&#39;s center of gravity), the value area is where it was accepted, and the delta side shows who was paying at each row. Frame an impulse or a battle zone and the shape tends to answer who won it.</p>
-    <p data-en="<b>Good to know:</b> your ranges auto-save per instrument — they survive reloads and restarts." data-es="<b>Bueno saberlo:</b> tus rangos se guardan solos por instrumento — sobreviven recargas y reinicios."><b>Good to know:</b> your ranges auto-save per instrument — they survive reloads and restarts.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -1028,6 +1149,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Minute data (fast) or tick data (exact) — Data Resolution. Live is always tick-exact." data-es="Datos de minuto (rápido) o de ticks (exacto) — Data Resolution. En vivo siempre es exacto al tick.">Minute data (fast) or tick data (exact) — Data Resolution. Live is always tick-exact.</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Profile Timeframe (the eleven windows), Session Time Zone, Tick Compression (groups rows on fine-tick instruments)." data-es="Profile Timeframe (las once ventanas), Session Time Zone, Tick Compression (agrupa filas en instrumentos de tick fino).">Profile Timeframe (the eleven windows), Session Time Zone, Tick Compression (groups rows on fine-tick instruments).</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the profile" data-es="Cómo leer el perfil">Reading the profile</span>
+          <p data-en="One profile is one auction at your chosen scale. Its POC is that window&#39;s fairest price; VAH/VAL frame where roughly 70% of its business happened. The same price can be expensive for the day and cheap for the week — that is exactly why running two (one per border) and letting the scales disagree is so informative." data-es="Un perfil es una subasta a la escala que elijas. Su POC es el precio más justo de esa ventana; VAH/VAL enmarcan dónde ocurrió aproximadamente el 70% de su negocio. El mismo precio puede ser caro para el día y barato para la semana — exactamente por eso es tan informativo correr dos (uno por borde) y dejar que las escalas discrepen.">One profile is one auction at your chosen scale. Its POC is that window&#39;s fairest price; VAH/VAL frame where roughly 70% of its business happened. The same price can be expensive for the day and cheap for the week — that is exactly why running two (one per border) and letting the scales disagree is so informative.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Pro move" data-es="Jugada pro">Pro move</span>
+          <p data-en="Add it twice — one per panel edge — to face two windows off against each other." data-es="Añádelo dos veces — una por borde del panel — para enfrentar dos ventanas.">Add it twice — one per panel edge — to face two windows off against each other.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -1035,13 +1179,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> minute data (fast) or tick data (exact) — Data Resolution. Live is always tick-exact." data-es="<b>Requiere:</b> datos de minuto (rápido) o de ticks (exacto) — Data Resolution. En vivo siempre es exacto al tick."><b>Requires:</b> minute data (fast) or tick data (exact) — Data Resolution. Live is always tick-exact.</p>
-    <p data-en="<b>Key settings:</b> Profile Timeframe (the eleven windows), Session Time Zone, Tick Compression (groups rows on fine-tick instruments)." data-es="<b>Ajustes clave:</b> Profile Timeframe (las once ventanas), Session Time Zone, Tick Compression (agrupa filas en instrumentos de tick fino)."><b>Key settings:</b> Profile Timeframe (the eleven windows), Session Time Zone, Tick Compression (groups rows on fine-tick instruments).</p>
-    <p data-en="<b>Reading the profile:</b> one profile is one auction at your chosen scale. Its POC is that window&#39;s fairest price; VAH/VAL frame where roughly 70% of its business happened. The same price can be expensive for the day and cheap for the week — that is exactly why running two (one per border) and letting the scales disagree is so informative." data-es="<b>Cómo leer el perfil:</b> un perfil es una subasta a la escala que elijas. Su POC es el precio más justo de esa ventana; VAH/VAL enmarcan dónde ocurrió aproximadamente el 70% de su negocio. El mismo precio puede ser caro para el día y barato para la semana — exactamente por eso es tan informativo correr dos (uno por borde) y dejar que las escalas discrepen."><b>Reading the profile:</b> one profile is one auction at your chosen scale. Its POC is that window&#39;s fairest price; VAH/VAL frame where roughly 70% of its business happened. The same price can be expensive for the day and cheap for the week — that is exactly why running two (one per border) and letting the scales disagree is so informative.</p>
-    <p data-en="<b>Pro move:</b> add it twice — one per panel edge — to face two windows off against each other." data-es="<b>Jugada pro:</b> añádelo dos veces — una por borde del panel — para enfrentar dos ventanas."><b>Pro move:</b> add it twice — one per panel edge — to face two windows off against each other.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -1108,6 +1245,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Tick data (computed trade by trade — the same value on any chart)." data-es="Datos de ticks (calculado trade a trade — el mismo valor en cualquier gráfico).">Tick data (computed trade by trade — the same value on any chart).</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Each horizon is its own indicator (add Daily, Weekly… the ones you use); session hours + time zone; band multipliers; Prior Values for the frozen levels of the last period." data-es="Cada horizonte es su propio indicador (añade Daily, Weekly… los que uses); horas de sesión + zona horaria; multiplicadores de bandas; Prior Values para los niveles congelados del período anterior.">Each horizon is its own indicator (add Daily, Weekly… the ones you use); session hours + time zone; band multipliers; Prior Values for the frozen levels of the last period.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the lines" data-es="Cómo leer las líneas">Reading the lines</span>
+          <p data-en="The center line is the average price actually paid in the session, weighted by volume — the market&#39;s running fair price. The bands measure how stretched price is from that average, in deviations or quarter-range. Prior Values freeze the previous period&#39;s VWAP and bands on today&#39;s chart: reference levels many desks benchmark against, which is why they tend to get tested." data-es="La línea central es el precio medio realmente pagado en la sesión, ponderado por volumen — el precio justo en movimiento del mercado. Las bandas miden cuán estirado está el precio respecto a esa media, en desviaciones o quarter-range. Prior Values congela el VWAP y las bandas del periodo anterior sobre el gráfico de hoy: niveles de referencia contra los que muchas mesas se comparan, y por eso suelen ponerse a prueba.">The center line is the average price actually paid in the session, weighted by volume — the market&#39;s running fair price. The bands measure how stretched price is from that average, in deviations or quarter-range. Prior Values freeze the previous period&#39;s VWAP and bands on today&#39;s chart: reference levels many desks benchmark against, which is why they tend to get tested.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If the value looks “off”" data-es="Si el valor te parece “raro”">If the value looks “off”</span>
+          <p data-en="Check session hours and time zone — a VWAP is only as good as its session definition." data-es="Revisa horas de sesión y zona horaria — un VWAP vale lo que valga su definición de sesión.">Check session hours and time zone — a VWAP is only as good as its session definition.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED" data-es="5 INDICADORES · ACTUALIZACIONES Y SOPORTE INCLUIDOS">5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -1115,13 +1275,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> tick data (computed trade by trade — the same value on any chart)." data-es="<b>Requiere:</b> datos de ticks (calculado trade a trade — el mismo valor en cualquier gráfico)."><b>Requires:</b> tick data (computed trade by trade — the same value on any chart).</p>
-    <p data-en="<b>Key settings:</b> each horizon is its own indicator (add Daily, Weekly… the ones you use); session hours + time zone; band multipliers; Prior Values for the frozen levels of the last period." data-es="<b>Ajustes clave:</b> cada horizonte es su propio indicador (añade Daily, Weekly… los que uses); horas de sesión + zona horaria; multiplicadores de bandas; Prior Values para los niveles congelados del período anterior."><b>Key settings:</b> each horizon is its own indicator (add Daily, Weekly… the ones you use); session hours + time zone; band multipliers; Prior Values for the frozen levels of the last period.</p>
-    <p data-en="<b>Reading the lines:</b> the center line is the average price actually paid in the session, weighted by volume — the market&#39;s running fair price. The bands measure how stretched price is from that average, in deviations or quarter-range. Prior Values freeze the previous period&#39;s VWAP and bands on today&#39;s chart: reference levels many desks benchmark against, which is why they tend to get tested." data-es="<b>Cómo leer las líneas:</b> la línea central es el precio medio realmente pagado en la sesión, ponderado por volumen — el precio justo en movimiento del mercado. Las bandas miden cuán estirado está el precio respecto a esa media, en desviaciones o quarter-range. Prior Values congela el VWAP y las bandas del periodo anterior sobre el gráfico de hoy: niveles de referencia contra los que muchas mesas se comparan, y por eso suelen ponerse a prueba."><b>Reading the lines:</b> the center line is the average price actually paid in the session, weighted by volume — the market&#39;s running fair price. The bands measure how stretched price is from that average, in deviations or quarter-range. Prior Values freeze the previous period&#39;s VWAP and bands on today&#39;s chart: reference levels many desks benchmark against, which is why they tend to get tested.</p>
-    <p data-en="<b>If the value looks “off”:</b> check session hours and time zone — a VWAP is only as good as its session definition." data-es="<b>Si el valor te parece “raro”:</b> revisa horas de sesión y zona horaria — un VWAP vale lo que valga su definición de sesión."><b>If the value looks “off”:</b> check session hours and time zone — a VWAP is only as good as its session definition.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -1188,6 +1341,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Enough history on the chart (Days of History controls how much past is drawn)." data-es="Suficiente histórico en el gráfico (Days of History controla cuánto pasado se dibuja).">Enough history on the chart (Days of History controls how much past is drawn).</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="RTH / overnight / ETH hours (the foundation of every level!), Initial Balance (minutes), first-touch alerts, study-the-past mode." data-es="Horas RTH / overnight / ETH (¡la base de todos los niveles!), Initial Balance (minutos), alertas de primer toque, modo estudiar-el-pasado.">RTH / overnight / ETH hours (the foundation of every level!), Initial Balance (minutes), first-touch alerts, study-the-past mode.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the levels" data-es="Cómo leer los niveles">Reading the levels</span>
+          <p data-en="Every line carries its label on the chart, and each one is born at its exact minute — the overnight range completes at the open, the IB after its first minutes, and so on. They matter because they are the references the whole market watches: the first touch of a fresh level tends to be the most informative, and that is exactly what the alerts watch." data-es="Cada línea lleva su etiqueta en el gráfico, y cada una nace en su minuto exacto — el rango overnight se completa en la apertura, el IB tras sus primeros minutos, etcétera. Importan porque son las referencias que todo el mercado mira: el primer toque de un nivel recién nacido suele ser el más informativo, y eso es exactamente lo que vigilan las alertas.">Every line carries its label on the chart, and each one is born at its exact minute — the overnight range completes at the open, the IB after its first minutes, and so on. They matter because they are the references the whole market watches: the first touch of a fresh level tends to be the most informative, and that is exactly what the alerts watch.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If a level is missing" data-es="Si falta un nivel">If a level is missing</span>
+          <p data-en="It hasn't been defined yet — every level is born at its exact time. Not a bug: honesty." data-es="Aún no se ha definido — cada nivel nace a su hora exacta. No es un fallo: es honestidad.">It hasn't been defined yet — every level is born at its exact time. Not a bug: honesty.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED" data-es="5 INDICADORES · ACTUALIZACIONES Y SOPORTE INCLUIDOS">5 INDICATORS · UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -1195,13 +1371,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> enough history on the chart (Days of History controls how much past is drawn)." data-es="<b>Requiere:</b> suficiente histórico en el gráfico (Days of History controla cuánto pasado se dibuja)."><b>Requires:</b> enough history on the chart (Days of History controls how much past is drawn).</p>
-    <p data-en="<b>Key settings:</b> RTH / overnight / ETH hours (the foundation of every level!), Initial Balance (minutes), first-touch alerts, study-the-past mode." data-es="<b>Ajustes clave:</b> horas RTH / overnight / ETH (¡la base de todos los niveles!), Initial Balance (minutos), alertas de primer toque, modo estudiar-el-pasado."><b>Key settings:</b> RTH / overnight / ETH hours (the foundation of every level!), Initial Balance (minutes), first-touch alerts, study-the-past mode.</p>
-    <p data-en="<b>Reading the levels:</b> every line carries its label on the chart, and each one is born at its exact minute — the overnight range completes at the open, the IB after its first minutes, and so on. They matter because they are the references the whole market watches: the first touch of a fresh level tends to be the most informative, and that is exactly what the alerts watch." data-es="<b>Cómo leer los niveles:</b> cada línea lleva su etiqueta en el gráfico, y cada una nace en su minuto exacto — el rango overnight se completa en la apertura, el IB tras sus primeros minutos, etcétera. Importan porque son las referencias que todo el mercado mira: el primer toque de un nivel recién nacido suele ser el más informativo, y eso es exactamente lo que vigilan las alertas."><b>Reading the levels:</b> every line carries its label on the chart, and each one is born at its exact minute — the overnight range completes at the open, the IB after its first minutes, and so on. They matter because they are the references the whole market watches: the first touch of a fresh level tends to be the most informative, and that is exactly what the alerts watch.</p>
-    <p data-en="<b>If a level is missing:</b> it hasn't been defined yet — every level is born at its exact time. Not a bug: honesty." data-es="<b>Si falta un nivel:</b> aún no se ha definido — cada nivel nace a su hora exacta. No es un fallo: es honestidad."><b>If a level is missing:</b> it hasn't been defined yet — every level is born at its exact time. Not a bug: honesty.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -1267,6 +1436,25 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Nothing special. Add it and forget it: silence means everything is healthy." data-es="Nada especial. Añádelo y olvídalo: el silencio significa que todo está sano.">Nothing special. Add it and forget it: silence means everything is healthy.</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings (optional)" data-es="Ajustes clave (opcionales)">Key settings (optional)</span>
+          <p data-en="Warning thresholds and text position. The defaults are tuned to never cry wolf." data-es="Umbrales de aviso y posición del texto. Los defaults están afinados para no gritar en falso.">Warning thresholds and text position. The defaults are tuned to never cry wolf.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the readout" data-es="Cómo leer el marcador">Reading the readout</span>
+          <p data-en="A small text line on your chart — gray on black, everything healthy; amber, a sustained warning above your thresholds; dark red, a real problem. It watches three things by pure listening: your data feed&#39;s delay, your order round-trip (submit to ack) and NinjaTrader&#39;s own UI thread. It never touches your orders — and if you never notice it, everything is fine." data-es="Una pequeña línea de texto en tu gráfico — gris sobre negro, todo sano; ámbar, un aviso sostenido por encima de tus umbrales; rojo oscuro, un problema real. Vigila tres cosas solo escuchando: el retraso de tu feed de datos, el viaje de tus órdenes (envío a confirmación) y el propio hilo de interfaz de NinjaTrader. Jamás toca tus órdenes — y si nunca lo notas, todo va bien.">A small text line on your chart — gray on black, everything healthy; amber, a sustained warning above your thresholds; dark red, a real problem. It watches three things by pure listening: your data feed&#39;s delay, your order round-trip (submit to ack) and NinjaTrader&#39;s own UI thread. It never touches your orders — and if you never notice it, everything is fine.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -1274,12 +1462,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> nothing special. Add it and forget it: silence means everything is healthy." data-es="<b>Requiere:</b> nada especial. Añádelo y olvídalo: el silencio significa que todo está sano."><b>Requires:</b> nothing special. Add it and forget it: silence means everything is healthy.</p>
-    <p data-en="<b>Key settings (optional):</b> warning thresholds and text position. The defaults are tuned to never cry wolf." data-es="<b>Ajustes clave (opcionales):</b> umbrales de aviso y posición del texto. Los defaults están afinados para no gritar en falso."><b>Key settings (optional):</b> warning thresholds and text position. The defaults are tuned to never cry wolf.</p>
-    <p data-en="<b>Reading the readout:</b> a small text line on your chart — gray on black, everything healthy; amber, a sustained warning above your thresholds; dark red, a real problem. It watches three things by pure listening: your data feed&#39;s delay, your order round-trip (submit to ack) and NinjaTrader&#39;s own UI thread. It never touches your orders — and if you never notice it, everything is fine." data-es="<b>Cómo leer el marcador:</b> una pequeña línea de texto en tu gráfico — gris sobre negro, todo sano; ámbar, un aviso sostenido por encima de tus umbrales; rojo oscuro, un problema real. Vigila tres cosas solo escuchando: el retraso de tu feed de datos, el viaje de tus órdenes (envío a confirmación) y el propio hilo de interfaz de NinjaTrader. Jamás toca tus órdenes — y si nunca lo notas, todo va bien."><b>Reading the readout:</b> a small text line on your chart — gray on black, everything healthy; amber, a sustained warning above your thresholds; dark red, a real problem. It watches three things by pure listening: your data feed&#39;s delay, your order round-trip (submit to ack) and NinjaTrader&#39;s own UI thread. It never touches your orders — and if you never notice it, everything is fine.</p>
-  </div>
 </section>
 
 <section style="padding-top:0">
@@ -1345,6 +1527,29 @@
         </div>
       </div>
 
+      
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Times are interpreted in ET (New York), or use your Trading Hours template. Loads its own minute + tick series." data-es="Las horas se interpretan en ET (Nueva York), o usa tu plantilla de Trading Hours. Carga sus propias series de minuto y ticks.">Times are interpreted in ET (New York), or use your Trading Hours template. Loads its own minute + tick series.</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Lookback (days) — the “normal” it compares against; Initial Balance (minutes); median vs mean; panel position." data-es="Lookback (days) — el “normal” contra el que compara; Initial Balance (minutos); mediana vs media; posición del panel.">Lookback (days) — the “normal” it compares against; Initial Balance (minutes); median vs mean; panel position.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the panel" data-es="Cómo leer el panel">Reading the panel</span>
+          <p data-en="Each row compares today against your instrument&#39;s own normal — current value, typical value and percent of typical — built from your lookback (median or mean, your choice). That turns raw numbers into context: an Initial Balance at 150% of typical is a very different day from one at 60%." data-es="Cada fila compara el hoy contra lo normal de tu propio instrumento — valor actual, valor típico y porcentaje del típico — construido con tu lookback (mediana o media, a tu elección). Eso convierte números crudos en contexto: un Initial Balance al 150% de lo típico es un día muy distinto a uno al 60%.">Each row compares today against your instrument&#39;s own normal — current value, typical value and percent of typical — built from your lookback (median or mean, your choice). That turns raw numbers into context: an Initial Balance at 150% of typical is a very different day from one at 60%.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="If you see N/A" data-es="Si ves N/A">If you see N/A</span>
+          <p data-en="That's deliberate — not enough complete sessions yet for an honest average." data-es="Es deliberado — aún no hay sesiones completas suficientes para un promedio honesto.">That's deliberate — not enough complete sessions yet for an honest average.</p>
+        </div>
+        </div>
+      </div>
+
       <div class="fc-foot">
         <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
         <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
@@ -1352,13 +1557,6 @@
     </div>
   </div>
 
-  <div class="setup">
-    <span class="st">SETUP</span>
-    <p data-en="<b>Requires:</b> times are interpreted in ET (New York), or use your Trading Hours template. Loads its own minute + tick series." data-es="<b>Requiere:</b> las horas se interpretan en ET (Nueva York), o usa tu plantilla de Trading Hours. Carga sus propias series de minuto y ticks."><b>Requires:</b> times are interpreted in ET (New York), or use your Trading Hours template. Loads its own minute + tick series.</p>
-    <p data-en="<b>Key settings:</b> Lookback (days) — the “normal” it compares against; Initial Balance (minutes); median vs mean; panel position." data-es="<b>Ajustes clave:</b> Lookback (days) — el “normal” contra el que compara; Initial Balance (minutos); mediana vs media; posición del panel."><b>Key settings:</b> Lookback (days) — the “normal” it compares against; Initial Balance (minutes); median vs mean; panel position.</p>
-    <p data-en="<b>Reading the panel:</b> each row compares today against your instrument&#39;s own normal — current value, typical value and percent of typical — built from your lookback (median or mean, your choice). That turns raw numbers into context: an Initial Balance at 150% of typical is a very different day from one at 60%." data-es="<b>Cómo leer el panel:</b> cada fila compara el hoy contra lo normal de tu propio instrumento — valor actual, valor típico y porcentaje del típico — construido con tu lookback (mediana o media, a tu elección). Eso convierte números crudos en contexto: un Initial Balance al 150% de lo típico es un día muy distinto a uno al 60%."><b>Reading the panel:</b> each row compares today against your instrument&#39;s own normal — current value, typical value and percent of typical — built from your lookback (median or mean, your choice). That turns raw numbers into context: an Initial Balance at 150% of typical is a very different day from one at 60%.</p>
-    <p data-en="<b>If you see N/A:</b> that's deliberate — not enough complete sessions yet for an honest average." data-es="<b>Si ves N/A:</b> es deliberado — aún no hay sesiones completas suficientes para un promedio honesto."><b>If you see N/A:</b> that's deliberate — not enough complete sessions yet for an honest average.</p>
-  </div>
 </section>
 
 <section>
