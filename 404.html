@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — MATE · Order Flow Tools</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon-v2.png">
+<link rel="apple-touch-icon" href="favicon-v2-144.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030409;--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
+    --text:#EBF0F7;--muted:#7E8A9C;--blue:#5E9FD8;--orange:#FFA500;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+  header{border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1160px;margin:0 auto;padding:0 24px}
+  .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:var(--text)}
+  .logo-word{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.3em}
+  .logo-word::first-letter{color:var(--blue)}
+  .logo-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.34em;color:var(--orange);margin-top:4px}
+  .lang-sw{display:flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+  .lang-sw button{background:none;border:none;color:var(--muted);padding:7px 11px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:.06em}
+  .lang-sw button.on{color:#1A1000;background:var(--orange);font-weight:600}
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 24px}
+  .box{text-align:center;max-width:560px}
+  .code{font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.28em;color:var(--orange);display:block;margin-bottom:14px}
+  h1{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:-.02em;margin-bottom:14px}
+  p{color:var(--muted);font-size:.98rem;margin-bottom:30px}
+  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;padding:12px 24px;border-radius:10px;font-weight:600;font-size:.9rem;text-decoration:none;transition:transform .15s, box-shadow .15s}
+  .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
+  .btn-ghost{border:1px solid var(--line-2);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--blue)}
+  footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.82rem}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1160px;margin:0 auto;padding:0 24px}
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a class="logo" href="index.html"><span class="logo-word">MATE</span><span class="logo-sub">ORDER FLOW TOOLS</span></a>
+    <div class="lang-sw" role="group" aria-label="Language">
+      <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+      <button id="langES" onclick="setLang('es')">ES</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="box">
+    <span class="code">ERROR 404</span>
+    <h1 data-en="This page doesn't exist" data-es="Esta página no existe">This page doesn't exist</h1>
+    <p data-en="Like a naked POC, the link you followed points to a level that isn't there anymore. Let's get you back to value."
+       data-es="Como un POC naked, el enlace que seguiste apunta a un nivel que ya no está. Volvamos al valor.">Like a naked POC, the link you followed points to a level that isn't there anymore. Let's get you back to value.</p>
+    <div class="actions">
+      <a class="btn btn-orange" href="index.html" data-en="Back to home" data-es="Volver al inicio">Back to home</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MATE · matetrading.com</span>
+    <span data-en="NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated."
+          data-es="NinjaTrader® es una marca registrada de NinjaTrader Group, LLC. Sitio no afiliado.">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. Site not affiliated.</span>
+  </div>
+</footer>
+
+<script>
+function applyLang(l){
+  document.documentElement.lang = l;
+  document.getElementById('langEN').className = l==='en' ? 'on' : '';
+  document.getElementById('langES').className = l==='es' ? 'on' : '';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+l);
+    if(v!==null) el.innerHTML = v;
+  });
+  document.title = l==='en' ? 'Page not found — MATE · Order Flow Tools'
+                            : 'Página no encontrada — MATE · Order Flow Tools';
+}
+function setLang(l){
+  try{ localStorage.setItem('mate_lang', l); }catch(e){}
+  applyLang(l);
+}
+(function(){
+  let l = null;
+  try{ l = localStorage.getItem('mate_lang'); }catch(e){}
+  if(!l){
+    const nav = (navigator.language || 'en').toLowerCase();
+    l = nav.startsWith('es') ? 'es' : 'en';
+  }
+  applyLang(l);
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ae104bc1724a18a3884922ce60fd85"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -120,11 +120,11 @@
   .btn-orange{background:linear-gradient(100deg,#5E9FD8 -12%,#FFA500 52%);color:#1A1000}
   .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,165,0,.35)}
   .btn-ghost{border:1px solid var(--line-2);color:var(--text);background:rgba(255,255,255,.02)}
-  .launch-chip{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,165,0,.4);
+  .launch-chip{display:inline-block;border:1px solid rgba(255,165,0,.4);
     border-radius:999px;padding:8px 18px;font-family:'JetBrains Mono',monospace;font-size:.68rem;
-    letter-spacing:.18em;color:var(--orange);background:rgba(255,165,0,.05)}
-  .launch-chip i{width:7px;height:7px;border-radius:50%;background:linear-gradient(100deg,#5E9FD8,#FFA500);
-    box-shadow:0 0 10px rgba(255,165,0,.7)}
+    letter-spacing:.18em;color:var(--orange);background:rgba(255,165,0,.05);text-align:center;line-height:1.9}
+  .launch-chip i{display:inline-block;width:7px;height:7px;border-radius:50%;background:linear-gradient(100deg,#5E9FD8,#FFA500);
+    box-shadow:0 0 10px rgba(255,165,0,.7);margin-right:9px;vertical-align:1px}
   .prod:nth-child(2) .cat{color:#E0A94F}
   .prod.hot .cat{color:var(--orange)}
   .prod:nth-child(2):hover{border-color:rgba(224,169,79,.45);
@@ -390,7 +390,7 @@
   .fsoc a{color:var(--muted);transition:color .15s}
   .fsoc a:hover{color:var(--text)}
   .fbrand p{margin-top:14px;font-size:.82rem;max-width:34ch;color:var(--muted)}
-  .fcol h4{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:#5A6474;text-transform:uppercase;margin-bottom:14px;font-weight:500}
+  .fcol h4{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:#6B7A92;text-transform:uppercase;margin-bottom:14px;font-weight:500}
   .fcol ul{list-style:none}
   .fcol li{margin-bottom:9px}
   .fcol a{text-decoration:none;color:var(--muted);transition:color .2s}
@@ -401,7 +401,7 @@
   .community-strip svg{flex:none;opacity:.75}
   .community-strip a{color:var(--blue);text-decoration:none;font-weight:600;transition:color .15s}
   .community-strip a:hover{color:var(--orange)}
-  .disclaimer{margin-top:14px;font-size:.72rem;max-width:90ch;color:#5A6474}
+  .disclaimer{margin-top:14px;font-size:.72rem;max-width:90ch;color:#6B7A92}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "MATE · Order Flow Tools", "url": "https://www.matetrading.com", "logo": "https://www.matetrading.com/favicon-v2-144.png", "sameAs": ["https://www.instagram.com/mateorderflow", "https://x.com/mateorderflow", "https://discord.gg/bAvjacqdmA"]}, {"@type": "SoftwareApplication", "name": "MATE Suite", "operatingSystem": "Windows (NinjaTrader 8)", "applicationCategory": "FinanceApplication", "url": "https://www.matetrading.com", "description": "A suite of 20 professional order flow indicators for NinjaTrader 8: Footprint, Liquidity Heatmap, Big Trades, TPO, Volume Profile, Delta, VWAP and MGI.", "offers": [{"@type": "Offer", "price": "49", "priceCurrency": "USD", "description": "1 month subscription"}, {"@type": "Offer", "price": "129", "priceCurrency": "USD", "description": "3 months subscription"}, {"@type": "Offer", "price": "399", "priceCurrency": "USD", "description": "12 months subscription"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I receive the tools after purchase?", "acceptedAnswer": {"@type": "Answer", "text": "Right after payment you see your license key on screen and receive it by email with the download link. Installation is a standard NinjaTrader 8 import — under 5 minutes."}}, {"@type": "Question", "name": "Does it work with my funded account or broker?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. MATE tools run on any NinjaTrader 8 installation, with any broker or data provider."}}, {"@type": "Question", "name": "On how many computers can I use my license?", "acceptedAnswer": {"@type": "Answer", "text": "Each license is personal and tied to your machine. Switching to a new computer? Write to support and we'll move it at no cost."}}, {"@type": "Question", "name": "Is there a free trial?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. One click starts your 7-day free trial — full access to the whole suite, no credit card required."}}, {"@type": "Question", "name": "What does each plan include?", "acceptedAnswer": {"@type": "Answer", "text": "Every plan includes the complete suite with updates and support. The only difference is duration — the longer, the better the monthly price."}}, {"@type": "Question", "name": "What market data do I need? Do I need Level 2?", "acceptedAnswer": {"@type": "Answer", "text": "Any data feed with tick data covers most of the suite. Only the Liquidity Heatmap needs market depth (Level 2) — check that your data subscription includes it. No Tick Replay is required."}}, {"@type": "Question", "name": "Do I need a paid NinjaTrader license?", "acceptedAnswer": {"@type": "Answer", "text": "No. MATE runs on the free NinjaTrader 8 platform — charting and simulated trading included. You only ever pay NinjaTrader if you decide to trade live, and that is independent of MATE."}}, {"@type": "Question", "name": "Which markets and instruments does it work on?", "acceptedAnswer": {"@type": "Answer", "text": "Any instrument in NinjaTrader 8 with real traded volume: futures (ES, NQ, CL, GC, micros…), stocks and more. Order flow shines brightest on liquid futures — that is where these tools were born."}}, {"@type": "Question", "name": "How do I cancel? What happens when my subscription ends?", "acceptedAnswer": {"@type": "Answer", "text": "Cancel anytime from your Stripe receipt or by writing to support — no questions asked. You keep full access until the end of the period you already paid; after that, the tools simply stop loading. Full details in our Terms."}}]}]}</script>
 </head>
