@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indicators — MATE · Order Flow Tools for NinjaTrader 8</title>
-<meta name="description" content="The 20 indicators of the MATE suite: Footprint, Liquidity Heatmap, Big Trades, TPO, volume profiles, Delta, VWAP Suite, MGI Suite, Lag Sentinel and Auction Context. Each with its full manual.">
+<meta name="description" content="The 20+ indicators of the MATE suite: Footprint, Liquidity Heatmap, Big Trades, Tape Speed, TPO, volume profiles, Delta, VWAP Suite, MGI Suite, Lag Sentinel and Auction Context. Each with its full manual.">
 <link rel="canonical" href="https://www.matetrading.com/indicadores.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="144x144" href="favicon-v2-144.png">
@@ -12,15 +12,15 @@
 <link rel="apple-touch-icon" href="favicon-v2-144.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MATE — Order Flow Tools">
-<meta property="og:title" content="The 20 MATE Indicators — Order Flow Tools for NinjaTrader 8">
-<meta property="og:description" content="20 professional order flow indicators for NinjaTrader 8. Footprint, Liquidity Heatmap, TPO, Volume Profile, Delta, VWAP & MGI. 7-day free trial, no credit card.">
+<meta property="og:title" content="The 20+ MATE Indicators — Order Flow Tools for NinjaTrader 8">
+<meta property="og:description" content="20+ professional order flow indicators for NinjaTrader 8. Footprint, Liquidity Heatmap, TPO, Volume Profile, Delta, VWAP & MGI. 7-day free trial, no credit card.">
 <meta property="og:url" content="https://www.matetrading.com/indicadores.html">
 <meta property="og:image" content="https://www.matetrading.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MATE — Order Flow Tools for NinjaTrader 8">
-<meta name="twitter:description" content="20 professional order flow indicators for NinjaTrader 8. 7-day free trial, no credit card.">
+<meta name="twitter:description" content="20+ professional order flow indicators for NinjaTrader 8. 7-day free trial, no credit card.">
 <meta name="twitter:image" content="https://www.matetrading.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -283,6 +283,12 @@
   .scell .sl{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;margin-bottom:8px}
   .scell p{color:var(--muted);font-size:.88rem;line-height:1.68;margin:0}
   @media(max-width:840px){.setup-grid{grid-template-columns:1fr}}
+  .wn{border-top:1px solid var(--line);padding:26px 40px 12px}
+  .wn .st{display:block;font-family:'JetBrains Mono',monospace;color:var(--orange);letter-spacing:.24em;font-size:.66rem;margin-bottom:4px}
+  .wn ul{margin:14px 0 16px;padding:0;list-style:none;display:grid;gap:10px}
+  .wn li{color:var(--muted);font-size:.88rem;line-height:1.66;padding-left:22px;position:relative}
+  .wn li::before{content:"";position:absolute;left:4px;top:.52em;width:7px;height:7px;border-radius:2px;background:linear-gradient(135deg,var(--blue),var(--orange))}
+  .wn li b{color:var(--text)}
 </style>
 </head>
 <body>
@@ -334,13 +340,14 @@
   <div class="page-head">
     <span class="kicker" data-en="The arsenal" data-es="El arsenal">The arsenal</span>
     <h1 data-en='The indicators of the <span class="grad">MATE</span> suite' data-es='Los indicadores del pack <span class="grad">MATE</span>'>The indicators of the <span class="grad">MATE</span> suite</h1>
-    <p data-en="All 20 indicators of the suite. What each one measures, how to read it and where it fits in your trading — the complete catalog, no secrets."
-       data-es="Los 20 indicadores del pack. Qué mide cada uno, cómo se lee y qué lugar ocupa en tu operativa — el catálogo completo, sin secretos.">All 20 indicators of the suite. What each one measures, how to read it and where it fits in your trading — the complete catalog, no secrets.</p>
+    <p data-en="All 20+ indicators of the suite. What each one measures, how to read it and where it fits in your trading — the complete catalog, no secrets."
+       data-es="Los +20 indicadores del pack. Qué mide cada uno, cómo se lee y qué lugar ocupa en tu operativa — el catálogo completo, sin secretos.">All 20+ indicators of the suite. What each one measures, how to read it and where it fits in your trading — the complete catalog, no secrets.</p>
     <nav class="chips" aria-label="Indicator index">
       <a class="chip" href="#footprint">FOOTPRINT</a>
       <a class="chip" href="#heatmap">LIQUIDITY HEATMAP</a>
       <a class="chip" href="#tpo">TPO &amp; VOLUME PROFILE</a>
       <a class="chip" href="#bigtrades">BIG TRADES</a>
+      <a class="chip" href="#tapespeed">TAPE SPEED</a>
       <a class="chip" href="#deltasuite">DELTA SUITE</a>
       <a class="chip" href="#deltaprofile">DELTA PROFILE</a>
       <a class="chip" href="#fixedrange">FIXED RANGE VP</a>
@@ -357,6 +364,7 @@
         <option value="heatmap">LIQUIDITY HEATMAP</option>
         <option value="tpo">TPO &amp; VOLUME PROFILE</option>
         <option value="bigtrades">BIG TRADES</option>
+        <option value="tapespeed">TAPE SPEED</option>
         <option value="deltasuite">DELTA SUITE</option>
         <option value="deltaprofile">DELTA PROFILE</option>
         <option value="fixedrange">FIXED RANGE VP</option>
@@ -449,7 +457,17 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Cell heatmap and pro layouts</b> — the reading styles of dedicated footprint platforms, built in." data-es="<b>Heatmap de celdas y layouts pro</b> — los estilos de lectura de las plataformas dedicadas de footprint, integrados."><b>Cell heatmap and pro layouts</b> — the reading styles of dedicated footprint platforms, built in.</li>
+          <li data-en="<b>Four alerts, four voices</b> — each alert type ships with its own sound (pick any .wav)." data-es="<b>Cuatro alertas, cuatro voces</b> — cada tipo de alerta con su propio sonido (elige cualquier .wav)."><b>Four alerts, four voices</b> — each alert type ships with its own sound (pick any .wav).</li>
+          <li data-en="<b>Readable signals</b> — signal marks and badge redesigned for instant reading." data-es="<b>Señales legibles</b> — marcas de señal y badge rediseñados para lectura instantánea."><b>Readable signals</b> — signal marks and badge redesigned for instant reading.</li>
+          <li data-en="<b>A menu rebuilt for humans</b> — 12 clean groups, self-explanatory names (Cell Value Type, Footprint Width, Bid/Ask Separator, Color Intensity Steps)." data-es="<b>Un menú reconstruido para humanos</b> — 12 grupos limpios y nombres autoexplicativos (Cell Value Type, Footprint Width, Bid/Ask Separator, Color Intensity Steps)."><b>A menu rebuilt for humans</b> — 12 clean groups, self-explanatory names (Cell Value Type, Footprint Width, Bid/Ask Separator, Color Intensity Steps).</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell wide">
@@ -501,12 +519,8 @@
 
       <div class="fc-shot">
         <div class="shots" id="sh-heatmap">
-          <img src="img/heatmap.webp" alt="MATE Liquidity Heatmap on NinjaTrader 8" loading="lazy" onclick="openLb(this.src)">
-          <img src="img/heatmap-zoom.webp" alt="MATE Liquidity Heatmap close-up: absorption and iceberg marks with a resting wall" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/heatmap.webp" alt="MATE Liquidity Heatmap on NinjaTrader 8: live liquidity map with sliding trail and resting walls on NQ" loading="lazy" onclick="openLb(this.src)">
         </div>
-        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-heatmap',-1)">‹</button>
-        <button class="snav next" aria-label="Next" onclick="shNav('sh-heatmap',1)">›</button>
-        <div class="sdots" id="sh-heatmap-dots"><i class="on"></i><i></i></div>
       </div>
 
       <div class="fc-promise">
@@ -563,7 +577,19 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Live map with a sliding trail</b> — the heatmap draws liquidity as it happens and leaves the trail of consumed liquidity behind price, with a configurable Drawing Trail that keeps only the last minutes on screen, sliding with the market." data-es="<b>Mapa en vivo con estela deslizante</b> — el heatmap dibuja la liquidez según sucede y deja la estela de lo consumido detrás del precio, con un Drawing Trail configurable que mantiene solo los últimos minutos en pantalla, deslizándose con el mercado."><b>Live map with a sliding trail</b> — the heatmap draws liquidity as it happens and leaves the trail of consumed liquidity behind price, with a configurable Drawing Trail that keeps only the last minutes on screen, sliding with the market.</li>
+          <li data-en="<b>Pro Color Mode (on by default)</b> — scale AND color curve calibrate themselves to each instrument&#39;s book, and the gradient re-anchors automatically to your Minimum Size To Paint: the smallest size you show is the coldest blue, the biggest walls on screen are the hottest red — always the full color arc. ES, NQ, GC or CL read correctly with zero tuning." data-es="<b>Pro Color Mode (activado por defecto)</b> — la escala Y la curva de color se calibran solas al libro de cada instrumento, y el degradado se re-ancla automáticamente a tu Minimum Size To Paint: el tamaño mínimo que muestras es el azul más frío y los muros más grandes en pantalla son el rojo más caliente — siempre el arco completo de color. ES, NQ, GC o CL se leen correctos sin ajustar nada."><b>Pro Color Mode (on by default)</b> — scale AND color curve calibrate themselves to each instrument&#39;s book, and the gradient re-anchors automatically to your Minimum Size To Paint: the smallest size you show is the coldest blue, the biggest walls on screen are the hottest red — always the full color arc. ES, NQ, GC or CL read correctly with zero tuning.</li>
+          <li data-en="<b>Smooth Gradient mode</b> — an optional continuous-surface finish, the fluid look of dedicated order-flow platforms." data-es="<b>Modo Smooth Gradient</b> — acabado opcional de superficie continua, el look fluido de las plataformas dedicadas de order flow."><b>Smooth Gradient mode</b> — an optional continuous-surface finish, the fluid look of dedicated order-flow platforms.</li>
+          <li data-en="<b>Trade Bubbles, unlocked</b> — executed-volume bubbles with area proportional to true size (buys green, sells red), now available on any chart, not just Bookmap Mode." data-es="<b>Trade Bubbles, desbloqueadas</b> — burbujas de volumen ejecutado con área proporcional al tamaño real (compras verdes, ventas rojas), ahora en cualquier gráfico, no solo en el modo Bookmap."><b>Trade Bubbles, unlocked</b> — executed-volume bubbles with area proportional to true size (buys green, sells red), now available on any chart, not just Bookmap Mode.</li>
+          <li data-en="<b>Sharper everywhere</b> — book projection welded to the DOM panel, bigger configurable panel numbers, configurable canvas color, 30 fps fluidity, and colors that stay identical from any scroll position." data-es="<b>Más nítido en todo</b> — proyección del libro soldada al panel DOM, números del panel más grandes y configurables, color del lienzo configurable, fluidez de 30 fps y colores idénticos desde cualquier posición de scroll."><b>Sharper everywhere</b> — book projection welded to the DOM panel, bigger configurable panel numbers, configurable canvas color, 30 fps fluidity, and colors that stay identical from any scroll position.</li>
+          <li data-en="<b>Recommended starting points</b> — Minimum Size To Paint ≈ 20 on ES, ≈ 5 on NQ; the colors adapt on their own." data-es="<b>Puntos de partida recomendados</b> — Minimum Size To Paint ≈ 20 en ES, ≈ 5 en NQ; los colores se adaptan solos."><b>Recommended starting points</b> — Minimum Size To Paint ≈ 20 on ES, ≈ 5 on NQ; the colors adapt on their own.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -673,7 +699,16 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Complete session menu</b> — RTH, ETH, Overnight and Custom sessions, each with its own hours, shown contextually (only the hours of the session you picked)." data-es="<b>Menú de sesiones completo</b> — RTH, ETH, Overnight y Custom, cada una con sus horas, mostradas contextualmente (solo las horas de la sesión elegida)."><b>Complete session menu</b> — RTH, ETH, Overnight and Custom sessions, each with its own hours, shown contextually (only the hours of the session you picked).</li>
+          <li data-en="<b>Names that explain themselves</b> — Minutes Per Letter, TPO/VP Row Size, Initial Balance Length, Min Rows for a Tail." data-es="<b>Nombres que se explican solos</b> — Minutes Per Letter, TPO/VP Row Size, Initial Balance Length, Min Rows for a Tail."><b>Names that explain themselves</b> — Minutes Per Letter, TPO/VP Row Size, Initial Balance Length, Min Rows for a Tail.</li>
+          <li data-en="<b>Rock-solid rendering</b> — row textures and letters stay stable at every zoom level." data-es="<b>Render sólido como una roca</b> — texturas de filas y letras estables a cualquier nivel de zoom."><b>Rock-solid rendering</b> — row textures and letters stay stable at every zoom level.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -772,7 +807,16 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>A voice per detection</b> — prints and sweeps each alert with their own sound (any .wav, file picker included)." data-es="<b>Una voz por detección</b> — prints y sweeps alertan cada uno con su propio sonido (cualquier .wav, con selector de archivos)."><b>A voice per detection</b> — prints and sweeps each alert with their own sound (any .wav, file picker included).</li>
+          <li data-en="<b>True relative bubble scale</b> — bubble sizes anchor to the largest event actually detected, so proportions stay honest all session." data-es="<b>Escala de burbujas relativa de verdad</b> — los tamaños se anclan al mayor evento realmente detectado, y las proporciones se mantienen honestas toda la sesión."><b>True relative bubble scale</b> — bubble sizes anchor to the largest event actually detected, so proportions stay honest all session.</li>
+          <li data-en="<b>Size tiers you can read</b> — Big / Large / Huge Minimum, with plain-English descriptions." data-es="<b>Niveles de tamaño legibles</b> — Big / Large / Huge Minimum, con descripciones en lenguaje llano."><b>Size tiers you can read</b> — Big / Large / Huge Minimum, with plain-English descriptions.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -790,6 +834,104 @@
         <div class="scell wide">
           <span class="sl" data-en="Too many / too few bubbles" data-es="¿Demasiadas o muy pocas burbujas?">Too many / too few bubbles</span>
           <p data-en="Raise or lower the threshold — it's always the first knob." data-es="Sube o baja el umbral — siempre es la primera perilla.">Raise or lower the threshold — it's always the first knob.</p>
+        </div>
+        </div>
+      </div>
+
+      <div class="fc-foot">
+        <span class="doc"><i></i><span data-en="UPDATES &amp; SUPPORT INCLUDED" data-es="ACTUALIZACIONES Y SOPORTE INCLUIDOS">UPDATES &amp; SUPPORT INCLUDED</span></span>
+        <a class="btn btn-orange" href="index.html#productos" data-en="Included in every plan" data-es="Incluido en todos los planes">Included in every plan</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature-card">
+      <div class="fc-head">
+        <div class="t">
+          <h2 id="tapespeed">Tape Speed</h2>
+          <p class="sub" data-en="The time dimension of order flow: how fast the tape is trading right now, as a live histogram in its own panel — one bar per candle, updating with every tick."
+             data-es="La dimensión temporal del order flow: qué tan rápido está operando la cinta ahora mismo, como histograma en vivo en su propio panel — una barra por vela, actualizándose con cada tick.">The time dimension of order flow: how fast the tape is trading right now, as a live histogram in its own panel — one bar per candle, updating with every tick.</p>
+        </div>
+        <div class="fc-badges">
+          <span class="badge b1" data-en="NEW · v1.2" data-es="NUEVO · v1.2">NEW · v1.2</span>
+          <span class="badge b2" data-en="AUTO-CALIBRATED" data-es="AUTOCALIBRADO">AUTO-CALIBRATED</span>
+        </div>
+      </div>
+
+      <div class="fc-shot">
+        <div class="shots" id="sh-tapespeed">
+          <img src="img/tapespeed.webp" alt="MATE Tape Speed histogram panel with Heat Gradient bursts under a NinjaTrader 8 chart" loading="lazy" onclick="openLb(this.src)">
+          <img src="img/tapespeed-detail.webp" alt="MATE Tape Speed detail: heat gradient bars, average line and burst highlights" loading="lazy" onclick="openLb(this.src)">
+        </div>
+        <button class="snav prev" aria-label="Previous" onclick="shNav('sh-tapespeed',-1)">‹</button>
+        <button class="snav next" aria-label="Next" onclick="shNav('sh-tapespeed',1)">›</button>
+        <div class="sdots" id="sh-tapespeed-dots"><i class="on"></i><i></i></div>
+      </div>
+
+      <div class="fc-promise">
+        <p data-en="<b>Footprints tell you where volume executes; profiles, where it accumulated.</b> Tape Speed tells you how urgently it&#39;s coming in — the classic tape-reading tool brought to the MATE standard, born from a direct client request."
+           data-es="<b>Los footprints te dicen dónde se ejecuta el volumen; los perfiles, dónde se acumuló.</b> El Tape Speed te dice con qué urgencia está entrando — la herramienta clásica del tape reading llevada al estándar MATE, nacida de la petición directa de un cliente."><b>Footprints tell you where volume executes; profiles, where it accumulated.</b> Tape Speed tells you how urgently it&#39;s coming in — the classic tape-reading tool brought to the MATE standard, born from a direct client request.</p>
+      </div>
+
+      <div class="fc-grid">
+        <div class="fcell">
+          <h3 data-en="Four metrics, one ruler" data-es="Cuatro métricas, una regla">Four metrics, one ruler</h3>
+          <p data-en="Volume (contracts per second, default), trades per second, orders hitting the book per second (optional — needs Level 2) or net delta per second — over a configurable rolling window (10 s default), showing each candle&#39;s peak or average."
+             data-es="Volumen (contratos por segundo, por defecto), operaciones por segundo, órdenes al libro por segundo (opcional — requiere Level 2) o delta neto por segundo — sobre una ventana rodante configurable (10 s por defecto), mostrando el pico o el promedio de cada vela.">Volume (contracts per second, default), trades per second, orders hitting the book per second (optional — needs Level 2) or net delta per second — over a configurable rolling window (10 s default), showing each candle&#39;s peak or average.</p>
+        </div>
+        <div class="fcell">
+          <h3 data-en="It learns each instrument&#39;s pace" data-es="Aprende el ritmo de cada instrumento">It learns each instrument&#39;s pace</h3>
+          <p data-en="Auto-calibration shows you the live multiple: ×1.0 is the usual pace, ×3.0 a burst running at triple speed. The QUIET / NORMAL / FAST / EXTREME ladder reads at a glance — on ES, NQ, GC or CL, without touching a thing."
+             data-es="El autocalibrado te muestra el múltiplo en vivo: ×1.0 es el paso habitual, ×3.0 una ráfaga al triple. La escalera QUIET / NORMAL / FAST / EXTREME se lee de un vistazo — en ES, NQ, GC o CL, sin tocar nada.">Auto-calibration shows you the live multiple: ×1.0 is the usual pace, ×3.0 a burst running at triple speed. The QUIET / NORMAL / FAST / EXTREME ladder reads at a glance — on ES, NQ, GC or CL, without touching a thing.</p>
+        </div>
+        <div class="fcell">
+          <h3 data-en="Burst detection" data-es="Detección de ráfagas">Burst detection</h3>
+          <p data-en="An automatic statistical filter (self-calibrated to the instrument) or your manual threshold: candles where the tape explodes highlight themselves — and can optionally paint the price candle too."
+             data-es="Filtro estadístico automático (autocalibrado al instrumento) o tu umbral manual: las velas donde la cinta explota se resaltan solas — y opcionalmente pintan también la vela del precio.">An automatic statistical filter (self-calibrated to the instrument) or your manual threshold: candles where the tape explodes highlight themselves — and can optionally paint the price candle too.</p>
+        </div>
+        <div class="fcell">
+          <h3 data-en="A burst alert with its own sound" data-es="Alerta de ráfaga con sonido propio">A burst alert with its own sound</h3>
+          <p data-en="Sound the moment the tape accelerates — one alert per episode, auto re-arm when it cools down, and it only ever fires in real time (history never makes noise)."
+             data-es="Sonido en el momento en que la cinta se acelera — un aviso por episodio, rearme automático al enfriarse, y solo dispara en tiempo real (el histórico jamás suena).">Sound the moment the tape accelerates — one alert per episode, auto re-arm when it cools down, and it only ever fires in real time (history never makes noise).</p>
+        </div>
+        <div class="fcell">
+          <h3 data-en="Three aesthetics" data-es="Tres estéticas">Three aesthetics</h3>
+          <p data-en="Heat Gradient (the Liquidity Heatmap&#39;s visual language: cold blue → green → red), Bull/Bear by aggressor side, or the classic single-color speed of tape — plus an average line and an Info Box with the live multiple and state."
+             data-es="Heat Gradient (el idioma visual del Liquidity Heatmap: azul frío → verde → rojo), Bull/Bear por lado agresor, o el clásico speed of tape de un color — más la línea de promedio y el Info Box con el múltiplo y el estado en vivo.">Heat Gradient (the Liquidity Heatmap&#39;s visual language: cold blue → green → red), Bull/Bear by aggressor side, or the classic single-color speed of tape — plus an average line and an Info Box with the live multiple and state.</p>
+        </div>
+        <div class="fcell">
+          <h3 data-en="Filters for the flow you care about" data-es="Filtros para el flujo que te importa">Filters for the flow you care about</h3>
+          <p data-en="Minimum and maximum trade-size filters, so the speedometer measures only the participants you want to watch."
+             data-es="Filtros de tamaño mínimo y máximo por operación, para que el velocímetro mida solo a los participantes que quieres vigilar.">Minimum and maximum trade-size filters, so the speedometer measures only the participants you want to watch.</p>
+        </div>
+      </div>
+
+      <div class="setup">
+        <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
+        <div class="setup-grid">
+        <div class="scell">
+          <span class="sl" data-en="Requires" data-es="Requiere">Requires</span>
+          <p data-en="Works with any live data feed — no Level 2 required. The Volume (default), Trades and Delta metrics use only the tape (Time &amp; Sales). Only the optional Orders metric — which measures orders placed on the book, a different data set from the tape — needs market depth (Level 2); on that metric the histogram builds live from the moment you open the chart, because the order book has no history. The indicator loads in its own lower panel." data-es="Funciona con cualquier feed de datos en vivo — no requiere Level 2. Las métricas Volume (por defecto), Trades y Delta usan solo la cinta de operaciones (Time &amp; Sales). Únicamente la métrica opcional Orders — que mide órdenes colocadas en el libro, un dato distinto de la cinta — necesita profundidad de mercado (Level 2); en esa métrica el histograma se construye en vivo desde que abres el gráfico, porque el libro de órdenes no tiene histórico. El indicador se añade en su propio panel inferior.">Works with any live data feed — no Level 2 required. The Volume (default), Trades and Delta metrics use only the tape (Time &amp; Sales). Only the optional Orders metric — which measures orders placed on the book, a different data set from the tape — needs market depth (Level 2); on that metric the histogram builds live from the moment you open the chart, because the order book has no history. The indicator loads in its own lower panel.</p>
+        </div>
+        <div class="scell">
+          <span class="sl" data-en="Key settings" data-es="Ajustes clave">Key settings</span>
+          <p data-en="Metric (Volume / Trades / Orders / Delta), rolling window (10 s default), Peak or Average per candle, aesthetic (Heat Gradient / Bull-Bear / Single Color), burst filter (auto or manual) and size filters." data-es="Métrica (Volume / Trades / Orders / Delta), ventana rodante (10 s por defecto), Pico o Promedio por vela, estética (Heat Gradient / Bull-Bear / Single Color), filtro de ráfagas (auto o manual) y filtros de tamaño.">Metric (Volume / Trades / Orders / Delta), rolling window (10 s default), Peak or Average per candle, aesthetic (Heat Gradient / Bull-Bear / Single Color), burst filter (auto or manual) and size filters.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Reading the panel" data-es="Cómo leer el panel">Reading the panel</span>
+          <p data-en="Each bar is that candle&#39;s tape speed; the live bar updates with every tick — it never waits for the close. Read the multiple, not the raw number: ×1.0 is that instrument&#39;s normal pace, higher multiples mean the tape is running hot, and the QUIET / NORMAL / FAST / EXTREME state says it at a glance. The first time you load it you&#39;ll see “calibrating…” for the first few candles: the indicator is learning that instrument&#39;s normal pace. That&#39;s expected, and it takes under a minute of active market." data-es="Cada barra es la velocidad de la cinta en esa vela; la barra en curso se actualiza con cada tick — nunca espera al cierre. Lee el múltiplo, no el número bruto: ×1.0 es el ritmo normal de ese instrumento, múltiplos mayores significan cinta caliente, y el estado QUIET / NORMAL / FAST / EXTREME lo dice de un vistazo. Al cargarlo por primera vez verás “calibrating…” durante las primeras velas: el indicador está aprendiendo el ritmo normal de ese instrumento. Es normal y tarda menos de un minuto de mercado activo.">Each bar is that candle&#39;s tape speed; the live bar updates with every tick — it never waits for the close. Read the multiple, not the raw number: ×1.0 is that instrument&#39;s normal pace, higher multiples mean the tape is running hot, and the QUIET / NORMAL / FAST / EXTREME state says it at a glance. The first time you load it you&#39;ll see “calibrating…” for the first few candles: the indicator is learning that instrument&#39;s normal pace. That&#39;s expected, and it takes under a minute of active market.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Historical data" data-es="Histórico">Historical data</span>
+          <p data-en="With providers that supply historical tick data, the histogram arrives with the chart&#39;s entire past already drawn; if your connection doesn&#39;t offer it, the indicator itself tells you and builds from the moment you open the chart." data-es="Con proveedores que entregan datos de ticks históricos, el histograma llega con todo el pasado del gráfico ya dibujado; si tu conexión no los ofrece, el propio indicador te lo indica y construye desde el momento en que abres el chart.">With providers that supply historical tick data, the histogram arrives with the chart&#39;s entire past already drawn; if your connection doesn&#39;t offer it, the indicator itself tells you and builds from the moment you open the chart.</p>
+        </div>
+        <div class="scell wide">
+          <span class="sl" data-en="Combine it with" data-es="Combínalo con">Combine it with</span>
+          <p data-en="Volume profiles (value areas, POC), the delta tools and the Footprint — all in the suite. Together they reveal absorptions (price frozen, tape racing), dead levels (price frozen, tape slow) and the algo bursts that precede breakouts." data-es="Los perfiles de volumen (value areas, POC), las herramientas de delta y el Footprint — todos en la suite. Juntos revelan absorciones (precio quieto, cinta rapidísima), niveles muertos (precio quieto, cinta lenta) y las ráfagas de algos que preceden las rupturas.">Volume profiles (value areas, POC), the delta tools and the Footprint — all in the suite. Together they reveal absorptions (price frozen, tape racing), dead levels (price frozen, tape slow) and the algo bursts that precede breakouts.</p>
         </div>
         </div>
       </div>
@@ -867,7 +1009,15 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>CVD divergence alert</b> — the divergence detector never repaints by construction, and now it can call them out loud (realtime only, own sound)." data-es="<b>Alerta de divergencias del CVD</b> — el detector jamás repinta por construcción, y ahora puede cantarlas en voz alta (solo tiempo real, sonido propio)."><b>CVD divergence alert</b> — the divergence detector never repaints by construction, and now it can call them out loud (realtime only, own sound).</li>
+          <li data-en="<b>Clearer controls</b> — View Mode, Trade Source, and a menu that only shows what applies to the view you&#39;re in." data-es="<b>Controles más claros</b> — View Mode, Trade Source y un menú que solo muestra lo que aplica a la vista en la que estás."><b>Clearer controls</b> — View Mode, Trade Source, and a menu that only shows what applies to the view you&#39;re in.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -962,7 +1112,16 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Naked-level touch alert</b> — fires the moment price returns to an untested level (historical touches never sound), with its own .wav." data-es="<b>Alerta de toque de naked levels</b> — dispara en el momento en que el precio vuelve a un nivel sin testear (los toques históricos jamás suenan), con su propio .wav."><b>Naked-level touch alert</b> — fires the moment price returns to an untested level (historical touches never sound), with its own .wav.</li>
+          <li data-en="<b>Delta flip alert</b> — the developing profile&#39;s delta changes sign, with hysteresis so it never spams." data-es="<b>Alerta de cambio de signo del delta</b> — el delta del perfil en desarrollo cambia de signo, con histéresis para que nunca haga spam."><b>Delta flip alert</b> — the developing profile&#39;s delta changes sign, with hysteresis so it never spams.</li>
+          <li data-en="<b>Clearer controls</b> — Profile Reset Mode, Weakest/Strongest Row Opacity, Fresh If Younger Than, Value Above Threshold." data-es="<b>Controles más claros</b> — Profile Reset Mode, Weakest/Strongest Row Opacity, Fresh If Younger Than, Value Above Threshold."><b>Clearer controls</b> — Profile Reset Mode, Weakest/Strongest Row Opacity, Fresh If Younger Than, Value Above Threshold.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -1057,7 +1216,15 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Steadier than ever</b> — profiles keep their exact shape at every zoom level and scroll position." data-es="<b>Más estable que nunca</b> — los perfiles mantienen su forma exacta a cualquier zoom y posición de scroll."><b>Steadier than ever</b> — profiles keep their exact shape at every zoom level and scroll position.</li>
+          <li data-en="<b>Contextual menu</b> — delta, POC, value-area and label options appear only when their feature is on." data-es="<b>Menú contextual</b> — las opciones de delta, POC, value area y etiquetas aparecen solo cuando su función está activada."><b>Contextual menu</b> — delta, POC, value-area and label options appear only when their feature is on.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell wide">
@@ -1152,7 +1319,17 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Heat Gradient mode</b> — profile rows colored by volume intensity, with the POC highlighted." data-es="<b>Modo Heat Gradient</b> — filas del perfil coloreadas por intensidad de volumen, con el POC resaltado."><b>Heat Gradient mode</b> — profile rows colored by volume intensity, with the POC highlighted.</li>
+          <li data-en="<b>VPOC / VAH / VAL touch alerts</b> — each with its own sound, distance-based re-arming, and level-migration awareness." data-es="<b>Alertas de toque de VPOC / VAH / VAL</b> — cada una con su sonido, rearme por distancia y conciencia de migración del nivel."><b>VPOC / VAH / VAL touch alerts</b> — each with its own sound, distance-based re-arming, and level-migration awareness.</li>
+          <li data-en="<b>50% line</b> — the midpoint of the profiled range, with its own color." data-es="<b>Línea del 50%</b> — el punto medio del rango perfilado, con su propio color."><b>50% line</b> — the midpoint of the profiled range, with its own color.</li>
+          <li data-en="<b>More sessions</b> — Previous RTH/ETH profiles, Overnight and Custom windows, and Time Span anchoring with time-of-day precision (not just dates)." data-es="<b>Más sesiones</b> — perfiles Previous RTH/ETH, ventanas Overnight y Custom, y anclaje Time Span con precisión de hora del día (no solo fechas)."><b>More sessions</b> — Previous RTH/ETH profiles, Overnight and Custom windows, and Time Span anchoring with time-of-day precision (not just dates).</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -1248,7 +1425,18 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Automatic, universal trading calendar</b> — Weekly, Monthly, Quarterly and Yearly VWAPs read YOUR instrument&#39;s trading calendar straight from its exchange template and cut each period exactly where that market defines it — any exchange, any timezone, zero session settings. Load it and it&#39;s already right." data-es="<b>Calendario de trading automático y universal</b> — los VWAP Weekly, Monthly, Quarterly y Yearly leen el calendario de TU instrumento directamente de su plantilla de bolsa y cortan cada periodo exactamente donde ese mercado lo define — cualquier bolsa, cualquier zona horaria, cero ajustes de sesión. Lo cargas y ya está midiendo bien."><b>Automatic, universal trading calendar</b> — Weekly, Monthly, Quarterly and Yearly VWAPs read YOUR instrument&#39;s trading calendar straight from its exchange template and cut each period exactly where that market defines it — any exchange, any timezone, zero session settings. Load it and it&#39;s already right.</li>
+          <li data-en="<b>Each Daily VWAP picks its session</b> — slot 1 and slot 2 each choose RTH, ETH or fully custom hours." data-es="<b>Cada Daily VWAP elige su sesión</b> — el slot 1 y el slot 2 eligen RTH, ETH u horas totalmente personalizadas."><b>Each Daily VWAP picks its session</b> — slot 1 and slot 2 each choose RTH, ETH or fully custom hours.</li>
+          <li data-en="<b>Touch alerts</b> — VWAP touch and band-1 touch, per-session, each with its own sound and distance-based re-arming." data-es="<b>Alertas de toque</b> — toque de VWAP y de banda 1, por sesión, cada una con su sonido y rearme por distancia."><b>Touch alerts</b> — VWAP touch and band-1 touch, per-session, each with its own sound and distance-based re-arming.</li>
+          <li data-en="<b>Fast or exact, your choice</b> — Minute resolution (loads in seconds) or Tick resolution (trade-by-trade precision) across the family." data-es="<b>Rápido o exacto, a elección</b> — resolución Minute (carga en segundos) o Tick (precisión operación por operación) en toda la familia."><b>Fast or exact, your choice</b> — Minute resolution (loads in seconds) or Tick resolution (trade-by-trade precision) across the family.</li>
+          <li data-en="<b>Band fills that always load</b> — shading appears reliably in every scenario." data-es="<b>Sombreados de bandas que siempre cargan</b> — el relleno aparece de forma fiable en cualquier escenario."><b>Band fills that always load</b> — shading appears reliably in every scenario.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -1344,7 +1532,18 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Automatic, universal trading calendar</b> — Weekly, Monthly, Quarterly and Yearly MGIs read your instrument&#39;s trading calendar straight from its exchange template — any exchange, any timezone, zero session settings." data-es="<b>Calendario de trading automático y universal</b> — los MGI Weekly, Monthly, Quarterly y Yearly leen el calendario de tu instrumento directamente de su plantilla de bolsa — cualquier bolsa, cualquier zona horaria, cero ajustes de sesión."><b>Automatic, universal trading calendar</b> — Weekly, Monthly, Quarterly and Yearly MGIs read your instrument&#39;s trading calendar straight from its exchange template — any exchange, any timezone, zero session settings.</li>
+          <li data-en="<b>Alerts in your instrument&#39;s language</b> — touch alerts announce prices in the exact tick format (indices, bonds or forex alike), each level with its own sound." data-es="<b>Alertas en el idioma de tu instrumento</b> — las alertas de toque anuncian los precios en el formato de tick exacto (índices, bonos o forex por igual), cada nivel con su propio sonido."><b>Alerts in your instrument&#39;s language</b> — touch alerts announce prices in the exact tick format (indices, bonds or forex alike), each level with its own sound.</li>
+          <li data-en="<b>Labels that never collide</b> — level tags stack automatically and never invade the price axis." data-es="<b>Etiquetas que nunca chocan</b> — los rótulos de niveles se apilan automáticamente y jamás invaden el eje del precio."><b>Labels that never collide</b> — level tags stack automatically and never invade the price axis.</li>
+          <li data-en="<b>A menu that follows you</b> — 35 contextual rules on Daily MGI: every sub-option and color appears only while its level is active." data-es="<b>Un menú que te sigue</b> — 35 reglas contextuales en el Daily MGI: cada sub-opción y color aparece solo mientras su nivel está activo."><b>A menu that follows you</b> — 35 contextual rules on Daily MGI: every sub-option and color appears only while its level is active.</li>
+          <li data-en="<b>Fast or exact, your choice</b> — Minute or Tick resolution across the family." data-es="<b>Rápido o exacto, a elección</b> — resolución Minute o Tick en toda la familia."><b>Fast or exact, your choice</b> — Minute or Tick resolution across the family.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -1439,7 +1638,15 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Status colors that speak</b> — Healthy / Warning / Frozen text and background colors, named by state." data-es="<b>Colores de estado que hablan</b> — texto y fondo Healthy / Warning / Frozen, con nombre por estado."><b>Status colors that speak</b> — Healthy / Warning / Frozen text and background colors, named by state.</li>
+          <li data-en="<b>Pick your alarm</b> — any .wav via file picker." data-es="<b>Elige tu alarma</b> — cualquier .wav mediante selector de archivos."><b>Pick your alarm</b> — any .wav via file picker.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
@@ -1530,7 +1737,16 @@
       </div>
 
       
-      <div class="setup">
+            <div class="wn">
+        <span class="st" data-en="WHAT&#39;S NEW IN v1.2" data-es="NOVEDADES v1.2">WHAT&#39;S NEW IN v1.2</span>
+        <ul>
+          <li data-en="<b>Inventory read</b> — a new panel row classifies overnight inventory from the REAL percentage of trade over settlement and states the book&#39;s risk in plain words: Long liquidation / Short covering / Correcting / Corrected." data-es="<b>Lectura de inventario</b> — una fila nueva del panel clasifica el inventario overnight desde el porcentaje REAL de negocio sobre el settlement y dice el riesgo del libro en palabras llanas: Long liquidation / Short covering / Correcting / Corrected."><b>Inventory read</b> — a new panel row classifies overnight inventory from the REAL percentage of trade over settlement and states the book&#39;s risk in plain words: Long liquidation / Short covering / Correcting / Corrected.</li>
+          <li data-en="<b>Every setting documented</b> — all options now carry full descriptions, written for any market." data-es="<b>Cada opción documentada</b> — todas las opciones llevan ahora descripciones completas, escritas para cualquier mercado."><b>Every setting documented</b> — all options now carry full descriptions, written for any market.</li>
+          <li data-en="<b>Crisp panel, always</b> — panel text can never overflow its box." data-es="<b>Panel nítido, siempre</b> — el texto del panel no puede desbordar su caja."><b>Crisp panel, always</b> — panel text can never overflow its box.</li>
+        </ul>
+      </div>
+
+<div class="setup">
         <span class="st" data-en="SETUP &amp; READING" data-es="CONFIGURACIÓN Y LECTURA">SETUP &amp; READING</span>
         <div class="setup-grid">
         <div class="scell">
